@@ -19,6 +19,7 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         collectionView.dataSource = provider
         collectionView.delegate = delegate
+        self.title = "Nice Day"
         // Do any additional setup after loading the view.
     }
 
