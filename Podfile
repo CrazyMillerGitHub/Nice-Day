@@ -4,6 +4,7 @@
 target 'Nice Day' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
+  inhibit_all_warnings!
   pod 'SwiftLint'
   pod 'Alamofire', '~> 5.0.0-beta.5'
   pod 'Hero'
