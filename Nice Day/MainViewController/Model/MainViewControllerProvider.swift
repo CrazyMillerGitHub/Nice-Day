@@ -10,12 +10,17 @@ import UIKit
 
 class MainViewControllerProvider: NSObject ,UICollectionViewDataSource {
 
+    var data: MainViewControllerData = {
+        let data = MainViewControllerData.shared
+        return data
+    }()
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return data.arr.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? CustomCollectionViewCell else { fatalError("Error with cell") }
-        cell.backgroundColor = .black
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? ChartsCell else { fatalError("Error with cell") }
+        
         return cell
     }
    
