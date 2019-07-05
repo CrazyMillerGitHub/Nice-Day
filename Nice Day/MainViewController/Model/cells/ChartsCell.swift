@@ -17,14 +17,12 @@ class ChartsCell: UICollectionViewCell {
     
     /// Создание тени под cell
     func shadow() {
-        backgroundColor = UIColor(red:0.40, green:0.70, blue:0.99, alpha:1.00)
-        self.layer.shadowColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.3).cgColor
-        self.layer.shadowRadius = 5
+        backgroundColor = .red
+        self.layer.shadowColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.16).cgColor
         self.layer.shadowOpacity = 0.9
+        self.layer.shadowRadius = 16
         self.layer.cornerRadius = 15
-    
-        self.layer.shadowPath = CustomShadowClass.instance.shadow(height: 236)
-
+        self.layer.shadowOffset = CGSize(width: 0, height: 16)
     }
     override var isHighlighted: Bool {
         didSet {
@@ -40,15 +38,4 @@ class ChartsCell: UICollectionViewCell {
         }
     }
 
-}
-
-class CustomShadowClass {
-    static var instance = CustomShadowClass()
-    private init() {}
-    func shadow(height: Int) -> CGPath {
-        let contactShadowSize: CGFloat = 15
-        let yRes: CGFloat = CGFloat(height - 5)
-        let shadowPath = CGPath(ellipseIn: CGRect(x: 20, y: yRes, width: UIScreen.main.bounds.width - 68, height: contactShadowSize), transform: nil)
-        return shadowPath
-    }
 }
