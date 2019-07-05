@@ -19,9 +19,14 @@ class MainViewControllerProvider: NSObject ,UICollectionViewDataSource {
         return data.arr.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? ChartsCell else { fatalError("Error with cell") }
-        
-        return cell
+        switch indexPath.row {
+        case 0...1:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "big_cell", for: indexPath) as? ChartsCell else { fatalError("Error with cell") }
+            return cell
+        default:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "small_cell", for: indexPath) as? BunusCell else { fatalError("Error with cell") }
+            return cell
+        }
     }
    
 }
