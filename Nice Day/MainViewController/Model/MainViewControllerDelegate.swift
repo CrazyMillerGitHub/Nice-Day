@@ -24,7 +24,6 @@ class MainViewControllerDelegate: NSObject, UICollectionViewDelegate, UICollecti
         }
     }
     
-    
     /// Изменения размера ячейки при различной последовательности
     ///
     /// - Parameters:
@@ -34,10 +33,10 @@ class MainViewControllerDelegate: NSObject, UICollectionViewDelegate, UICollecti
     /// - Returns: размер ячейки
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch data.arr[indexPath.row] {
-            case 0...1:
-                return CGSize(width: UIScreen.main.bounds.width - 30, height: 130)
-            default:
-                return CGSize(width: UIScreen.main.bounds.width - 30, height: 236)
+        case 0...1:
+            return CGSize(width: UIScreen.main.bounds.width - 30, height: 130)
+        default:
+            return CGSize(width: UIScreen.main.bounds.width - 30, height: 236)
         }
     }
 }
