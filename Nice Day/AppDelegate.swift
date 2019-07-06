@@ -15,6 +15,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        //Removed line from TabBar
+        UITabBar.appearance().shadowImage = UIImage()
+        UITabBar.appearance().backgroundImage = UIImage()
+        UITabBar.appearance().layer.masksToBounds = false
+        UserDefaults.standard.set(true, forKey: "loggedIn")
+        //Custm tabBar
         // Override point for customization after application launch.
         return true
     }
