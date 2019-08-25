@@ -8,13 +8,13 @@
 
 import UIKit
 
-class MainViewControllerDelegate: NSObject, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class MainViewControllerDelegate: NSObject, UICollectionViewDelegate, UIScrollViewDelegate, UICollectionViewDelegateFlowLayout {
     
     var data: MainViewControllerData = {
         let data = MainViewControllerData.shared
         return data
     }()
-    
+    weak var delegate: ProfileImageViewProtocol?
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if (data.arr.contains(1) && indexPath.row == 1) {
             collectionView.performBatchUpdates({
@@ -23,7 +23,10 @@ class MainViewControllerDelegate: NSObject, UICollectionViewDelegate, UICollecti
             }, completion:nil)
         }
     }
-    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        delegate?.moveAndResizeImage()
+//        moveAndResizeImage(for: height)
+    }
     /// Изменения размера ячейки при различной последовательности
     ///
     /// - Parameters:
@@ -33,10 +36,13 @@ class MainViewControllerDelegate: NSObject, UICollectionViewDelegate, UICollecti
     /// - Returns: размер ячейки
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch data.arr[indexPath.row] {
-        case 0...1:
+        case 0...2:
             return CGSize(width: UIScreen.main.bounds.width - 30, height: 130)
         default:
             return CGSize(width: UIScreen.main.bounds.width - 30, height: 236)
         }
     }
+}
+protocol ProfileImageViewProtocol: class {
+    func moveAndResizeImage()
 }

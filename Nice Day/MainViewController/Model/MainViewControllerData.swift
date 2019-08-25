@@ -12,5 +12,5 @@ class MainViewControllerData {
     
     static let shared = MainViewControllerData()
     private init() {}
-    var arr = Array(0..<4)
+    var arr = Array(0..<6)
 }

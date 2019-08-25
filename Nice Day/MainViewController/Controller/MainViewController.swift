@@ -8,65 +8,13 @@
 
 import UIKit
 
-class MainViewController: UIViewController, UIScrollViewDelegate {
-
-    @IBOutlet weak var collectionView: UICollectionView!
-
-    let provider = MainViewControllerProvider()
-    let delegate = MainViewControllerDelegate()
-    private let imageView = UIImageView(image: UIImage() )
+class MainViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, ProfileImageViewProtocol {
+    //
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        collectionView.dataSource = provider
-        collectionView.delegate = delegate
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.extendedLayoutIncludesOpaqueBars = true
-        setupUI()
-        // Do any additional setup after loading the view.
-    }
+    let imagePicker = UIImagePickerController()
     
-}
-extension MainViewController {
-    //Что тут происходит?
-    private struct Const {
-        /// Image height/width for Large NavBar state
-        static let ImageSizeForLargeState: CGFloat = 32
-        /// Margin from right anchor of safe area to right anchor of Image
-        static let ImageRightMargin: CGFloat = 16
-        /// Margin from bottom anchor of NavBar to bottom anchor of Image for Large NavBar state
-        static let ImageBottomMarginForLargeState: CGFloat = 12
-        /// Margin from bottom anchor of NavBar to bottom anchor of Image for Small NavBar state
-        static let ImageBottomMarginForSmallState: CGFloat = 6
-        /// Image height/width for Small NavBar state
-        static let ImageSizeForSmallState: CGFloat = 25
-        /// Height of NavBar for Small state. Usually it's just 32
-        static let NavBarHeightSmallState: CGFloat = 44
-        /// Height of NavBar for Large state. Usually it's just 96.5 but if you have a custom font for the title, please make sure to edit this value since it changes the height for Large state of NavBar
-        static let NavBarHeightLargeState: CGFloat = 96.5
-    }
-    
-    private func setupUI() {
-        navigationController?.navigationBar.prefersLargeTitles = true
-        
-        title = "Nice Day"
-        self.imageView.backgroundColor = .black
-        
-        // Initial setup for image for Large NavBar state since the the screen always has Large NavBar once it gets opened
-        guard let navigationBar = self.navigationController?.navigationBar else { return }
-        navigationBar.addSubview(imageView)
-        imageView.layer.cornerRadius = Const.ImageSizeForLargeState / 2
-        imageView.clipsToBounds = true
-        imageView.contentMode = .scaleAspectFill
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            imageView.rightAnchor.constraint(equalTo: navigationBar.rightAnchor, constant: -Const.ImageRightMargin),
-            imageView.bottomAnchor.constraint(equalTo: navigationBar.bottomAnchor, constant: -Const.ImageBottomMarginForLargeState),
-            imageView.heightAnchor.constraint(equalToConstant: Const.ImageSizeForLargeState),
-            imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor)
-            ])
-    }
-    private func moveAndResizeImage(for height: CGFloat) {
+    func moveAndResizeImage() {
+        guard let height = navigationController?.navigationBar.frame.height else { return }
         let coeff: CGFloat = {
             let delta = height - Const.NavBarHeightSmallState
             let heightDifferenceBetweenStates = (Const.NavBarHeightLargeState - Const.NavBarHeightSmallState)
@@ -95,9 +43,87 @@ extension MainViewController {
             .translatedBy(x: xTranslation, y: yTranslation)
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard let height = navigationController?.navigationBar.frame.height else { return }
-        moveAndResizeImage(for: height)
+    @IBOutlet weak var collectionView: UICollectionView!
+
+    let provider = MainViewControllerProvider()
+    let delegate = MainViewControllerDelegate()
+    
+    /// imageView
+    let imageView: UIImageView = {
+        guard let data = UserDefaults.standard.data(forKey: "imageView") else { return UIImageView(image: #imageLiteral(resourceName: "profile_img.pdf"))}
+        let imageView = UIImageView(image: UIImage(data: data))
+        return imageView
+    }()
+    
+    @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
+        imagePicker.allowsEditing = false
+        imagePicker.sourceType = .photoLibrary
+        
+        present(imagePicker, animated: true, completion: nil)
     }
     
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            UserDefaults.standard.set(pickedImage.pngData(), forKey: "imageView")
+            imageView.image = pickedImage
+        }
+        
+        dismiss(animated: true, completion: nil)
+    }
+//func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: NSDictionary!) {
+//    self.dismiss(animated: true, completion: { () -> Void in
+//    })
+//    imageView.image = image
+//}
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        imageView.isUserInteractionEnabled = true
+        imagePicker.delegate = self
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
+        imageView.addGestureRecognizer(tapGestureRecognizer)
+        
+        collectionView.dataSource = provider
+        collectionView.delegate = delegate
+        delegate.delegate = self
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.extendedLayoutIncludesOpaqueBars = true
+        self.tabBarController?.tabBar.layer.shadowColor = UIColor.lightGray.cgColor
+        self.tabBarController?.tabBar.layer.shadowOpacity = 0.5
+        self.tabBarController?.tabBar.layer.shadowOffset = CGSize(width: 0, height: 2.0)
+        self.tabBarController?.tabBar.layer.shadowRadius = 4
+
+        setupUI()
+        // Do any additional setup after loading the view.
+    }
+    
+}
+extension MainViewController {
+    //Что тут происходит?
+    private struct Const {
+        static let ImageSizeForLargeState: CGFloat = 32
+        static let ImageRightMargin: CGFloat = 16
+        static let ImageBottomMarginForLargeState: CGFloat = 12
+        static let ImageBottomMarginForSmallState: CGFloat = 6
+        static let ImageSizeForSmallState: CGFloat = 25
+        static let NavBarHeightSmallState: CGFloat = 44
+        static let NavBarHeightLargeState: CGFloat = 96.5
+    }
+    
+    private func setupUI() {
+        navigationController?.navigationBar.topItem?.title = "Nice Day"
+        // Initial setup for image for Large NavBar state since the the screen always has Large NavBar once it gets opened
+        guard let navigationBar = self.navigationController?.navigationBar else { return }
+        navigationBar.addSubview(imageView)
+        imageView.layer.cornerRadius = Const.ImageSizeForLargeState / 2
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            imageView.rightAnchor.constraint(equalTo: navigationBar.rightAnchor, constant: -Const.ImageRightMargin),
+            imageView.bottomAnchor.constraint(equalTo: navigationBar.bottomAnchor, constant: -Const.ImageBottomMarginForLargeState),
+            imageView.heightAnchor.constraint(equalToConstant: Const.ImageSizeForLargeState),
+            imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor)
+            ])
+    }
+  
 }

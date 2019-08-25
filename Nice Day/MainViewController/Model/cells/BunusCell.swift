@@ -23,6 +23,8 @@ class BunusCell: UICollectionViewCell {
         self.layer.shadowOffset = CGSize(width: 0, height: 16)
 
     }
+    
+    /// Переназначаю isHighlited 
     override var isHighlighted: Bool {
         didSet {
             if self.isHighlighted {
