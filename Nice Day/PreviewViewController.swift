@@ -27,6 +27,6 @@ class PreviewViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         animationView.play(fromProgress: 0.2, toProgress: 1.0, loopMode: nil, completion: nil)
+        //Animation
     }
-
 }
