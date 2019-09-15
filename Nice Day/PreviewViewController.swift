@@ -33,9 +33,10 @@ class PreviewViewController: UIViewController {
         super.viewDidLoad()
         setupView()
         NSLayoutConstraint.activate([
-                     appleSignInButton.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-                     appleSignInButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
-                     appleSignInButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30)])
+                     appleSignInButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -60),
+                     appleSignInButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 60),
+                     appleSignInButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -60),
+                     appleSignInButton.heightAnchor.constraint(equalToConstant: CGFloat(46.0))])
         // Do any additional setup after loading the view.
     }
     
