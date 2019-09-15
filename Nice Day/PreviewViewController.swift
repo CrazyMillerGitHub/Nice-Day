@@ -26,6 +26,7 @@ class PreviewViewController: UIViewController {
     let appleSignInButton : ASAuthorizationAppleIDButton = {
         let appleSignInButton = ASAuthorizationAppleIDButton()
         appleSignInButton.translatesAutoresizingMaskIntoConstraints = false
+        appleSignInButton.addTarget(self, action: #selector(didTapAppleIDButton(sender:)), for: .touchUpInside)
         return appleSignInButton
     }()
     override func viewDidLoad() {
@@ -44,7 +45,15 @@ class PreviewViewController: UIViewController {
         view.addSubview(label)
         view.addSubview(appleSignInButton)
     }
-    
+    @objc private func didTapAppleIDButton(sender: Any) {
+        let provider = ASAuthorizationAppleIDProvider()
+        let request = provider.createRequest()
+        request.requestedScopes = [.email, .fullName]
+        let controller = ASAuthorizationController(authorizationRequests: [request])
+        controller.delegate = self
+        controller.presentationContextProvider = self
+        controller.performRequests()
+    }
     override func viewWillAppear(_ animated: Bool) {
         animationView.play(fromProgress: 0.2, toProgress: 1.0, loopMode: nil, completion: nil)
         //Animation
