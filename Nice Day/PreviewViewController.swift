@@ -60,3 +60,23 @@ class PreviewViewController: UIViewController {
         //Animation
     }
 }
+extension PreviewViewController: ASAuthorizationControllerDelegate {
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        print("Authorization completed!")
+        switch authorization.credential {
+        case let credentials as ASAuthorizationAppleIDCredential:
+            let user = UserStruct(credentials: credentials)
+            print(user)
+        default: break
+        }
+    }
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        print("Authorization failed with error: \(error)")
+    }
+}
+
+extension PreviewViewController: ASAuthorizationControllerPresentationContextProviding {
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return view.window!
+    }
+}
