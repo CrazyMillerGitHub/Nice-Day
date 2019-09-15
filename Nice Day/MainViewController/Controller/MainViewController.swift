@@ -79,6 +79,11 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
         super.viewDidLoad()
         imageView.isUserInteractionEnabled = true
         imagePicker.delegate = self
+        //colors
+        self.view.backgroundColor = .bgColor
+        collectionView.backgroundColor = .bgColor
+        navigationController?.navigationBar.backgroundColor = .bgColor
+        //end colors
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
         imageView.addGestureRecognizer(tapGestureRecognizer)
         
