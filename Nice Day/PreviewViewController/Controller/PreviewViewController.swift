@@ -37,7 +37,6 @@ class PreviewViewController: UIViewController {
                      appleSignInButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 60),
                      appleSignInButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -60),
                      appleSignInButton.heightAnchor.constraint(equalToConstant: CGFloat(46.0))])
-        // Do any additional setup after loading the view.
     }
     
     // настройка PreviewViewController
