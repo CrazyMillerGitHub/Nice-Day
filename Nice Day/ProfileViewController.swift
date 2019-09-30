@@ -10,31 +10,65 @@ import UIKit
 
 class ProfileViewController: UIViewController {
 
+    //  создание imageView
+       let imageView: UIImageView = {
+           let imageView = UIImageView()
+        imageView.layer.cornerRadius = 45.5
+           imageView.translatesAutoresizingMaskIntoConstraints = false
+           imageView.clipsToBounds = true
+           imageView.contentMode = .scaleAspectFit
+           imageView.backgroundColor = .red
+           return imageView
+       }()
+    
+    let navigationBar: UINavigationBar = {
+        let navigationBar: UINavigationBar = UINavigationBar()
+        let navigationItem = UINavigationItem(title: "Profile")
+        navigationBar.translatesAutoresizingMaskIntoConstraints = false
+        let doneBtn = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.close, target: nil, action: #selector(getClose))
+        navigationItem.leftBarButtonItem = doneBtn
+        navigationBar.setItems([navigationItem], animated: false)
+        return navigationBar
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
+//        collectionView.dataSource = self
+//        collectionView.delegate = self
         setupView()
-        NSLayoutConstraint.activate([
-        imageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 60),
-        imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-        imageView.widthAnchor.constraint(equalToConstant: 60.0),
-        imageView.heightAnchor.constraint(equalToConstant: 60.0)])
+        setupConstraint()
         
     }
-    let imageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.layer.cornerRadius = 30
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.clipsToBounds = true
-        imageView.contentMode = .scaleAspectFit
-        imageView.backgroundColor = .red
-        return imageView
-    }()
+    
+    // Настройка constraint
+    private func setupConstraint() {
+        NSLayoutConstraint.activate([
+        imageView.topAnchor.constraint(equalTo: navigationBar.topAnchor, constant: 60),
+        imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+        imageView.widthAnchor.constraint(equalToConstant: 91.0),
+        imageView.heightAnchor.constraint(equalToConstant: 91.0),
+        
+        navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+        navigationBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+        navigationBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+        ])
+            
+    }
     
     private func setupView() {
         bgView()
+        setupNavigationBar()
         setupImageView()
     }
     
+    private func setupNavigationBar() {
+        self.view.addSubview(navigationBar)
+    }
+    
+    @ objc private func getClose() {
+        
+    }
+    // настройка цвета bg
     private func bgView() {
         self.view.backgroundColor = .black
         let bgView = UIView(frame: self.view.frame)
@@ -46,15 +80,5 @@ class ProfileViewController: UIViewController {
     private func setupImageView() {
         self.view.addSubview(imageView)
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

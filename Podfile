@@ -8,6 +8,7 @@ target 'Nice Day' do
   pod 'SwiftLint'
   pod 'Alamofire', '~> 5.0.0-beta.5'
   pod 'Hero'
+  pod 'CHIPageControl', '~> 0.1.3'
   pod 'Charts'
   pod 'lottie-ios'
   # Pods for Nice Day

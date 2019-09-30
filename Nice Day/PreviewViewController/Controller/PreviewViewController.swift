@@ -16,11 +16,11 @@ class PreviewViewController: UIViewController {
     }()
     let animationView: AnimationView = {
         let animationView = AnimationView()
-        let animation = Animation.named("file")
+        let animation = Animation.named("onboarding_dark")
         animationView.animation = animation
-        animationView.frame = CGRect(x: 100, y: 200, width: 200, height: 200)
+        animationView.frame = CGRect(x: 100, y: 200, width: 237.5, height: 200)
         animationView.contentMode = .scaleAspectFit
-        animationView.animationSpeed = 0.5
+        //animationView.animationSpeed = 0.5
         return animationView
     }()
     let appleSignInButton : ASAuthorizationAppleIDButton = {
