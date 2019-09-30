@@ -14,15 +14,6 @@ class PreviewViewController: UIViewController {
         let label = HelloLabel()
         return label
     }()
-    let animationView: AnimationView = {
-        let animationView = AnimationView()
-        let animation = Animation.named("onboarding_dark")
-        animationView.animation = animation
-        animationView.frame = CGRect(x: 100, y: 200, width: 237.5, height: 200)
-        animationView.contentMode = .scaleAspectFit
-        //animationView.animationSpeed = 0.5
-        return animationView
-    }()
     let appleSignInButton : ASAuthorizationAppleIDButton = {
         let appleSignInButton = ASAuthorizationAppleIDButton()
         appleSignInButton.translatesAutoresizingMaskIntoConstraints = false
@@ -41,7 +32,6 @@ class PreviewViewController: UIViewController {
     
     // настройка PreviewViewController
     private func setupView() {
-        view.addSubview(animationView)
         view.addSubview(label)
         view.addSubview(appleSignInButton)
     }
@@ -53,10 +43,6 @@ class PreviewViewController: UIViewController {
         controller.delegate = self
         controller.presentationContextProvider = self
         controller.performRequests()
-    }
-    override func viewWillAppear(_ animated: Bool) {
-        animationView.play(fromProgress: 0.2, toProgress: 1.0, loopMode: nil, completion: nil)
-        //Animation
     }
 }
 extension PreviewViewController: ASAuthorizationControllerDelegate {
