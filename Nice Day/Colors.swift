@@ -13,4 +13,8 @@ extension UIColor {
           guard let color = UIColor(named: "bgColor") else { fatalError() }
           return color
       }
+    @nonobjc class var inverseColor: UIColor {
+        guard let color = UIColor(named: "inverseColor") else { fatalError() }
+        return color
+    }
 }

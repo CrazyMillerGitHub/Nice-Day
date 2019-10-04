@@ -16,7 +16,7 @@ class OnboardingViewController: UIViewController,UIScrollViewDelegate {
     
     // animationView
    private var animationView: AnimationView = {
-        let animationView = AnimationView(name: "test")
+        let animationView = AnimationView(name: "onboarding")
         animationView.contentMode = .scaleAspectFit
         animationView.translatesAutoresizingMaskIntoConstraints = false
         return animationView
@@ -39,11 +39,13 @@ class OnboardingViewController: UIViewController,UIScrollViewDelegate {
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.semibold)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 18
+        button.setTitleColor(UIColor.black, for: .normal)
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowRadius = 20
         button.layer.shadowOffset = CGSize(width: 0, height: 10)
         button.layer.shadowOpacity = 0.1
-        button.backgroundColor = .white
+        button.alpha = 0.0
+        button.addTarget(self, action: #selector(tappedButton), for: .touchUpInside)
         button.isHidden = true
         return button
     }()
@@ -159,12 +161,18 @@ class OnboardingViewController: UIViewController,UIScrollViewDelegate {
         self.view.bringSubviewToFront(scrollView)
         
     }
-    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         progress = scrollView.contentOffset.x / scrollView.contentSize.width * 0.75 + 0.5
         pageControl.progress = Double(scrollView.contentOffset.x / scrollView.contentSize.width) * 3
         if progress < 0.5 { progress = 0.5 }
-        if progress >= 1.0 { progress = 1.0; loginButton.isHidden = false }
+        if progress >= 1.0 {
+            progress = 1.0
+            if loginButton.isHidden {
+                loginButton.isHidden = false
+                UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 1.5, initialSpringVelocity: 0.0, options: [.curveEaseOut], animations: {
+                               self.loginButton.alpha = 1.0 })
+            }
+        }
         animationView.currentProgress = progress
     }
 }
