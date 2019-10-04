@@ -76,9 +76,6 @@ class OnboardingViewController: UIViewController,UIScrollViewDelegate {
         }
     }
     
-    private func isLight() -> Bool {
-        return  self.traitCollection.userInterfaceStyle == .light
-    }
     override func viewDidLoad() {
         super.viewDidLoad()
         if #available(iOS 11.0, *) {
@@ -151,11 +148,6 @@ class OnboardingViewController: UIViewController,UIScrollViewDelegate {
         scrollView.contentSize = CGSize(width: self.view.frame.size.width * 3, height: scrollView.frame.size.height)
         for iii in 0 ... 2 {
             let label = UILabel()
-//            label.translatesAutoresizingMaskIntoConstraints = false
-//            label.topAnchor.constraint(equalTo: self.scrollView.topAnchor, constant: 0).isActive = true
-//            label.heightAnchor.constraint(equalToConstant: 19.0).isActive = true
-//            label.widthAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.widthAnchor, constant: -56).isActive = true
-//            label.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor, constant: self.view.frame.width.
             label.frame = CGRect(x: 30 + CGFloat(iii) * self.view.frame.size.width , y: 0, width: self.view.frame.width - 110, height: 19)
             label.textAlignment = .left
             label.text = stringArray[iii]
