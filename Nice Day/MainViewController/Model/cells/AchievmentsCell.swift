@@ -8,6 +8,6 @@
 
 import UIKit
 
-class AchievmentsCell: CustomCell {
+class AchievmentsCell: CoreCell {
     
 }

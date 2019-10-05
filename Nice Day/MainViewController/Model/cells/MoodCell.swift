@@ -8,6 +8,6 @@
 
 import UIKit
 
-class MoodCell: CustomCell {
+class MoodCell: CoreCell {
     
 }

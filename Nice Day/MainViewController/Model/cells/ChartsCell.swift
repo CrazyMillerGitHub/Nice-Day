@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ChartsCell: CustomCell {
+class ChartsCell: CoreCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()

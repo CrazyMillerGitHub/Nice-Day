@@ -8,6 +8,6 @@
 
 import UIKit
 
-class FriendsCell: CustomCell {
+class FriendsCell: CoreCell {
     
 }

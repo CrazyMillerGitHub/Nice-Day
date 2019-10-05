@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BunusCell: CustomCell {
+class BunusCell: CoreCell {
     override func awakeFromNib() {
         super.awakeFromNib()
     }

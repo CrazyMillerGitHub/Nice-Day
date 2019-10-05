@@ -1,5 +1,5 @@
 //
-//  CustomCell.swift
+//  CoreCell.swift
 //  Nice Day
 //
 //  Created by Михаил Борисов on 05/10/2019.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CustomCell: UICollectionViewCell {
+class CoreCell: UICollectionViewCell {
     
     /// переписал cell
      override func awakeFromNib() {
