@@ -8,6 +8,6 @@
 
 import UIKit
 
-class FriendsCell: UICollectionViewCell {
+class FriendsCell: CustomCell {
     
 }

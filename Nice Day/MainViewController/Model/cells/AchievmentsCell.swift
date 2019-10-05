@@ -8,6 +8,6 @@
 
 import UIKit
 
-class AchievmentsCell: UICollectionViewCell {
+class AchievmentsCell: CustomCell {
     
 }
