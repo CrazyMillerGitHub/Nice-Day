@@ -229,8 +229,10 @@ extension AuthViewController: ASAuthorizationControllerDelegate {
         print("Authorization completed!")
         switch authorization.credential {
         case let credentials as ASAuthorizationAppleIDCredential:
-            let user = UserStruct(credentials: credentials)
-            print(user)
+//            let user = UserStruct(credentials: credentials)
+            guard let vc = storyboard?.instantiateViewController(identifier: "mainController") else { assert(false, "Not found!") }
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
         default: break
         }
     }

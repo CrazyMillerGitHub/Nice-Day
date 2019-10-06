@@ -14,10 +14,12 @@ class CoreCell: UICollectionViewCell {
      override func awakeFromNib() {
            super.awakeFromNib()
            self.layer.cornerRadius = 15
-           self.layer.shadowColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.16).cgColor
+        self.layer.shadowColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.16).cgColor
            self.layer.shadowOpacity = 0.9
            self.layer.shadowRadius = 16
            self.layer.shadowOffset = CGSize(width: 0, height: 16)
+//           self.layer.shadowPath = UIBezierPath(rect: self.bounds).cgPath
+//           self.layer.shouldRasterize = true
        }
     
     override var isHighlighted: Bool {
