@@ -20,6 +20,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITabBar.appearance().backgroundImage = UIImage()
         UITabBar.appearance().layer.masksToBounds = false
         UserDefaults.standard.set(true, forKey: "loggedIn")
+//        window = UIWindow(frame: UIScreen.main.bounds)
+//        let profileViewController = ProfileViewController()
+//        window?.rootViewController = profileViewController
+//        window?.makeKeyAndVisible()
         //Custm tabBar
         // Override point for customization after application launch.
         return true

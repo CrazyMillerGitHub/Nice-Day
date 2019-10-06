@@ -8,6 +8,6 @@
 
 import UIKit
 
-class MoodCell: UICollectionViewCell {
+class MoodCell: CoreCell {
     
 }
