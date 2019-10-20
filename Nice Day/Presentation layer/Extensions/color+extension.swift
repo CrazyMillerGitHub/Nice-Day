@@ -13,8 +13,14 @@ extension UIColor {
         guard let color = UIColor(named: "bgColor") else { fatalError() }
         return color
     }
+    
     class var inverseColor: UIColor {
         guard let color = UIColor(named: "inverseColor") else { fatalError() }
+        return color
+    }
+    
+    class var sunriseColor: UIColor {
+        guard let color = UIColor(named: "sunriseColor") else { return UIColor() }
         return color
     }
 }
