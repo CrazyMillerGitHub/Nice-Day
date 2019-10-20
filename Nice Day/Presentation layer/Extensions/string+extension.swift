@@ -9,6 +9,6 @@
 import UIKit
 extension String {
     func localized(withComment comment: String? = nil) -> String {
-           return NSLocalizedString(self, comment: comment ?? "")
-       }
+        return NSLocalizedString(self, comment: comment ?? "")
+    }
 }

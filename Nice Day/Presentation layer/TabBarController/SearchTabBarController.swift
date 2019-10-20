@@ -9,12 +9,12 @@
 import UIKit
 
 class SearchTabBarController: UITabBarController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let firstViewController = RootMainViewController()
-
+        
         firstViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .contacts, tag: 1)
         
         let secondViewController = SearchView()
@@ -24,5 +24,5 @@ class SearchTabBarController: UITabBarController {
         viewControllers = [secondViewController, firstViewController]
         
     }
-
+    
 }

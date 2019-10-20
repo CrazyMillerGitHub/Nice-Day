@@ -9,7 +9,7 @@
 import UIKit
 
 class CoreTabBarController: UITabBarController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBar.layer.shadowColor = UIColor.black.withAlphaComponent(0.5).cgColor
@@ -17,6 +17,6 @@ class CoreTabBarController: UITabBarController {
         self.tabBar.layer.shadowRadius = 5
         self.tabBar.layer.shadowOpacity = 1
         self.tabBar.layer.masksToBounds = false
-            }
-
+    }
+    
 }

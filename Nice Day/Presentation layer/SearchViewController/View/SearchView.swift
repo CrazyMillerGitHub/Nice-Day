@@ -9,22 +9,22 @@
 import UIKit
 
 class SearchView: UIViewController {
-
+    
     //init
     weak var collectionView: UICollectionView!
     
     override func loadView() {
         super.loadView()
         let collectionView = UICollectionView(frame: view.frame, collectionViewLayout: UICollectionViewFlowLayout())
-               collectionView.translatesAutoresizingMaskIntoConstraints = false
-               self.view.addSubview(collectionView)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(collectionView)
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 200),
             collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: 0),
             collectionView.leadingAnchor.constraint(equalTo:self.view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
         ])
-             
+        
         self.collectionView = collectionView
     }
     
@@ -63,25 +63,25 @@ extension SearchView: UICollectionViewDataSource, UICollectionViewDelegate {
 }
 
 extension SearchView: UICollectionViewDelegateFlowLayout {
-
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.bounds.width, height: 96)
     }
-
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) //.zero
     }
-
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
-
+    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
