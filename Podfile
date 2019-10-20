@@ -11,6 +11,7 @@ target 'Nice Day' do
   pod 'CHIPageControl', '~> 0.1.3'
   pod 'Charts'
   pod 'lottie-ios'
+  pod 'PMSuperButton'
   # Pods for Nice Day
 
 end

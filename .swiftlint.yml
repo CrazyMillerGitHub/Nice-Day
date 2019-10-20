@@ -1,0 +1,11 @@
+line_length: 200
+disabled_rules:
+  - colon
+  - comma
+  - control_statement
+  - trailing_whitespace
+excluded:
+  - Carthage
+  - Pods
+  - Source/ExcludedFolder
+  - Source/ExcludedFile.swift
