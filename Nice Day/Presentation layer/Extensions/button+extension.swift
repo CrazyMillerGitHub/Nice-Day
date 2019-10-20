@@ -12,11 +12,11 @@ extension UIButton {
     override open var isHighlighted: Bool {
                didSet {
                    if self.isHighlighted {
-                       UIView.animate(withDuration: 0.6, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.0, options: [], animations: {
+                       UIView.animate(withDuration: 0.3, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.0, options: [], animations: {
                            self.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
                        }, completion: nil)
                    } else {
-                       UIView.animate(withDuration: 0.8, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: [], animations: {
+                       UIView.animate(withDuration: 0.3, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: [], animations: {
                            self.transform = .identity
                        }, completion: nil)
                    }
