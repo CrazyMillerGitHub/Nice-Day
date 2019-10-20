@@ -35,12 +35,7 @@ class MainViewControllerDelegate: NSObject, UICollectionViewDelegate, UIScrollVi
     ///   - indexPath: indexPath
     /// - Returns: размер ячейки
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        switch data.arr[indexPath.row] {
-        case 0...2:
-            return CGSize(width: UIScreen.main.bounds.width - 30, height: 130)
-        default:
             return CGSize(width: UIScreen.main.bounds.width - 30, height: 236)
-        }
     }
 }
 protocol ProfileImageViewProtocol: class {

@@ -132,9 +132,9 @@ class OnboardingViewController: UIViewController,UIScrollViewDelegate {
     }
     
     @objc private func tappedButton() {
-        if let vc = self.storyboard?.instantiateViewController(withIdentifier: "auth") {
-            vc.modalPresentationStyle = .fullScreen
-             self.present(vc, animated: true, completion: nil)
+        if let authVC = self.storyboard?.instantiateViewController(withIdentifier: "auth") {
+            authVC.modalPresentationStyle = .fullScreen
+            self.present(authVC, animated: true, completion: nil)
         }
     }
     

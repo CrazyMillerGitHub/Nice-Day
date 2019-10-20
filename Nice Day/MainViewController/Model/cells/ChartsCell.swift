@@ -9,7 +9,13 @@
 import UIKit
 
 class ChartsCell: CoreCell {
+    static var identifier: String = "charts"
     
+    var item: MainViewModelItem? {
+        didSet {
+            guard let item = item as? ChartsCellModelItem else { return }
+        }
+    }
     override func awakeFromNib() {
         super.awakeFromNib()
     }

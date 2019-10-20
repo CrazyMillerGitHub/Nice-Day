@@ -13,15 +13,15 @@ class SearchTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        let firstViewController = MainViewController()
-//
-//        firstViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .contacts, tag: 0)
+        let firstViewController = MainViewController()
+
+        firstViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .contacts, tag: 1)
         
         let secondViewController = SearchView()
         
         secondViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 0)
         
-        viewControllers = [ secondViewController]
+        viewControllers = [secondViewController, firstViewController]
         
     }
 

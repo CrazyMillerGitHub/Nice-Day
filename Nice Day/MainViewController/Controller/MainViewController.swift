@@ -9,10 +9,10 @@
 import UIKit
 
 class MainViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, ProfileImageViewProtocol {
-    //
     
     let imagePicker = UIImagePickerController()
-    
+    weak var collectionView: UICollectionView!
+
     func moveAndResizeImage() {
         guard let height = navigationController?.navigationBar.frame.height else { return }
         let coeff: CGFloat = {
@@ -43,9 +43,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
             .translatedBy(x: xTranslation, y: yTranslation)
     }
     
-    @IBOutlet weak var collectionView: UICollectionView!
-
-    let provider = MainViewControllerProvider()
+    let provider = MainViewModel()
     let delegate = MainViewControllerDelegate()
     
     /// imageView
@@ -75,13 +73,36 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
 //    })
 //    imageView.image = image
 //}
+    override func loadView() {
+         super.loadView()
+               let collectionView = UICollectionView(frame: view.frame, collectionViewLayout: UICollectionViewFlowLayout())
+                      collectionView.translatesAutoresizingMaskIntoConstraints = false
+                      self.view.addSubview(collectionView)
+               NSLayoutConstraint.activate([
+                   collectionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+                   collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: 0),
+                   collectionView.leadingAnchor.constraint(equalTo:self.view.safeAreaLayoutGuide.leadingAnchor),
+                   collectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
+               ])
+                    
+               self.collectionView = collectionView
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         imageView.isUserInteractionEnabled = true
         imagePicker.delegate = self
         //colors
         self.view.backgroundColor = .bgColor
-        collectionView.backgroundColor = .bgColor
+        // collectionViewRegister
+        self.collectionView.register(ChartsCell.self, forCellWithReuseIdentifier: ChartsCell.identifier)
+        self.collectionView.register(BonusCell.self, forCellWithReuseIdentifier: BonusCell.identifier)
+        self.collectionView.register(FriendsCell.self, forCellWithReuseIdentifier: FriendsCell.identifier)
+        self.collectionView.register(MoodCell.self, forCellWithReuseIdentifier: MoodCell.identifier)
+        self.collectionView.register(SpecialCell.self, forCellWithReuseIdentifier: SpecialCell.identifier)
+        self.collectionView.register(AchievmentsCell.self, forCellWithReuseIdentifier: AchievmentsCell.identifier)
+        
+        self.collectionView.alwaysBounceVertical = true
+        self.collectionView.backgroundColor = .red
         navigationController?.navigationBar.backgroundColor = .bgColor
         //end colors
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
@@ -90,13 +111,6 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
         collectionView.dataSource = provider
         collectionView.delegate = delegate
         delegate.delegate = self
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.extendedLayoutIncludesOpaqueBars = true
-        self.tabBarController?.tabBar.layer.shadowColor = UIColor.lightGray.cgColor
-        self.tabBarController?.tabBar.layer.shadowOpacity = 0.5
-        self.tabBarController?.tabBar.layer.shadowOffset = CGSize(width: 0, height: 2.0)
-        self.tabBarController?.tabBar.layer.shadowRadius = 4
-
         setupUI()
         // Do any additional setup after loading the view.
     }

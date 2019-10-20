@@ -8,7 +8,15 @@
 
 import UIKit
 
-class BunusCell: CoreCell {
+class BonusCell: CoreCell {
+    static var identifier: String = "bonus"
+    
+    var item: MainViewModelItem? {
+        didSet {
+            guard let item = item as? BonusCellModelItem else { return }
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }

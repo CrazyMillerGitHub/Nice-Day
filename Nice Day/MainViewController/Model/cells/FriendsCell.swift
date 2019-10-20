@@ -9,5 +9,15 @@
 import UIKit
 
 class FriendsCell: CoreCell {
+    static var identifier: String = "friends"
     
+    var item: MainViewModelItem? {
+           didSet {
+               guard let item = item as? FriendsCellModelItem else { return }
+           }
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    }
 }

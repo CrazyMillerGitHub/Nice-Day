@@ -9,5 +9,15 @@
 import UIKit
 
 class MoodCell: CoreCell {
+    static var identifier: String = "mood"
     
+    var item: MainViewModelItem? {
+           didSet {
+               guard let item = item as? MoodCellModelItem else { return }
+           }
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    }
 }

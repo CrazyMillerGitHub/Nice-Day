@@ -228,11 +228,11 @@ extension AuthViewController: ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         print("Authorization completed!")
         switch authorization.credential {
-        case let credentials as ASAuthorizationAppleIDCredential:
+        case _ as ASAuthorizationAppleIDCredential:
 //            let user = UserStruct(credentials: credentials)
-            guard let vc = storyboard?.instantiateViewController(identifier: "mainController") else { assert(false, "Not found!") }
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: true, completion: nil)
+            guard let mainController = storyboard?.instantiateViewController(identifier: "mainController") else { assert(false, "Not found!") }
+            mainController.modalPresentationStyle = .fullScreen
+            self.present(mainController, animated: true, completion: nil)
         default: break
         }
     }

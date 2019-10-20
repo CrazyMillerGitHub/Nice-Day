@@ -9,5 +9,14 @@
 import UIKit
 
 class AchievmentsCell: CoreCell {
+    static var identifier: String = "achievments"
     
+    var item: MainViewModelItem? {
+           didSet {
+               guard let item = item as? AchievmentsCellModelItem else { return }
+           }
+    }
+    override func awakeFromNib() {
+           super.awakeFromNib()
+       }
 }
