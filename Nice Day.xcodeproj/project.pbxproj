@@ -43,9 +43,58 @@
 		74CE4435235CDAA500066B17 /* ProfileAchievmentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CE4434235CDAA500066B17 /* ProfileAchievmentsCell.swift */; };
 		74CE4437235CDC6200066B17 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CE4436235CDC6200066B17 /* ProfileViewModel.swift */; };
 		74CE4439235CE0D600066B17 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CE4438235CE0D600066B17 /* ProfileModel.swift */; };
+		74CE4440235D029100066B17 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74CE443E235D029000066B17 /* Interface.storyboard */; };
+		74CE4442235D029300066B17 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74CE4441235D029300066B17 /* Assets.xcassets */; };
+		74CE4449235D029300066B17 /* Nice Day Watch Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 74CE4448235D029300066B17 /* Nice Day Watch Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		74CE444E235D029300066B17 /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CE444D235D029300066B17 /* InterfaceController.swift */; };
+		74CE4450235D029300066B17 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CE444F235D029300066B17 /* ExtensionDelegate.swift */; };
+		74CE4454235D029400066B17 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74CE4453235D029400066B17 /* Assets.xcassets */; };
+		74CE4459235D029400066B17 /* Nice Day Watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 74CE443C235D029000066B17 /* Nice Day Watch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		74CF0C43232EA92A0091F1A8 /* user.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CF0C42232EA92A0091F1A8 /* user.swift */; };
 		74CF0C4B232F92510091F1A8 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CF0C4A232F92510091F1A8 /* ProfileView.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		74CE444A235D029300066B17 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 747C714F22CD25AB00FBEDCF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 74CE4447235D029300066B17;
+			remoteInfo = "Nice Day Watch Extension";
+		};
+		74CE4457235D029400066B17 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 747C714F22CD25AB00FBEDCF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 74CE443B235D029000066B17;
+			remoteInfo = "Nice Day Watch";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		74CE445D235D029400066B17 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				74CE4449235D029300066B17 /* Nice Day Watch Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74CE4461235D029400066B17 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				74CE4459235D029400066B17 /* Nice Day Watch.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		4E5BF540E2C876DAAEBAFE27 /* Pods_Nice_Day.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Nice_Day.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -90,6 +139,16 @@
 		74CE4434235CDAA500066B17 /* ProfileAchievmentsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAchievmentsCell.swift; sourceTree = "<group>"; };
 		74CE4436235CDC6200066B17 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		74CE4438235CE0D600066B17 /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
+		74CE443C235D029000066B17 /* Nice Day Watch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Nice Day Watch.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		74CE443F235D029000066B17 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
+		74CE4441235D029300066B17 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		74CE4443235D029300066B17 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		74CE4448235D029300066B17 /* Nice Day Watch Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Nice Day Watch Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		74CE444D235D029300066B17 /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
+		74CE444F235D029300066B17 /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
+		74CE4453235D029400066B17 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		74CE4455235D029400066B17 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		74CE4456235D029400066B17 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
 		74CF0C42232EA92A0091F1A8 /* user.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = user.swift; sourceTree = "<group>"; };
 		74CF0C4A232F92510091F1A8 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		7BF8309A9283943692397954 /* Pods-Nice Day.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nice Day.debug.xcconfig"; path = "Target Support Files/Pods-Nice Day/Pods-Nice Day.debug.xcconfig"; sourceTree = "<group>"; };
@@ -101,6 +160,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				050661D3E53D7E166F079D69 /* Pods_Nice_Day.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74CE4445235D029300066B17 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -124,6 +190,8 @@
 			isa = PBXGroup;
 			children = (
 				747C715922CD25AB00FBEDCF /* Nice Day */,
+				74CE443D235D029000066B17 /* Nice Day Watch */,
+				74CE444C235D029300066B17 /* Nice Day Watch Extension */,
 				747C715822CD25AB00FBEDCF /* Products */,
 				F2B6194B865269D2B41AED0B /* Pods */,
 				986FDC537722AF7CDD7FDB8B /* Frameworks */,
@@ -134,6 +202,8 @@
 			isa = PBXGroup;
 			children = (
 				747C715722CD25AB00FBEDCF /* Nice Day.app */,
+				74CE443C235D029000066B17 /* Nice Day Watch.app */,
+				74CE4448235D029300066B17 /* Nice Day Watch Extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -329,6 +399,28 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		74CE443D235D029000066B17 /* Nice Day Watch */ = {
+			isa = PBXGroup;
+			children = (
+				74CE443E235D029000066B17 /* Interface.storyboard */,
+				74CE4441235D029300066B17 /* Assets.xcassets */,
+				74CE4443235D029300066B17 /* Info.plist */,
+			);
+			path = "Nice Day Watch";
+			sourceTree = "<group>";
+		};
+		74CE444C235D029300066B17 /* Nice Day Watch Extension */ = {
+			isa = PBXGroup;
+			children = (
+				74CE444D235D029300066B17 /* InterfaceController.swift */,
+				74CE444F235D029300066B17 /* ExtensionDelegate.swift */,
+				74CE4453235D029400066B17 /* Assets.xcassets */,
+				74CE4455235D029400066B17 /* Info.plist */,
+				74CE4456235D029400066B17 /* PushNotificationPayload.apns */,
+			);
+			path = "Nice Day Watch Extension";
+			sourceTree = "<group>";
+		};
 		74CF0C44232F8EF60091F1A8 /* PreviewViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -392,15 +484,51 @@
 				747C715522CD25AB00FBEDCF /* Resources */,
 				94BE13B8002D1EF3AE69A631 /* [CP] Embed Pods Frameworks */,
 				747F6F8922CF643500631A30 /* ShellScript */,
+				74CE4461235D029400066B17 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				74CE4458235D029400066B17 /* PBXTargetDependency */,
 			);
 			name = "Nice Day";
 			productName = "Nice Day";
 			productReference = 747C715722CD25AB00FBEDCF /* Nice Day.app */;
 			productType = "com.apple.product-type.application";
+		};
+		74CE443B235D029000066B17 /* Nice Day Watch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 74CE445E235D029400066B17 /* Build configuration list for PBXNativeTarget "Nice Day Watch" */;
+			buildPhases = (
+				74CE443A235D029000066B17 /* Resources */,
+				74CE445D235D029400066B17 /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				74CE444B235D029300066B17 /* PBXTargetDependency */,
+			);
+			name = "Nice Day Watch";
+			productName = "Nice Day Watch";
+			productReference = 74CE443C235D029000066B17 /* Nice Day Watch.app */;
+			productType = "com.apple.product-type.application.watchapp2";
+		};
+		74CE4447235D029300066B17 /* Nice Day Watch Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 74CE445A235D029400066B17 /* Build configuration list for PBXNativeTarget "Nice Day Watch Extension" */;
+			buildPhases = (
+				74CE4444235D029300066B17 /* Sources */,
+				74CE4445235D029300066B17 /* Frameworks */,
+				74CE4446235D029300066B17 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Nice Day Watch Extension";
+			productName = "Nice Day Watch Extension";
+			productReference = 74CE4448235D029300066B17 /* Nice Day Watch Extension.appex */;
+			productType = "com.apple.product-type.watchkit2-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -408,12 +536,18 @@
 		747C714F22CD25AB00FBEDCF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1020;
+				LastSwiftUpdateCheck = 1100;
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Mikhail Borisov";
 				TargetAttributes = {
 					747C715622CD25AB00FBEDCF = {
 						CreatedOnToolsVersion = 10.2.1;
+					};
+					74CE443B235D029000066B17 = {
+						CreatedOnToolsVersion = 11.0;
+					};
+					74CE4447235D029300066B17 = {
+						CreatedOnToolsVersion = 11.0;
 					};
 				};
 			};
@@ -432,6 +566,8 @@
 			projectRoot = "";
 			targets = (
 				747C715622CD25AB00FBEDCF /* Nice Day */,
+				74CE443B235D029000066B17 /* Nice Day Watch */,
+				74CE4447235D029300066B17 /* Nice Day Watch Extension */,
 			);
 		};
 /* End PBXProject section */
@@ -446,6 +582,23 @@
 				747C716522CD25AD00FBEDCF /* Assets.xcassets in Resources */,
 				747C716022CD25AB00FBEDCF /* Main.storyboard in Resources */,
 				74C92A3223474CAB00AB0C65 /* onboarding.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74CE443A235D029000066B17 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74CE4442235D029300066B17 /* Assets.xcassets in Resources */,
+				74CE4440235D029100066B17 /* Interface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		74CE4446235D029300066B17 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74CE4454235D029400066B17 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -550,7 +703,29 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		74CE4444235D029300066B17 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				74CE4450235D029300066B17 /* ExtensionDelegate.swift in Sources */,
+				74CE444E235D029300066B17 /* InterfaceController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		74CE444B235D029300066B17 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 74CE4447235D029300066B17 /* Nice Day Watch Extension */;
+			targetProxy = 74CE444A235D029300066B17 /* PBXContainerItemProxy */;
+		};
+		74CE4458235D029400066B17 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 74CE443B235D029000066B17 /* Nice Day Watch */;
+			targetProxy = 74CE4457235D029400066B17 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		747C715E22CD25AB00FBEDCF /* Main.storyboard */ = {
@@ -578,6 +753,14 @@
 				74CE4430235CCF9400066B17 /* ru */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		74CE443E235D029000066B17 /* Interface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				74CE443F235D029000066B17 /* Base */,
+			);
+			name = Interface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -747,6 +930,94 @@
 			};
 			name = Release;
 		};
+		74CE445B235D029400066B17 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 25;
+				DEVELOPMENT_TEAM = 4GB4E68ZU6;
+				INFOPLIST_FILE = "Nice Day Watch Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.Nice.Day.app.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 6.0;
+			};
+			name = Debug;
+		};
+		74CE445C235D029400066B17 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 25;
+				DEVELOPMENT_TEAM = 4GB4E68ZU6;
+				INFOPLIST_FILE = "Nice Day Watch Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.Nice.Day.app.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 6.0;
+			};
+			name = Release;
+		};
+		74CE445F235D029400066B17 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 25;
+				DEVELOPMENT_TEAM = 4GB4E68ZU6;
+				IBSC_MODULE = Nice_Day_Watch_Extension;
+				INFOPLIST_FILE = "Nice Day Watch/Info.plist";
+				MARKETING_VERSION = 1.3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Nice.Day.app.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 6.0;
+			};
+			name = Debug;
+		};
+		74CE4460235D029400066B17 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 25;
+				DEVELOPMENT_TEAM = 4GB4E68ZU6;
+				IBSC_MODULE = Nice_Day_Watch_Extension;
+				INFOPLIST_FILE = "Nice Day Watch/Info.plist";
+				MARKETING_VERSION = 1.3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Nice.Day.app.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 6.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -764,6 +1035,24 @@
 			buildConfigurations = (
 				747C716D22CD25AD00FBEDCF /* Debug */,
 				747C716E22CD25AD00FBEDCF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		74CE445A235D029400066B17 /* Build configuration list for PBXNativeTarget "Nice Day Watch Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				74CE445B235D029400066B17 /* Debug */,
+				74CE445C235D029400066B17 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		74CE445E235D029400066B17 /* Build configuration list for PBXNativeTarget "Nice Day Watch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				74CE445F235D029400066B17 /* Debug */,
+				74CE4460235D029400066B17 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
