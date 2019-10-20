@@ -10,8 +10,6 @@ import UIKit
 
 class SearchView: UIViewController {
 
-    //TODO: Add MVVM Archetecture
-    
     //init
     weak var collectionView: UICollectionView!
     

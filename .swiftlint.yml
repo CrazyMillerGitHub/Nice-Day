@@ -4,6 +4,8 @@ disabled_rules:
   - comma
   - control_statement
   - trailing_whitespace
+cyclomatic_complexity:
+  ignores_case_statements: true
 excluded:
   - Carthage
   - Pods

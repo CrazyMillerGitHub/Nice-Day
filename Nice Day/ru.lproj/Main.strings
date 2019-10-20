@@ -1,0 +1,9 @@
+
+/* Class = "UITextField"; placeholder = "password"; ObjectID = "Nss-ov-ic7"; */
+"Nss-ov-ic7.placeholder" = "password";
+
+/* Class = "UITextField"; placeholder = "email"; ObjectID = "P4o-ah-PHt"; */
+"P4o-ah-PHt.placeholder" = "email";
+
+/* Class = "UILabel"; text = "forget password?"; ObjectID = "qXn-Uk-lum"; */
+"qXn-Uk-lum.text" = "forget password?";

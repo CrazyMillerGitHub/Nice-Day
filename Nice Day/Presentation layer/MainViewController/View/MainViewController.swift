@@ -54,10 +54,12 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
     }()
     
     @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
-        imagePicker.allowsEditing = false
-        imagePicker.sourceType = .photoLibrary
-        
-        present(imagePicker, animated: true, completion: nil)
+        let profileViewController = ProfileView()
+        present(profileViewController, animated: true, completion: nil)
+//        imagePicker.allowsEditing = false
+//        imagePicker.sourceType = .photoLibrary
+//
+//        present(imagePicker, animated: true, completion: nil)
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -68,11 +70,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
         
         dismiss(animated: true, completion: nil)
     }
-//func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: NSDictionary!) {
-//    self.dismiss(animated: true, completion: { () -> Void in
-//    })
-//    imageView.image = image
-//}
+
     override func loadView() {
          super.loadView()
                let collectionView = UICollectionView(frame: view.frame, collectionViewLayout: UICollectionViewFlowLayout())

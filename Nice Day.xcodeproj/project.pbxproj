@@ -37,8 +37,14 @@
 		74CE441E235C9FA400066B17 /* SearchTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CE441D235C9FA400066B17 /* SearchTabBarController.swift */; };
 		74CE4424235CA28800066B17 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CE4423235CA28800066B17 /* CoreDataManager.swift */; };
 		74CE4426235CA29E00066B17 /* NetworkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CE4425235CA29E00066B17 /* NetworkingManager.swift */; };
+		74CE4428235CCDC500066B17 /* string+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CE4427235CCDC500066B17 /* string+extension.swift */; };
+		74CE442B235CCF8400066B17 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 74CE442D235CCF8400066B17 /* Localizable.strings */; };
+		74CE4433235CD82D00066B17 /* AboutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CE4432235CD82D00066B17 /* AboutCell.swift */; };
+		74CE4435235CDAA500066B17 /* ProfileAchievmentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CE4434235CDAA500066B17 /* ProfileAchievmentsCell.swift */; };
+		74CE4437235CDC6200066B17 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CE4436235CDC6200066B17 /* ProfileViewModel.swift */; };
+		74CE4439235CE0D600066B17 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CE4438235CE0D600066B17 /* ProfileModel.swift */; };
 		74CF0C43232EA92A0091F1A8 /* user.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CF0C42232EA92A0091F1A8 /* user.swift */; };
-		74CF0C4B232F92510091F1A8 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CF0C4A232F92510091F1A8 /* ProfileViewController.swift */; };
+		74CF0C4B232F92510091F1A8 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CF0C4A232F92510091F1A8 /* ProfileView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,8 +81,17 @@
 		74CE441D235C9FA400066B17 /* SearchTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTabBarController.swift; sourceTree = "<group>"; };
 		74CE4423235CA28800066B17 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		74CE4425235CA29E00066B17 /* NetworkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingManager.swift; sourceTree = "<group>"; };
+		74CE4427235CCDC500066B17 /* string+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "string+extension.swift"; sourceTree = "<group>"; };
+		74CE442C235CCF8400066B17 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		74CE442E235CCF9400066B17 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
+		74CE442F235CCF9400066B17 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		74CE4430235CCF9400066B17 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		74CE4432235CD82D00066B17 /* AboutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutCell.swift; sourceTree = "<group>"; };
+		74CE4434235CDAA500066B17 /* ProfileAchievmentsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAchievmentsCell.swift; sourceTree = "<group>"; };
+		74CE4436235CDC6200066B17 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		74CE4438235CE0D600066B17 /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		74CF0C42232EA92A0091F1A8 /* user.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = user.swift; sourceTree = "<group>"; };
-		74CF0C4A232F92510091F1A8 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		74CF0C4A232F92510091F1A8 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		7BF8309A9283943692397954 /* Pods-Nice Day.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nice Day.debug.xcconfig"; path = "Target Support Files/Pods-Nice Day/Pods-Nice Day.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -100,6 +115,7 @@
 				745805B423491FA300B7783F /* CoreCell.swift */,
 				7459C70E2349C5F300362DFC /* color+extension.swift */,
 				74CE440F235C9A7B00066B17 /* button+extension.swift */,
+				74CE4427235CCDC500066B17 /* string+extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -135,6 +151,7 @@
 				747C716622CD25AD00FBEDCF /* LaunchScreen.storyboard */,
 				747C716922CD25AD00FBEDCF /* Info.plist */,
 				747C716122CD25AB00FBEDCF /* Nice_Day.xcdatamodeld */,
+				74CE442D235CCF8400066B17 /* Localizable.strings */,
 			);
 			path = "Nice Day";
 			sourceTree = "<group>";
@@ -208,6 +225,7 @@
 		74CE4411235C9ACD00066B17 /* ProfileViewController */ = {
 			isa = PBXGroup;
 			children = (
+				74CE4431235CD80D00066B17 /* Cell */,
 				74CE4414235C9AEE00066B17 /* Model */,
 				74CE4413235C9ADE00066B17 /* ViewModel */,
 				74CE4412235C9AD700066B17 /* View */,
@@ -218,7 +236,7 @@
 		74CE4412235C9AD700066B17 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				74CF0C4A232F92510091F1A8 /* ProfileViewController.swift */,
+				74CF0C4A232F92510091F1A8 /* ProfileView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -226,6 +244,7 @@
 		74CE4413235C9ADE00066B17 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				74CE4436235CDC6200066B17 /* ProfileViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -233,6 +252,7 @@
 		74CE4414235C9AEE00066B17 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				74CE4438235CE0D600066B17 /* ProfileModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -298,6 +318,15 @@
 				74CE4425235CA29E00066B17 /* NetworkingManager.swift */,
 			);
 			path = "Core Layer";
+			sourceTree = "<group>";
+		};
+		74CE4431235CD80D00066B17 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				74CE4432235CD82D00066B17 /* AboutCell.swift */,
+				74CE4434235CDAA500066B17 /* ProfileAchievmentsCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		74CF0C44232F8EF60091F1A8 /* PreviewViewController */ = {
@@ -395,6 +424,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = 747C714E22CD25AB00FBEDCF;
 			productRefGroup = 747C715822CD25AB00FBEDCF /* Products */;
@@ -411,6 +441,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74CE442B235CCF8400066B17 /* Localizable.strings in Resources */,
 				747C716822CD25AD00FBEDCF /* LaunchScreen.storyboard in Resources */,
 				747C716522CD25AD00FBEDCF /* Assets.xcassets in Resources */,
 				747C716022CD25AB00FBEDCF /* Main.storyboard in Resources */,
@@ -488,23 +519,28 @@
 				747C715D22CD25AB00FBEDCF /* AuthViewController.swift in Sources */,
 				745805B723492AF800B7783F /* CoreTabBarController.swift in Sources */,
 				747F6F9822CFD11400631A30 /* BonusCell.swift in Sources */,
+				74CE4433235CD82D00066B17 /* AboutCell.swift in Sources */,
 				74CE441B235C9F7200066B17 /* SearchView.swift in Sources */,
 				74184CB622CE3D2F00EC31DE /* ChartsCell.swift in Sources */,
 				742A39F42342899300770F68 /* OnboardingViewController.swift in Sources */,
 				74CE441E235C9FA400066B17 /* SearchTabBarController.swift in Sources */,
 				74BCEE2122D12B6100127488 /* MoodCell.swift in Sources */,
 				74CF0C43232EA92A0091F1A8 /* user.swift in Sources */,
-				74CF0C4B232F92510091F1A8 /* ProfileViewController.swift in Sources */,
+				74CF0C4B232F92510091F1A8 /* ProfileView.swift in Sources */,
+				74CE4437235CDC6200066B17 /* ProfileViewModel.swift in Sources */,
 				745805B523491FA300B7783F /* CoreCell.swift in Sources */,
 				74BCEE2722D13AD800127488 /* UICollectionViewCell+IndexPath.swift in Sources */,
+				74CE4439235CE0D600066B17 /* ProfileModel.swift in Sources */,
 				74BCEE2522D12BBF00127488 /* SpecialCell.swift in Sources */,
 				747C716322CD25AB00FBEDCF /* Nice_Day.xcdatamodeld in Sources */,
 				747C715B22CD25AB00FBEDCF /* AppDelegate.swift in Sources */,
+				74CE4428235CCDC500066B17 /* string+extension.swift in Sources */,
 				747F6F9122CF73D700631A30 /* MainViewControllerDelegate.swift in Sources */,
 				747F6F9322CF757900631A30 /* MainViewControllerData.swift in Sources */,
 				74BCEE1F22D12B3200127488 /* FriendsCell.swift in Sources */,
 				74184CB422CE2F9000EC31DE /* MainViewController.swift in Sources */,
 				74CE4424235CA28800066B17 /* CoreDataManager.swift in Sources */,
+				74CE4435235CDAA500066B17 /* ProfileAchievmentsCell.swift in Sources */,
 				74CE440A235C75D700066B17 /* RootMainViewController.swift in Sources */,
 				7459C70F2349C5F300362DFC /* color+extension.swift in Sources */,
 				74CE4408235C5F4E00066B17 /* MainViewModel.swift in Sources */,
@@ -521,6 +557,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				747C715F22CD25AB00FBEDCF /* Base */,
+				74CE442E235CCF9400066B17 /* ru */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -529,8 +566,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				747C716722CD25AD00FBEDCF /* Base */,
+				74CE442F235CCF9400066B17 /* ru */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		74CE442D235CCF8400066B17 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				74CE442C235CCF8400066B17 /* en */,
+				74CE4430235CCF9400066B17 /* ru */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -540,6 +587,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -601,6 +649,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

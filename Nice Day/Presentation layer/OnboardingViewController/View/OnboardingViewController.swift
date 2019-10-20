@@ -177,5 +177,3 @@ class OnboardingViewController: UIViewController,UIScrollViewDelegate {
         animationView.currentProgress = progress
     }
 }
-
-
