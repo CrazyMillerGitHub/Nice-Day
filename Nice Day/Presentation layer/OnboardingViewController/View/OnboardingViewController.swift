@@ -80,6 +80,7 @@ class OnboardingViewController: UIViewController,UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = .bgColor
         if #available(iOS 11.0, *) {
             UINavigationBar.appearance().shadowImage = UIImage()
         } else {
@@ -132,10 +133,10 @@ class OnboardingViewController: UIViewController,UIScrollViewDelegate {
     }
     
     @objc private func tappedButton() {
-        if let authVC = self.storyboard?.instantiateViewController(withIdentifier: "auth") {
+            let authVC = AuthViewController()
             authVC.modalPresentationStyle = .fullScreen
             self.present(authVC, animated: true, completion: nil)
-        }
+        
     }
     
     private func handlePan (recognizer:UIPanGestureRecognizer) {
@@ -159,8 +160,8 @@ class OnboardingViewController: UIViewController,UIScrollViewDelegate {
             
         }
         self.view.bringSubviewToFront(scrollView)
-        
     }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         progress = scrollView.contentOffset.x / scrollView.contentSize.width * 0.75 + 0.5
         pageControl.progress = Double(scrollView.contentOffset.x / scrollView.contentSize.width) * 3
@@ -176,3 +177,5 @@ class OnboardingViewController: UIViewController,UIScrollViewDelegate {
         animationView.currentProgress = progress
     }
 }
+
+

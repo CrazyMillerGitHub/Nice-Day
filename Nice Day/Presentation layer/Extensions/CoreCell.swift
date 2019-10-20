@@ -10,16 +10,28 @@ import UIKit
 
 class CoreCell: UICollectionViewCell {
     
-    /// переписал cell
-     override func awakeFromNib() {
-           super.awakeFromNib()
-           self.layer.cornerRadius = 15
-        self.layer.shadowColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.16).cgColor
-           self.layer.shadowOpacity = 0.9
-           self.layer.shadowRadius = 16
-           self.layer.shadowOffset = CGSize(width: 0, height: 16)
-//           self.layer.shadowPath = UIBezierPath(rect: self.bounds).cgPath
-//           self.layer.shouldRasterize = true
+   override init(frame: CGRect) {
+            super.init(frame: frame)
+           
+           self.reset()
+       }
+       
+       required init?(coder: NSCoder) {
+           fatalError("init(coder:) has not been implemented")
+       }
+       override func prepareForReuse() {
+            super.prepareForReuse()
+           self.reset()
+       }
+       func reset() {
+           self.contentView.layer.cornerRadius = 15
+           self.contentView.backgroundColor = .red
+           self.contentView.clipsToBounds = true
+           self.contentView.layer.shadowColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.16).cgColor
+           self.contentView.layer.shadowOpacity = 0.9
+           self.contentView.layer.shadowRadius = 16
+           self.contentView.layer.shadowOffset = CGSize(width: 0, height: 16)
+           self.contentView.layer.masksToBounds = false
        }
     
     override var isHighlighted: Bool {

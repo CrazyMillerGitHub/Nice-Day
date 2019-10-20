@@ -1,5 +1,5 @@
 //
-//  ProfileViewController.swift
+//  ProfileView.swift
 //  Nice Day
 //
 //  Created by Михаил Борисов on 16/09/2019.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+class ProfileView: UIViewController {
 
     //  создание imageView
        let imageView: UIImageView = {

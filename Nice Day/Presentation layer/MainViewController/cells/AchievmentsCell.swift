@@ -16,7 +16,5 @@ class AchievmentsCell: CoreCell {
                guard let item = item as? AchievmentsCellModelItem else { return }
            }
     }
-    override func awakeFromNib() {
-           super.awakeFromNib()
-       }
+   
 }

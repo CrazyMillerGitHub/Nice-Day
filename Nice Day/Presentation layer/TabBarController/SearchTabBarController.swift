@@ -13,7 +13,7 @@ class SearchTabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let firstViewController = MainViewController()
+        let firstViewController = RootMainViewController()
 
         firstViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .contacts, tag: 1)
         

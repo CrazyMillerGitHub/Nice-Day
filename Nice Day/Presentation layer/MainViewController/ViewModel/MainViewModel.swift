@@ -94,7 +94,7 @@ class MainViewModel: NSObject {
         items.append(specialItem)
     }
 }
-extension MainViewModel:  UICollectionViewDataSource {
+extension MainViewModel:  UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return items.count
@@ -104,14 +104,13 @@ extension MainViewModel:  UICollectionViewDataSource {
         print(items[section].rowCount)
         return items[section].rowCount
     }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let item = items[indexPath.section]
         switch item.type {
         case .achievments:
-            print(AchievmentsCell.identifier)
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AchievmentsCell.identifier, for: indexPath) as? AchievmentsCell else { fatalError() }
                 cell.item = item
-            cell.backgroundColor = .white
                 return cell
             
         case .bonus:
@@ -127,20 +126,23 @@ extension MainViewModel:  UICollectionViewDataSource {
         case .charts:
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ChartsCell.identifier, for: indexPath) as? ChartsCell {
                 cell.item = item
+               
                 return cell
             }
         case .friend:
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FriendsCell.identifier, for: indexPath) as? FriendsCell {
                 cell.item = item
+             
                 return cell
             }
         case .mood:
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoodCell.identifier, for: indexPath) as? MoodCell {
                 cell.item = item
+             
                 return cell
             }
         }
         return UICollectionViewCell()
     }
-   
+
 }

@@ -110,9 +110,10 @@ class AuthViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        self.view.backgroundColor = .bgColor
        containerView.backgroundColor = .clear
        
-       let controller = storyboard!.instantiateViewController(withIdentifier: "container")
+       let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "container")
        addChild(controller)
        prepareUI()
        prepareConstraints()

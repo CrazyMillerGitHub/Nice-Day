@@ -79,7 +79,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
                       collectionView.translatesAutoresizingMaskIntoConstraints = false
                       self.view.addSubview(collectionView)
                NSLayoutConstraint.activate([
-                   collectionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+                collectionView.topAnchor.constraint(equalTo: self.view.topAnchor),
                    collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: 0),
                    collectionView.leadingAnchor.constraint(equalTo:self.view.safeAreaLayoutGuide.leadingAnchor),
                    collectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
@@ -93,7 +93,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
         imagePicker.delegate = self
         //colors
         self.view.backgroundColor = .bgColor
-        // collectionViewRegister
+        self.collectionView.showsVerticalScrollIndicator = false
         self.collectionView.register(ChartsCell.self, forCellWithReuseIdentifier: ChartsCell.identifier)
         self.collectionView.register(BonusCell.self, forCellWithReuseIdentifier: BonusCell.identifier)
         self.collectionView.register(FriendsCell.self, forCellWithReuseIdentifier: FriendsCell.identifier)
@@ -102,7 +102,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
         self.collectionView.register(AchievmentsCell.self, forCellWithReuseIdentifier: AchievmentsCell.identifier)
         
         self.collectionView.alwaysBounceVertical = true
-        self.collectionView.backgroundColor = .red
+        self.collectionView.backgroundColor = .bgColor
         navigationController?.navigationBar.backgroundColor = .bgColor
         //end colors
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
@@ -129,7 +129,10 @@ extension MainViewController {
     }
     
     private func setupUI() {
-        navigationController?.navigationBar.topItem?.title = "Nice Day"
+        self.extendedLayoutIncludesOpaqueBars = true
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.navigationBar.topItem?.title = "Nice Day"
+        self.navigationController?.navigationBar.shadowImage = UIImage()
         // Initial setup for image for Large NavBar state since the the screen always has Large NavBar once it gets opened
         guard let navigationBar = self.navigationController?.navigationBar else { return }
         navigationBar.addSubview(imageView)
