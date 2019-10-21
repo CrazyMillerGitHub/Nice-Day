@@ -57,16 +57,6 @@ class AuthViewController: UIViewController {
         return button
     }()
     
-    let navigationBar: UINavigationBar = {
-        let nav = UINavigationBar()
-     //  let navItem = UINavigationItem(title: "Log in")
-        nav.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        nav.shadowImage = UIImage()
-        nav.translatesAutoresizingMaskIntoConstraints = false
-        nav.titleTextAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .heavy)]
-      //  nav.setItems([navItem], animated: false)
-        return nav
-    }()
     let ttleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -112,9 +102,13 @@ class AuthViewController: UIViewController {
         setupView()
         self.view.backgroundColor = .bgColor
        containerView.backgroundColor = .clear
-       
        let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "container")
        addChild(controller)
+    
+       let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
+       swipeUp.direction = .down
+       self.containerView.addGestureRecognizer(swipeUp)
+        
        prepareUI()
        prepareConstraints()
        controller.view.translatesAutoresizingMaskIntoConstraints = false
@@ -133,6 +127,33 @@ class AuthViewController: UIViewController {
         view.addSubview(friendlyLabel)
         view.addSubview(appleSignInButton)
     }
+    
+    @objc
+    private func handleGesture(gesture: UISwipeGestureRecognizer) {
+         UIView.animateKeyframes(withDuration: 1.5, delay: 0.0, options: [], animations: {
+                     self.topConstraint.constant -= self.circleView.bounds.height / 1.1
+                     UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.7) {
+                         UIView.animate(withDuration: 1.0, delay: 0.0, usingSpringWithDamping: 1.5, initialSpringVelocity: 0.0, options: [], animations: {
+                             self.view.layoutIfNeeded()
+                            self.circleView.transform = .identity
+                         }, completion: nil )
+                     }
+                     UIView.addKeyframe(withRelativeStartTime: 0.4, relativeDuration: 0.3) {
+                         UIView.animate(withDuration: 0.4, delay: 0.0, usingSpringWithDamping: 1.5, initialSpringVelocity: 0.0, options: [.curveEaseOut], animations: {
+                             self.emailButton.isHidden = false
+                             self.emailButton.alpha = 1
+                         }, completion: nil)
+                     }
+                     UIView.addKeyframe(withRelativeStartTime: 1.0, relativeDuration: 0.4) {
+                         self.signInButton.isHidden = true
+                         UIView.animate(withDuration: 0.4, delay: 0.3, usingSpringWithDamping: 1.5, initialSpringVelocity: 0.0, options: [.curveEaseOut, .transitionCurlUp], animations: {
+                                            self.signInButton.alpha = 0
+                             self.containerView.alpha = 0
+                                        }, completion: nil )
+                     }
+                 }, completion: nil)
+    }
+    
     @objc private func didTapAppleIDButton(sender: Any) {
         let provider = ASAuthorizationAppleIDProvider()
         let request = provider.createRequest()
@@ -147,7 +168,6 @@ class AuthViewController: UIViewController {
           self.view.addSubview(ttleLabel)
           self.view.addSubview(dscrLabel)
           self.view.addSubview(circleView)
-          self.view.addSubview(navigationBar)
           self.view.addSubview(emailButton)
           self.view.addSubview(signInButton)
           view.addSubview(containerView)
@@ -166,10 +186,6 @@ class AuthViewController: UIViewController {
           containerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 80.0),
           containerView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor, constant: 0),
           containerView.heightAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 1.0/1.0),
-          
-          navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-          navigationBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-          navigationBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
           
           ttleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 79),
           ttleLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 33.0),
