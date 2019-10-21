@@ -11,16 +11,6 @@ import UIKit
 class ProfileView: UIViewController {
 
     var viewModel = ProfileViewModel()
-    //  создание imageView
-    let imageView: UIImageView = {
-           let imageView = UIImageView()
-        imageView.layer.cornerRadius = 45.5
-           imageView.translatesAutoresizingMaskIntoConstraints = false
-           imageView.clipsToBounds = true
-           imageView.contentMode = .scaleAspectFit
-           imageView.backgroundColor = .red
-           return imageView
-       }()
     
     let navigationBar: UINavigationBar = {
         let navigationBar: UINavigationBar = UINavigationBar()
@@ -33,18 +23,6 @@ class ProfileView: UIViewController {
         navigationItem.leftBarButtonItem = doneBtn
         navigationBar.setItems([navigationItem], animated: false)
         return navigationBar
-    }()
-    
-    // MARK: SignOut Button
-    let signOutButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .sunriseColor
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.layer.cornerRadius = 15
-        button.clipsToBounds = true
-        button.setTitle("_signOut".localized(), for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
-        return button
     }()
     
     weak var collectionView: UICollectionView!
@@ -79,31 +57,14 @@ class ProfileView: UIViewController {
     // MARK: Настройка constraint
     private func setupConstraint() {
         NSLayoutConstraint.activate([
-        imageView.topAnchor.constraint(equalTo: navigationBar.topAnchor, constant: 60),
-        imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-        imageView.widthAnchor.constraint(equalToConstant: 91.0),
-        imageView.heightAnchor.constraint(equalToConstant: 91.0),
-        
         navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
         navigationBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-        navigationBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-        
-        //SignOutButtonConstraints
-        signOutButton.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 50),
-        signOutButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-        signOutButton.heightAnchor.constraint(equalToConstant: 46),
-        signOutButton.widthAnchor.constraint(equalToConstant: 143)
+        navigationBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
             
     }
     
     private func setupView() {
-        setupNavigationBar()
-        setupImageView()
-        self.view.addSubview(signOutButton)
-    }
-    
-    private func setupNavigationBar() {
         self.view.addSubview(navigationBar)
     }
     
@@ -111,8 +72,4 @@ class ProfileView: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    private func setupImageView() {
-        self.view.addSubview(imageView)
-    }
-
 }
