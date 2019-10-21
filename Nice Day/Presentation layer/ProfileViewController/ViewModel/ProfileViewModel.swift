@@ -61,7 +61,7 @@ extension ProfileViewModel: UICollectionViewDataSource {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AboutCell.identifier, for: indexPath) as? AboutCell else {
                 return UICollectionViewCell()
             }
-            cell.backgroundColor = .red
+            cell.backgroundColor = .white
             return cell
         case .achievments:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileAchievmentsCell.identifier, for: indexPath) as? ProfileAchievmentsCell else {
