@@ -50,6 +50,8 @@
 		74CE4450235D029300066B17 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CE444F235D029300066B17 /* ExtensionDelegate.swift */; };
 		74CE4454235D029400066B17 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74CE4453235D029400066B17 /* Assets.xcassets */; };
 		74CE4459235D029400066B17 /* Nice Day Watch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 74CE443C235D029000066B17 /* Nice Day Watch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		74CE4463235D831D00066B17 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CE4462235D831D00066B17 /* CoreDataStack.swift */; };
+		74CE4469235E2E6500066B17 /* SupportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CE4468235E2E6500066B17 /* SupportViewController.swift */; };
 		74CF0C43232EA92A0091F1A8 /* user.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CF0C42232EA92A0091F1A8 /* user.swift */; };
 		74CF0C4B232F92510091F1A8 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CF0C4A232F92510091F1A8 /* ProfileView.swift */; };
 /* End PBXBuildFile section */
@@ -149,6 +151,8 @@
 		74CE4453235D029400066B17 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		74CE4455235D029400066B17 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		74CE4456235D029400066B17 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
+		74CE4462235D831D00066B17 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		74CE4468235E2E6500066B17 /* SupportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportViewController.swift; sourceTree = "<group>"; };
 		74CF0C42232EA92A0091F1A8 /* user.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = user.swift; sourceTree = "<group>"; };
 		74CF0C4A232F92510091F1A8 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		7BF8309A9283943692397954 /* Pods-Nice Day.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nice Day.debug.xcconfig"; path = "Target Support Files/Pods-Nice Day/Pods-Nice Day.debug.xcconfig"; sourceTree = "<group>"; };
@@ -363,6 +367,7 @@
 		74CE441F235CA20200066B17 /* Presentation layer */ = {
 			isa = PBXGroup;
 			children = (
+				74CE4464235E2E1A00066B17 /* SupportViewController */,
 				7459C7102349C77E00362DFC /* Extensions */,
 				74CE441C235C9F8F00066B17 /* TabBarController */,
 				74CE4415235C9F3C00066B17 /* SearchViewController */,
@@ -385,6 +390,7 @@
 			isa = PBXGroup;
 			children = (
 				74CE4423235CA28800066B17 /* CoreDataManager.swift */,
+				74CE4462235D831D00066B17 /* CoreDataStack.swift */,
 				74CE4425235CA29E00066B17 /* NetworkingManager.swift */,
 			);
 			path = "Core Layer";
@@ -419,6 +425,38 @@
 				74CE4456235D029400066B17 /* PushNotificationPayload.apns */,
 			);
 			path = "Nice Day Watch Extension";
+			sourceTree = "<group>";
+		};
+		74CE4464235E2E1A00066B17 /* SupportViewController */ = {
+			isa = PBXGroup;
+			children = (
+				74CE4467235E2E3900066B17 /* View */,
+				74CE4466235E2E3100066B17 /* ViewModel */,
+				74CE4465235E2E2C00066B17 /* Model */,
+			);
+			path = SupportViewController;
+			sourceTree = "<group>";
+		};
+		74CE4465235E2E2C00066B17 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		74CE4466235E2E3100066B17 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		74CE4467235E2E3900066B17 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				74CE4468235E2E6500066B17 /* SupportViewController.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		74CF0C44232F8EF60091F1A8 /* PreviewViewController */ = {
@@ -670,10 +708,12 @@
 			files = (
 				74BCEE2322D12BA500127488 /* AchievmentsCell.swift in Sources */,
 				747C715D22CD25AB00FBEDCF /* AuthViewController.swift in Sources */,
+				74CE4469235E2E6500066B17 /* SupportViewController.swift in Sources */,
 				745805B723492AF800B7783F /* CoreTabBarController.swift in Sources */,
 				747F6F9822CFD11400631A30 /* BonusCell.swift in Sources */,
 				74CE4433235CD82D00066B17 /* AboutCell.swift in Sources */,
 				74CE441B235C9F7200066B17 /* SearchView.swift in Sources */,
+				74CE4463235D831D00066B17 /* CoreDataStack.swift in Sources */,
 				74184CB622CE3D2F00EC31DE /* ChartsCell.swift in Sources */,
 				742A39F42342899300770F68 /* OnboardingViewController.swift in Sources */,
 				74CE441E235C9FA400066B17 /* SearchTabBarController.swift in Sources */,

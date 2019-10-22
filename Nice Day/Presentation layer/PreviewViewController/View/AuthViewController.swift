@@ -128,6 +128,7 @@ class AuthViewController: UIViewController {
         view.addSubview(appleSignInButton)
     }
     
+    // MARK: отмена email auth
     @objc
     private func handleGesture(gesture: UISwipeGestureRecognizer) {
          UIView.animateKeyframes(withDuration: 1.5, delay: 0.0, options: [], animations: {
@@ -247,7 +248,7 @@ extension AuthViewController: ASAuthorizationControllerDelegate {
         switch authorization.credential {
         case _ as ASAuthorizationAppleIDCredential:
 //            let user = UserStruct(credentials: credentials)
-            guard let mainController = storyboard?.instantiateViewController(identifier: "mainController") else { assert(false, "Not found!") }
+            let mainController = RootMainViewController()
             mainController.modalPresentationStyle = .fullScreen
             self.present(mainController, animated: true, completion: nil)
         default: break

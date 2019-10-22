@@ -9,14 +9,42 @@
 import UIKit
 
 class AboutCell: UICollectionViewCell {
+    
     static var identifier = "about"
+    
     var headerView: ProfileHeaderView!
+    
+    //  создание imageView
+      let imageView: UIImageView = {
+             let imageView = UIImageView()
+          imageView.layer.cornerRadius = 45.5
+             imageView.translatesAutoresizingMaskIntoConstraints = false
+             imageView.clipsToBounds = true
+             imageView.contentMode = .scaleAspectFit
+             imageView.backgroundColor = .red
+             return imageView
+         }()
+
+       // MARK: SignOut Button
+       let signOutButton: UIButton = {
+           let button = UIButton()
+           button.backgroundColor = .sunriseColor
+           button.translatesAutoresizingMaskIntoConstraints = false
+           button.layer.cornerRadius = 15
+           button.clipsToBounds = true
+           button.setTitle("_signOut".localized(), for: .normal)
+           button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+           return button
+       }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         let headerView = ProfileHeaderView()
         headerView.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(headerView)
+        self.contentView.addSubview(imageView)
+        self.contentView.addSubview(signOutButton)
         self.headerView = headerView
         
         NSLayoutConstraint.activate([
@@ -24,12 +52,21 @@ class AboutCell: UICollectionViewCell {
             self.headerView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
             self.headerView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
             self.headerView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
-            self.headerView.heightAnchor.constraint(equalToConstant: 35.0)
+            self.headerView.heightAnchor.constraint(equalToConstant: 35.0),
+            
+            self.imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 60),
+            self.imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            self.imageView.widthAnchor.constraint(equalToConstant: 91.0),
+            self.imageView.heightAnchor.constraint(equalToConstant: 91.0),
+                   
+                   //SignOutButtonConstraints
+            self.signOutButton.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 50),
+            self.signOutButton.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
+            self.signOutButton.heightAnchor.constraint(equalToConstant: 46),
+            self.signOutButton.widthAnchor.constraint(equalToConstant: 143)
             
         ])
-        
         reset()
-        
     }
     
     required init?(coder: NSCoder) {
@@ -41,7 +78,7 @@ class AboutCell: UICollectionViewCell {
         reset()
     }
     
-    private func reset() {
+    private func reset() {        
     }
 }
 
@@ -50,6 +87,7 @@ class ProfileHeaderView: UIView {
     override func draw(_ rect: CGRect) {
         ProfileHeader.drawCanvas1(frame: self.bounds, resizing: .aspectFill)
     }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         updateView()
@@ -62,7 +100,6 @@ class ProfileHeaderView: UIView {
     func updateView() {
         self.backgroundColor = .clear
     }
-
 }
 
 public class ProfileHeader : NSObject {

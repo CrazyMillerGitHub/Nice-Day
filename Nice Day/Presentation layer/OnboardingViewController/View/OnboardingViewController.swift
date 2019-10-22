@@ -116,7 +116,7 @@ class OnboardingViewController: UIViewController,UIScrollViewDelegate {
             self.scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 118.0),
             
             //animationView
-            self.animationView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 30),
+            self.animationView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 70),
             self.animationView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             self.animationView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
             self.animationView.heightAnchor.constraint(equalTo: animationView.widthAnchor, multiplier: 9/16)
