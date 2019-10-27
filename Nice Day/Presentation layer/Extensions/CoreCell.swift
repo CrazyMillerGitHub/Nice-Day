@@ -25,8 +25,8 @@ class CoreCell: UICollectionViewCell {
     }
     func reset() {
         self.contentView.layer.cornerRadius = 15
-        self.contentView.backgroundColor = .red
         self.contentView.clipsToBounds = true
+        self.contentView.backgroundColor = .white
         self.contentView.layer.shadowColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.16).cgColor
         self.contentView.layer.shadowOpacity = 0.9
         self.contentView.layer.shadowRadius = 16

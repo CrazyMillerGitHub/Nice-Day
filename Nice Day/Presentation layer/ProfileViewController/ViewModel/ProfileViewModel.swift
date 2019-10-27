@@ -77,12 +77,14 @@ extension ProfileViewModel: UICollectionViewDelegate, UICollectionViewDelegateFl
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
         let item = items[indexPath.section]
+        
         switch item.type {
         case .about:
-             return CGSize(width: collectionView.bounds.width, height: 400)
+             return CGSize(width: collectionView.bounds.width, height: 431)
         case .achievments:
-             return CGSize(width: collectionView.bounds.width, height: 400)
+             return CGSize(width: collectionView.bounds.width, height: 842)
         }
     }
 

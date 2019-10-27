@@ -56,21 +56,8 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
     @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
         let profileViewController = ProfileView()
         present(profileViewController, animated: true, completion: nil)
-//        imagePicker.allowsEditing = false
-//        imagePicker.sourceType = .photoLibrary
-//
-//        present(imagePicker, animated: true, completion: nil)
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            UserDefaults.standard.set(pickedImage.pngData(), forKey: "imageView")
-            imageView.image = pickedImage
-        }
-        
-        dismiss(animated: true, completion: nil)
-    }
-
     override func loadView() {
          super.loadView()
                let collectionView = UICollectionView(frame: view.frame, collectionViewLayout: UICollectionViewFlowLayout())
@@ -92,8 +79,8 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
         //colors
         self.view.backgroundColor = .bgColor
         self.collectionView.showsVerticalScrollIndicator = false
-        self.collectionView.register(ChartsCell.self, forCellWithReuseIdentifier: ChartsCell.identifier)
         self.collectionView.register(BonusCell.self, forCellWithReuseIdentifier: BonusCell.identifier)
+        self.collectionView.register(ChartsCell.self, forCellWithReuseIdentifier: ChartsCell.identifier)
         self.collectionView.register(FriendsCell.self, forCellWithReuseIdentifier: FriendsCell.identifier)
         self.collectionView.register(MoodCell.self, forCellWithReuseIdentifier: MoodCell.identifier)
         self.collectionView.register(SpecialCell.self, forCellWithReuseIdentifier: SpecialCell.identifier)
@@ -139,10 +126,12 @@ extension MainViewController {
         imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
+            
             imageView.rightAnchor.constraint(equalTo: navigationBar.rightAnchor, constant: -Const.ImageRightMargin),
             imageView.bottomAnchor.constraint(equalTo: navigationBar.bottomAnchor, constant: -Const.ImageBottomMarginForLargeState),
             imageView.heightAnchor.constraint(equalToConstant: Const.ImageSizeForLargeState),
             imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor)
+            
             ])
     }
   

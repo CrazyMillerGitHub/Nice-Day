@@ -75,17 +75,17 @@ class MainViewModel: NSObject {
     override init() {
         super.init()
         
-        let chartsItem = ChartsCellModelItem()
-        items.append(chartsItem)
-        
         let bonusItem = BonusCellModelItem()
         items.append(bonusItem)
         
-        let friendsItem = FriendsCellModelItem()
-        items.append(friendsItem)
-        
         let moodItem = MoodCellModelItem()
         items.append(moodItem)
+        
+        let chartsItem = ChartsCellModelItem()
+        items.append(chartsItem)
+        
+        let friendsItem = FriendsCellModelItem()
+        items.append(friendsItem)
         
         let acheivmentItem = AchievmentsCellModelItem()
         items.append(acheivmentItem)

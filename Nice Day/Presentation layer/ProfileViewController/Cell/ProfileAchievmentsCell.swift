@@ -12,8 +12,7 @@ class ProfileAchievmentsCell: UICollectionViewCell {
     
     static var identifier = "profileAchievments"
     
-    fileprivate let firstGradientColor = UIColor(red:1.00, green:0.18, blue:0.33, alpha:1.00)
-    fileprivate let secondGradientColor = UIColor(red:0.40, green:0.70, blue:0.99, alpha:1.00)
+    weak var bgView: UIView!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -32,10 +31,9 @@ class ProfileAchievmentsCell: UICollectionViewCell {
         reset()
     }
     private func reset() {
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = [firstGradientColor, secondGradientColor]
-        gradientLayer.locations = [0.0, 1.0]
-        gradientLayer.frame = self.contentView.bounds
-        self.contentView.layer.insertSublayer(gradientLayer, at:0)
+        let gradient = CAGradientLayer()
+        gradient.frame = contentView.bounds
+        gradient.colors = [UIColor.firstGradientColor.cgColor, UIColor.secondGradientColor.cgColor]
+        contentView.layer.addSublayer(gradient)
     }
 }

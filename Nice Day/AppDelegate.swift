@@ -15,9 +15,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        UITabBar.appearance().shadowImage = UIImage()
-        UITabBar.appearance().backgroundImage = UIImage()
-        UITabBar.appearance().layer.masksToBounds = false
+        //application.isStatusBarHidden = false
+        UITabBar.appearance().clipsToBounds = true
+        UITabBar.appearance().shadowImage = nil
+
         window = UIWindow(frame: UIScreen.main.bounds)
         if UserDefaults.standard.object(forKey: "loggedIn") == nil {
             window?.rootViewController = OnboardingViewController()
@@ -29,5 +30,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         return true
     }
-
 }

@@ -54,7 +54,7 @@ class AboutCell: UICollectionViewCell {
             self.headerView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
             self.headerView.heightAnchor.constraint(equalToConstant: 35.0),
             
-            self.imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 60),
+            self.imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 116),
             self.imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             self.imageView.widthAnchor.constraint(equalToConstant: 91.0),
             self.imageView.heightAnchor.constraint(equalToConstant: 91.0),
@@ -78,7 +78,8 @@ class AboutCell: UICollectionViewCell {
         reset()
     }
     
-    private func reset() {        
+    private func reset() {
+        self.contentView.backgroundColor = .bgColor
     }
 }
 

@@ -17,6 +17,7 @@ class CoreTabBarController: UITabBarController {
         self.tabBar.layer.shadowRadius = 5
         self.tabBar.layer.shadowOpacity = 1
         self.tabBar.layer.masksToBounds = false
+        self.tabBar.isTranslucent = true
     }
     
 }

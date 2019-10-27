@@ -14,8 +14,9 @@ class RootMainViewController: UINavigationController {
         super.viewDidLoad()
         let mainViewController = MainViewController()
         self.navigationBar.prefersLargeTitles = true
-        
+        self.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .heavy)]
         viewControllers = [mainViewController]
+        
     }
     
 }

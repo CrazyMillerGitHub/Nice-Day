@@ -16,13 +16,21 @@ class ProfileView: UIViewController {
         let navigationBar: UINavigationBar = UINavigationBar()
         let navigationItem = UINavigationItem(title: "Profile")
         navigationBar.shadowImage = UIImage()
-        navigationBar.isTranslucent = false
-        navigationBar.backgroundColor = .bgColor
+        navigationBar.isTranslucent = true
+        navigationBar.backgroundColor = UIColor.bgColor.withAlphaComponent(0.2)
+        navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .heavy)]
         navigationBar.translatesAutoresizingMaskIntoConstraints = false
-        let doneBtn = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.close, target: nil, action: #selector(getClose))
-        navigationItem.leftBarButtonItem = doneBtn
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.close, target: nil, action: #selector(getClose))
         navigationBar.setItems([navigationItem], animated: false)
         return navigationBar
+    }()
+    
+    // MARK: topView
+    let topView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .bgColor
+        return view
     }()
     
     weak var collectionView: UICollectionView!
@@ -30,15 +38,27 @@ class ProfileView: UIViewController {
     override func loadView() {
         super.loadView()
         let collectionView = UICollectionView(frame: view.frame, collectionViewLayout: UICollectionViewFlowLayout())
-               collectionView.translatesAutoresizingMaskIntoConstraints = false
-               self.view.addSubview(collectionView)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.showsVerticalScrollIndicator = false
+        self.view.addSubview(collectionView)
+        collectionView.addSubview(topView)
+        
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 56),
+            
+            collectionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
             collectionView.leadingAnchor.constraint(equalTo:self.view.safeAreaLayoutGuide.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
+            collectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+            
+            // bottomView constraints
+            topView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
+            topView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+            topView.bottomAnchor.constraint(equalTo: collectionView.topAnchor),
+            topView.heightAnchor.constraint(equalToConstant: 300)
+            
         ])
-        collectionView.backgroundColor = .white
+        
+        collectionView.backgroundColor = .secondGradientColor
         self.collectionView = collectionView
     }
     
