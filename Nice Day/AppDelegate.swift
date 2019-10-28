@@ -18,9 +18,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //application.isStatusBarHidden = false
         UITabBar.appearance().clipsToBounds = true
         UITabBar.appearance().shadowImage = nil
+        UINavigationBar.appearance().tintColor = .inverseColor
 
         window = UIWindow(frame: UIScreen.main.bounds)
-        if UserDefaults.standard.object(forKey: "loggedIn") == nil {
+        if UserDefaults.standard.object(forKey: "loggedIn") == nil || UserDefaults.standard.object(forKey: "loggedIn") as? Bool == false {
             window?.rootViewController = OnboardingViewController()
             UserDefaults.standard.set(true, forKey: "loggedIn")
         } else {
