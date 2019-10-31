@@ -20,7 +20,7 @@ class ProfileView: UIViewController {
         navigationBar.backgroundColor = UIColor.bgColor.withAlphaComponent(0.2)
         navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .heavy)]
         navigationBar.translatesAutoresizingMaskIntoConstraints = false
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.close, target: nil, action: #selector(getClose))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(getClose))
         navigationBar.setItems([navigationItem], animated: false)
         return navigationBar
     }()
@@ -88,7 +88,8 @@ class ProfileView: UIViewController {
         self.view.addSubview(navigationBar)
     }
     
-    @ objc private func getClose() {
+    @objc
+    private func getClose() {
         self.dismiss(animated: true, completion: nil)
     }
     

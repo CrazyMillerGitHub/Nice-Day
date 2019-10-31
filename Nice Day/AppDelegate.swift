@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.rootViewController = OnboardingViewController()
             UserDefaults.standard.set(true, forKey: "loggedIn")
         } else {
-            window?.rootViewController = SearchTabBarController()
+            window?.rootViewController = SupportView()
         }
         window?.makeKeyAndVisible()
 

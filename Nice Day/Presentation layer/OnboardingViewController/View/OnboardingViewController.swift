@@ -39,8 +39,8 @@ class OnboardingViewController: UIViewController,UIScrollViewDelegate {
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.semibold)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 18
-        button.setTitleColor(UIColor.black, for: .normal)
-        button.layer.shadowColor = UIColor.black.cgColor
+        button.setTitleColor(UIColor.inverseColor, for: .normal)
+        button.layer.shadowColor = UIColor.inverseColor.cgColor
         button.layer.shadowRadius = 20
         button.layer.shadowOffset = CGSize(width: 0, height: 10)
         button.layer.shadowOpacity = 0.1

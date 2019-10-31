@@ -39,7 +39,7 @@ class AboutCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+        signOutButton.addTarget(self, action: #selector(signOutAction), for: .touchUpInside)
         let headerView = ProfileHeaderView()
         headerView.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(headerView)
@@ -80,6 +80,11 @@ class AboutCell: UICollectionViewCell {
     
     private func reset() {
         self.contentView.backgroundColor = .bgColor
+    }
+    
+    @objc
+    private func signOutAction() {
+         UserDefaults.standard.set(false, forKey: "loggedIn")
     }
 }
 

@@ -17,7 +17,7 @@ class AuthViewController: UIViewController {
         label.text = "Hello! I’m\nyour friend,\nMike"
         label.numberOfLines = 0
         label.font = UIFont.systemFont(ofSize: 32.0, weight: .bold)
-        label.textColor = .black
+        label.textColor = .inverseColor
         return label
     }()
     

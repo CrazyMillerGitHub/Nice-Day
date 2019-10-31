@@ -8,16 +8,16 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Email View-->
         <scene sceneID="Aro-S6-fFE">
             <objects>
-                <viewController storyboardIdentifier="container" id="w60-lR-3XX" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="container" id="w60-lR-3XX" customClass="EmailView" customModule="Nice_Day" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" autoresizesSubviews="NO" contentMode="scaleToFill" id="uv2-Te-PhG">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" tag="1" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="DTe-Hu-DH3">
-                                <rect key="frame" x="82" y="385" width="250" height="126.5"/>
+                                <rect key="frame" x="82" y="378.5" width="250" height="139"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="-2" translatesAutoresizingMaskIntoConstraints="NO" id="jUu-Im-4k0">
                                         <rect key="frame" x="0.0" y="0.0" width="250" height="46"/>
@@ -87,12 +87,13 @@
                                             </view>
                                         </subviews>
                                     </stackView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="forget password?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qXn-Uk-lum">
-                                        <rect key="frame" x="0.0" y="112" width="250" height="14.5"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
-                                        <color key="textColor" name="blackColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dUN-IO-xLl">
+                                        <rect key="frame" x="0.0" y="112" width="250" height="27"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <state key="normal" title="forgot password?">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="yDT-7Q-Nra"/>
@@ -106,6 +107,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="bmh-vB-kWx"/>
                     </view>
+                    <connections>
+                        <outlet property="forgotButton" destination="dUN-IO-xLl" id="5f9-VD-yoX"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n1S-H1-lWA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

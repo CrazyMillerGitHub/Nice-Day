@@ -16,7 +16,7 @@ class SearchCell: UITableViewCell {
         let label = UILabel()
         label.text = "LoremIpsum"
         label.font = UIFont.systemFont(ofSize: 18.0, weight: .bold)
-        label.textColor = .black
+        label.textColor = .inverseColor
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -55,15 +55,15 @@ class SearchCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.backgroundColor = .bgColor
         self.accessoryType = .disclosureIndicator
+        stackView.addArrangedSubview(textTitle)
         stackView.addArrangedSubview(dscrTitle)
-         stackView.addArrangedSubview(textTitle)
         self.addSubview(stackView)
         NSLayoutConstraint.activate([
             
             stackView.centerYAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerYAnchor),
-            stackView.heightAnchor.constraint(equalTo: self.safeAreaLayoutGuide.heightAnchor, multiplier: 1),
             stackView.widthAnchor.constraint(equalTo: self.safeAreaLayoutGuide.widthAnchor, multiplier: 0.5),
             stackView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 18)
+            
         ])
     }
     
