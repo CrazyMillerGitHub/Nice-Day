@@ -8,9 +8,7 @@
 
 import UIKit
 
-class SupportCell: UITableViewCell {
-    
-    static var identifier = "supportCell"
+class CoreSupportCell: UITableViewCell {
     
     // MARK: stageLabel
     let stageLabel: UILabel = {
@@ -24,17 +22,33 @@ class SupportCell: UITableViewCell {
         label.layer.cornerRadius = 16
         return label
     }()
+    
+    // MARK: stageTitleLabel
+    // Название стадии на которой находится пользователь
+    let stageTitleLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .left
+        label.textColor = .black
+        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = UITableViewCell.SelectionStyle.none
         
         reset()
         NSLayoutConstraint.activate([
-        
+            
             stageLabel.heightAnchor.constraint(equalToConstant: 34.0),
             stageLabel.widthAnchor.constraint(equalToConstant: 34.0),
             stageLabel.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 34),
-            stageLabel.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 34)
+            stageLabel.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 34),
+            
+            stageTitleLabel.centerYAnchor.constraint(equalTo: self.stageLabel.centerYAnchor),
+            stageTitleLabel.leadingAnchor.constraint(equalTo: self.stageLabel.trailingAnchor, constant: 10),
+            stageTitleLabel.heightAnchor.constraint(equalToConstant: 34.0)
         ])
     }
     required init?(coder aDecoder: NSCoder) {
@@ -48,5 +62,6 @@ class SupportCell: UITableViewCell {
     
     private func reset() {
         addSubview(stageLabel)
+        addSubview(stageTitleLabel)
     }
 }

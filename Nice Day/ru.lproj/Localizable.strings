@@ -1,1 +1,5 @@
 "_signOut" = "Съебался нах";
+"_enterYourEmail" = "Введите ваш email";
+"_enterFiveDigitPassword" = "Введите 5-значное число";
+"_enterNewPassword" = "Введите новый пароль";
+"_enterNewPasswordAgain" = "Введите новый пароль еще раз";

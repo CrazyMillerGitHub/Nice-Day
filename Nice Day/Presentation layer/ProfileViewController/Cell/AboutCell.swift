@@ -85,6 +85,7 @@ class AboutCell: UICollectionViewCell {
     @objc
     private func signOutAction() {
          UserDefaults.standard.set(false, forKey: "loggedIn")
+
     }
 }
 

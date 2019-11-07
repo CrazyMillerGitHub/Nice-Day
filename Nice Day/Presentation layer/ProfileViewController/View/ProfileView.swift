@@ -11,6 +11,7 @@ import UIKit
 class ProfileView: UIViewController {
 
     var viewModel = ProfileViewModel()
+    var aboutCell = AboutCell()
     
     let navigationBar: UINavigationBar = {
         let navigationBar: UINavigationBar = UINavigationBar()
@@ -20,7 +21,7 @@ class ProfileView: UIViewController {
         navigationBar.backgroundColor = UIColor.bgColor.withAlphaComponent(0.2)
         navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .heavy)]
         navigationBar.translatesAutoresizingMaskIntoConstraints = false
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(getClose))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: nil)
         navigationBar.setItems([navigationItem], animated: false)
         return navigationBar
     }()
@@ -88,9 +89,9 @@ class ProfileView: UIViewController {
         self.view.addSubview(navigationBar)
     }
     
-    @objc
-    private func getClose() {
-        self.dismiss(animated: true, completion: nil)
+    func dismissViewAction() {
+        let authView = AuthViewController()
+        authView.modalPresentationStyle = .fullScreen
+        self.present(authView, animated: true, completion: nil)
     }
-    
 }

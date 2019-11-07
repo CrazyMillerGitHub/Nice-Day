@@ -11,6 +11,7 @@ import UIKit
 class SupportView: UIViewController {
     
     weak var tableView: UITableView!
+    var items = SupportViewModel()
     
     override func loadView() {
         super.loadView()
@@ -59,11 +60,14 @@ class SupportView: UIViewController {
         super.viewDidLoad()
         
         prepareUI()
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(SupportCell.self, forCellReuseIdentifier: SupportCell.identifier)
-
-        NSLayoutConstraint.activate([
+        tableView.delegate = items
+        tableView.dataSource = items
+        tableView.register(EmailSupportCell.self, forCellReuseIdentifier: EmailSupportCell.identifier)
+        tableView.register(FiveDigitCell.self, forCellReuseIdentifier: FiveDigitCell.identifier)
+        tableView.register(NewPasswordCell.self, forCellReuseIdentifier: NewPasswordCell.identifier)
+        tableView.register(NewPasswordAgain.self, forCellReuseIdentifier: NewPasswordAgain.identifier)
+        
+             NSLayoutConstraint.activate([
             
             navigationBar.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             navigationBar.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor),
@@ -90,27 +94,5 @@ class SupportView: UIViewController {
         self.view.addSubview(forgotPassswordLabel)
         self.view.addSubview(navigationBar)
         self.view.backgroundColor = .bgColor
-    }
-}
-
-extension SupportView: UITableViewDelegate, UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: SupportCell.identifier, for: indexPath) as? SupportCell else {
-            return UITableViewCell()
-        }
-        cell.stageLabel.text = String(indexPath.row + 1)
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        return 120.0
-    
     }
 }

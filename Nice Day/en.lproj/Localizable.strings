@@ -1,1 +1,5 @@
 "_signOut" = "Sign Out";
+"_enterYourEmail" = "Enter your email";
+"_enterFiveDigitPassword" = "Enter 5-digit code";
+"_enterNewPassword" = "Enter new password";
+"_enterNewPasswordAgain" = "Enter new password, again";
