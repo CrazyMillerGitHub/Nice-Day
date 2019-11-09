@@ -8,7 +8,10 @@
 
 import UIKit
 class FiveDigitCell: CoreSupportCell {
+    
     static var identifier = "FiveDigitCell"
+    
+    weak var collectionView: UICollectionView!
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }

@@ -33,8 +33,8 @@ class OnboardingViewController: UIViewController,UIScrollViewDelegate {
     }()
     
     //logInButton
-    let loginButton: UIButton = {
-        let button = UIButton()
+    let loginButton: ElasticButton = {
+        let button = ElasticButton()
         button.setTitle(NSLocalizedString("Log in", comment: ""), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.semibold)
         button.translatesAutoresizingMaskIntoConstraints = false

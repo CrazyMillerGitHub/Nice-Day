@@ -14,10 +14,22 @@ class FriendsCell: CoreCell {
     var item: MainViewModelItem? {
         didSet {
             guard let item = item as? FriendsCellModelItem else { return }
+            cellTitleLabel.text = item.titleText
         }
     }
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        refresh()
+    }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    private func refresh() {
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
     }
 }

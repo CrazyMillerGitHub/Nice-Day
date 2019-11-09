@@ -12,9 +12,10 @@ class AchievmentsCell: CoreCell {
     static var identifier: String = "achievments"
     
     var item: MainViewModelItem? {
-           didSet {
-               guard let item = item as? AchievmentsCellModelItem else { return }
-           }
+        didSet {
+            guard let item = item as? AchievmentsCellModelItem else { return }
+            cellTitleLabel.text = item.titleText
+        }
     }
    
 }

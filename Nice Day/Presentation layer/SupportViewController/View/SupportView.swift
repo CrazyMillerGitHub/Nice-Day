@@ -33,7 +33,7 @@ class SupportView: UIViewController {
         navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .heavy)]
         navigationBar.translatesAutoresizingMaskIntoConstraints = false
         navigationBar.isTranslucent = false
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: nil)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(dismissAction))
         navigationBar.setItems([navigationItem], animated: true)
         return navigationBar
     }()
@@ -87,6 +87,11 @@ class SupportView: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
             
         ])
+    }
+    
+    @objc
+    private func dismissAction(sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     private func prepareUI() {

@@ -10,6 +10,17 @@ import UIKit
 
 class CoreCell: UICollectionViewCell {
     
+    // MARK: stageTitleLabel
+    // Название ячейки
+    let cellTitleLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.textColor = .black
+        label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -24,14 +35,22 @@ class CoreCell: UICollectionViewCell {
         self.reset()
     }
     func reset() {
+        contentView.addSubview(cellTitleLabel)
         self.contentView.layer.cornerRadius = 15
-        self.contentView.clipsToBounds = true
         self.contentView.backgroundColor = .white
+        self.contentView.clipsToBounds = false
         self.contentView.layer.shadowColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.16).cgColor
         self.contentView.layer.shadowOpacity = 0.9
         self.contentView.layer.shadowRadius = 16
         self.contentView.layer.shadowOffset = CGSize(width: 0, height: 16)
         self.contentView.layer.masksToBounds = false
+        NSLayoutConstraint.activate([
+            
+            cellTitleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            cellTitleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
+            cellTitleLabel.heightAnchor.constraint(equalToConstant: 20)
+            
+        ])
     }
     
     override var isHighlighted: Bool {

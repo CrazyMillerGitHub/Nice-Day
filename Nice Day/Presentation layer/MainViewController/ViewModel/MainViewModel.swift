@@ -30,7 +30,11 @@ extension MainViewModelItem {
 
 class ChartsCellModelItem: MainViewModelItem {
     var type: MainViewModelItemType {
-        return .achievments
+        return .charts
+    }
+    
+    var titleText: String {
+        return "_charts".localized()
     }
 }
 
@@ -38,11 +42,16 @@ class BonusCellModelItem: MainViewModelItem {
     var type: MainViewModelItemType {
         return .bonus
     }
+    
 }
 
 class FriendsCellModelItem: MainViewModelItem {
     var type: MainViewModelItemType {
         return .friend
+    }
+    
+    var titleText: String {
+        return "_friends".localized()
     }
 }
 
@@ -50,17 +59,28 @@ class MoodCellModelItem: MainViewModelItem {
     var type: MainViewModelItemType {
         return .mood
     }
+    var titleText: String {
+        return "_mood".localized()
+    }
 }
 
 class AchievmentsCellModelItem: MainViewModelItem {
     var type: MainViewModelItemType {
         return .achievments
     }
+    
+    var titleText: String {
+        return "_achievments".localized()
+    }
 }
 
 class SpecialCellModelItem: MainViewModelItem {
     var type: MainViewModelItemType {
         return .special
+    }
+    
+    var titleText: String {
+        return "_special".localized()
     }
 }
 
@@ -110,8 +130,8 @@ extension MainViewModel:  UICollectionViewDataSource, UICollectionViewDelegateFl
         switch item.type {
         case .achievments:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AchievmentsCell.identifier, for: indexPath) as? AchievmentsCell else { fatalError() }
-                cell.item = item
-                return cell
+            cell.item = item
+            return cell
             
         case .bonus:
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BonusCell.identifier, for: indexPath) as? BonusCell {
@@ -126,23 +146,23 @@ extension MainViewModel:  UICollectionViewDataSource, UICollectionViewDelegateFl
         case .charts:
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ChartsCell.identifier, for: indexPath) as? ChartsCell {
                 cell.item = item
-               
+                
                 return cell
             }
         case .friend:
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FriendsCell.identifier, for: indexPath) as? FriendsCell {
                 cell.item = item
-             
+                
                 return cell
             }
         case .mood:
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoodCell.identifier, for: indexPath) as? MoodCell {
                 cell.item = item
-             
+                
                 return cell
             }
         }
         return UICollectionViewCell()
     }
-
+    
 }

@@ -75,8 +75,8 @@ class AuthViewController: UIViewController {
         return label
     }()
     
-    let signInButton: UIButton = {
-        let button = UIButton()
+    let signInButton: ElasticButton = {
+        let button = ElasticButton()
         button.backgroundColor = .clear
         button.setTitle("Sign In", for: .normal)
         button.tintColor = .white

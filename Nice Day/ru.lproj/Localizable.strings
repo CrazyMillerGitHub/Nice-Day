@@ -3,3 +3,4 @@
 "_enterFiveDigitPassword" = "Введите 5-значное число";
 "_enterNewPassword" = "Введите новый пароль";
 "_enterNewPasswordAgain" = "Введите новый пароль еще раз";
+"_mood" = "Самочувствие";

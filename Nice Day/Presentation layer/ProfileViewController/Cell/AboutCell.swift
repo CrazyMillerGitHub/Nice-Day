@@ -8,9 +8,15 @@
 
 import UIKit
 
+protocol YourCellDelegate: class {
+    func didCompleteOnboarding()
+}
+
 class AboutCell: UICollectionViewCell {
     
     static var identifier = "about"
+    
+    weak var delegate: YourCellDelegate?
     
     var headerView: ProfileHeaderView!
     
@@ -26,8 +32,8 @@ class AboutCell: UICollectionViewCell {
          }()
 
        // MARK: SignOut Button
-       let signOutButton: UIButton = {
-           let button = UIButton()
+       let signOutButton: ElasticButton = {
+           let button = ElasticButton()
            button.backgroundColor = .sunriseColor
            button.translatesAutoresizingMaskIntoConstraints = false
            button.layer.cornerRadius = 15
@@ -84,9 +90,10 @@ class AboutCell: UICollectionViewCell {
     
     @objc
     private func signOutAction() {
-         UserDefaults.standard.set(false, forKey: "loggedIn")
-
+        UserDefaults.standard.set(false, forKey: "loggedIn")
+        delegate?.didCompleteOnboarding()
     }
+    
 }
 
 class ProfileHeaderView: UIView {

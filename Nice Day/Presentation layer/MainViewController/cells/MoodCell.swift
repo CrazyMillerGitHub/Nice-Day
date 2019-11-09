@@ -13,11 +13,14 @@ class MoodCell: CoreCell {
     static var identifier: String = "mood"
     
     var item: MainViewModelItem? {
-           didSet {
-               guard let item = item as? MoodCellModelItem else { return }
-           }
+        didSet {
+            guard let item = item as? MoodCellModelItem else { return }
+            cellTitleLabel.text = item.titleText
+        }
+        
     }
     
+    // MARK: Close Button (отмена измерения настроения на день)
     let closeButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .sunriseColor
@@ -30,6 +33,7 @@ class MoodCell: CoreCell {
         button.layer.shadowOpacity = 0.14
         button.layer.shadowOffset = CGSize(width: 0, height: 16)
         button.layer.masksToBounds = false
+        button.addTarget(self, action: #selector(closeButtonAction(sender:)), for: .touchUpInside)
         return button
     }()
     
@@ -51,4 +55,8 @@ class MoodCell: CoreCell {
         super.prepareForReuse()
     }
     
+    @objc
+    private func closeButtonAction(sender: Any) {
+        
+    }
 }

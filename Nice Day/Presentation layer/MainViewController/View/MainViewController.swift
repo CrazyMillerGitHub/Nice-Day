@@ -54,8 +54,8 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
     }()
     
     @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
-        let profileViewController = ProfileView()
-        present(profileViewController, animated: true, completion: nil)
+        let profileView = ProfileView()
+        present(profileView, animated: true, completion: nil)
     }
     
     override func loadView() {

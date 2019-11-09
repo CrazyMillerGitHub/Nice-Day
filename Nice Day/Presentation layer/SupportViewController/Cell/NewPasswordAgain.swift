@@ -25,4 +25,3 @@ class NewPasswordAgain: CoreSupportCell {
     }
     
 }
-

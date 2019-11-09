@@ -3,3 +3,8 @@
 "_enterFiveDigitPassword" = "Enter 5-digit code";
 "_enterNewPassword" = "Enter new password";
 "_enterNewPasswordAgain" = "Enter new password, again";
+"_mood" = "Mood";
+"_charts" = "Charts";
+"_friends" = "Friends";
+"_achievments" = "Achievments";
+"_special" = "Special";
