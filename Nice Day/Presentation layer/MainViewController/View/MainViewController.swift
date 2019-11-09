@@ -75,7 +75,9 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
     override func viewDidLoad() {
         super.viewDidLoad()
         imageView.isUserInteractionEnabled = true
+        imageView.setImageColor(.inverseColor)
         imagePicker.delegate = self
+        
         //colors
         self.view.backgroundColor = .bgColor
         self.collectionView.showsVerticalScrollIndicator = false

@@ -18,6 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //application.isStatusBarHidden = false
         UITabBar.appearance().clipsToBounds = true
         UITabBar.appearance().shadowImage = nil
+        UITabBar.appearance().tintColor = .inverseColor
+        UITabBar.appearance().unselectedItemTintColor = UIColor(red:0.87, green:0.87, blue:0.88, alpha:1.0)
+        UITabBar.appearance().barTintColor = UIColor.bgColor.withAlphaComponent(0.2)
         UINavigationBar.appearance().tintColor = .inverseColor
 
         window = UIWindow(frame: UIScreen.main.bounds)

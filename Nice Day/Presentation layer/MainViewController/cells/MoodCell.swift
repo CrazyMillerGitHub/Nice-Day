@@ -24,7 +24,8 @@ class MoodCell: CoreCell {
     let closeButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .sunriseColor
-        button.setImage(UIImage(named: "Home"), for: .normal)
+        button.setImage(UIImage(named: "close"), for: .normal)
+        button.adjustsImageWhenHighlighted = false
         button.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
         button.layer.cornerRadius = 15
         button.translatesAutoresizingMaskIntoConstraints = false

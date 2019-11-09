@@ -16,7 +16,7 @@ class CoreSupportCell: UITableViewCell {
         let label = UILabel()
         label.textAlignment = .center
         label.textColor = .sunriseColor
-        label.layer.backgroundColor = UIColor.black.cgColor
+        label.layer.backgroundColor = UIColor.inverseColor.cgColor
         label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.layer.cornerRadius = 16
@@ -28,7 +28,7 @@ class CoreSupportCell: UITableViewCell {
     let stageTitleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
-        label.textColor = .black
+        label.textColor = .inverseColor
         label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label

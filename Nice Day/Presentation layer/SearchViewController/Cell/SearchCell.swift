@@ -25,12 +25,12 @@ class SearchCell: UITableViewCell {
     let dscrTitle: UILabel = {
         let label = UILabel()
         let attributedString = NSMutableAttributedString(string: "0,20 xp every minute", attributes: [
-          .font: UIFont.systemFont(ofSize: 12.0, weight: .regular),
-          .foregroundColor: UIColor(white: 0.0, alpha: 1.0),
+          .font: UIFont.systemFont(ofSize: 12.0, weight: .semibold),
+          .foregroundColor: UIColor.inverseColor,
           .kern: -0.29
         ])
         attributedString.addAttributes([
-            .font: UIFont.systemFont(ofSize: 12.0, weight: .medium),
+            .font: UIFont.systemFont(ofSize: 12.0, weight: .bold),
             .foregroundColor: UIColor.green
              ], range: NSRange(location: 5, length: 2))
         label.attributedText = attributedString
@@ -60,10 +60,11 @@ class SearchCell: UITableViewCell {
         self.addSubview(stackView)
         NSLayoutConstraint.activate([
             
+            // stackView constrsints
             stackView.centerYAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerYAnchor),
             stackView.widthAnchor.constraint(equalTo: self.safeAreaLayoutGuide.widthAnchor, multiplier: 0.5),
-            stackView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 18)
-            
+            stackView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 18),
+
         ])
     }
     
