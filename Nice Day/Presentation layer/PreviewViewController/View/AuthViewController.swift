@@ -9,7 +9,7 @@
 import UIKit
 import Lottie
 import AuthenticationServices
-import PMSuperButton
+
 class AuthViewController: UIViewController {
     
     let friendlyLabel: UILabel = {
@@ -22,6 +22,8 @@ class AuthViewController: UIViewController {
     }()
     
     weak var topConstraint: NSLayoutConstraint!
+    
+    fileprivate var isActive: Bool = true
     
     let containerView: UIView = {
         let view = UIView()
@@ -42,16 +44,14 @@ class AuthViewController: UIViewController {
         return view
     }()
     
-    let emailButton: PMSuperButton = {
-        let button = PMSuperButton()
+    let emailButton: ElasticButton = {
+        let button = ElasticButton()
         button.backgroundColor = UIColor(red:1.00, green:0.18, blue:0.33, alpha:1.0)
         button.setTitle("_sign_in_with_email_and_password".localized(), for: .normal)
         button.tintColor = UIColor.white
         button.titleLabel?.font =  UIFont.systemFont(ofSize: 17.0, weight: .semibold)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 5
-        button.animatedScaleWhenHighlighted = 0.9
-        button.animatedScaleDurationWhenHighlighted = 0.3
         button.clipsToBounds = true
         button.addTarget(self, action: #selector(emailAction(sender:)), for: .touchUpInside)
         return button
@@ -135,28 +135,29 @@ class AuthViewController: UIViewController {
     // MARK: отмена email auth
     @objc
     private func handleGesture(gesture: UISwipeGestureRecognizer) {
-         UIView.animateKeyframes(withDuration: 1.5, delay: 0.0, options: [], animations: {
-                     self.topConstraint.constant -= self.circleView.bounds.height / 1.1
-                     UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.7) {
-                         UIView.animate(withDuration: 1.0, delay: 0.0, usingSpringWithDamping: 1.5, initialSpringVelocity: 0.0, options: [], animations: {
-                             self.view.layoutIfNeeded()
-                            self.circleView.transform = .identity
-                         }, completion: nil )
-                     }
-                     UIView.addKeyframe(withRelativeStartTime: 0.4, relativeDuration: 0.3) {
-                         UIView.animate(withDuration: 0.4, delay: 0.0, usingSpringWithDamping: 1.5, initialSpringVelocity: 0.0, options: [.curveEaseOut], animations: {
-                             self.emailButton.isHidden = false
-                             self.emailButton.alpha = 1
-                         }, completion: nil)
-                     }
-                     UIView.addKeyframe(withRelativeStartTime: 1.0, relativeDuration: 0.4) {
-                         self.signInButton.isHidden = true
-                         UIView.animate(withDuration: 0.4, delay: 0.3, usingSpringWithDamping: 1.5, initialSpringVelocity: 0.0, options: [.curveEaseOut, .transitionCurlUp], animations: {
-                                            self.signInButton.alpha = 0
-                             self.containerView.alpha = 0
-                                        }, completion: nil )
-                     }
-                 }, completion: nil)
+        self.isActive = true
+        UIView.animateKeyframes(withDuration: 1.5, delay: 0.0, options: [], animations: {
+            self.topConstraint.constant -= self.circleView.bounds.height / 1.1
+            UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.7) {
+                UIView.animate(withDuration: 1.0, delay: 0.0, usingSpringWithDamping: 1.5, initialSpringVelocity: 0.0, options: [], animations: {
+                    self.view.layoutIfNeeded()
+                    self.circleView.transform = .identity
+                }, completion: nil )
+            }
+            UIView.addKeyframe(withRelativeStartTime: 0.4, relativeDuration: 0.3) {
+                UIView.animate(withDuration: 0.4, delay: 0.0, usingSpringWithDamping: 1.5, initialSpringVelocity: 0.0, options: [.curveEaseOut], animations: {
+                    self.emailButton.isHidden = false
+                    self.emailButton.alpha = 1
+                }, completion: nil)
+            }
+            UIView.addKeyframe(withRelativeStartTime: 1.0, relativeDuration: 0.4) {
+                self.signInButton.isHidden = true
+                UIView.animate(withDuration: 0.4, delay: 0.3, usingSpringWithDamping: 1.5, initialSpringVelocity: 0.0, options: [.curveEaseOut, .transitionCurlUp], animations: {
+                    self.signInButton.alpha = 0
+                    self.containerView.alpha = 0
+                }, completion: nil )
+            }
+        }, completion: nil)
     }
     
     @objc private func didTapAppleIDButton(sender: Any) {
@@ -178,73 +179,77 @@ class AuthViewController: UIViewController {
           view.addSubview(containerView)
       }
     
-      private func prepareConstraints() {
-          let topConstraint = circleView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor, constant: 0)
-          NSLayoutConstraint.activate([
-          
-          circleView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -80.0),
-          circleView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 80.0),
-          topConstraint,
-          circleView.heightAnchor.constraint(equalTo: circleView.widthAnchor, multiplier: 1.0/1.0),
-          
-          containerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -80.0),
-          containerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 80.0),
-          containerView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor, constant: 0),
-          containerView.heightAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 1.0/1.0),
-          
-          ttleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 79),
-          ttleLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 33.0),
-          ttleLabel.heightAnchor.constraint(equalToConstant: 43),
-          ttleLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -33),
-              
-          dscrLabel.leadingAnchor.constraint(equalTo: ttleLabel.leadingAnchor, constant: 0.0),
-          dscrLabel.trailingAnchor.constraint(equalTo: ttleLabel.trailingAnchor, constant: 0),
-          dscrLabel.topAnchor.constraint(equalTo: ttleLabel.topAnchor, constant: 40),
-          dscrLabel.heightAnchor.constraint(equalTo: ttleLabel.heightAnchor, multiplier: 1.0/1.0),
-          
-          signInButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
-          signInButton.heightAnchor.constraint(equalToConstant: 46.0),
-          signInButton.trailingAnchor.constraint(equalTo: circleView.trailingAnchor, constant: 40.0),
-          signInButton.leadingAnchor.constraint(equalTo: circleView.leadingAnchor, constant: -40.0),
-          
-          appleSignInButton.topAnchor.constraint(equalTo: circleView.bottomAnchor, constant: 60),
-          appleSignInButton.heightAnchor.constraint(equalToConstant: 46.0),
-          appleSignInButton.trailingAnchor.constraint(equalTo: circleView.trailingAnchor, constant: 40.0),
-          appleSignInButton.leadingAnchor.constraint(equalTo: circleView.leadingAnchor, constant: -40.0),
-          
-          emailButton.topAnchor.constraint(equalTo: self.appleSignInButton.bottomAnchor, constant: 20),
-          emailButton.leadingAnchor.constraint(equalTo: self.appleSignInButton.leadingAnchor, constant: 0),
-          emailButton.trailingAnchor.constraint(equalTo: self.appleSignInButton.trailingAnchor, constant: 0),
-          emailButton.heightAnchor.constraint(equalToConstant: CGFloat(46.0))
-          
-          ])
-          self.topConstraint = topConstraint
-      }
-      @objc private func emailAction(sender: Any) {
-          UIView.animateKeyframes(withDuration: 1.5, delay: 0.0, options: [], animations: {
-              self.topConstraint.constant += self.circleView.bounds.height / 1.1
-              UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.7) {
-                  UIView.animate(withDuration: 1.0, delay: 0.0, usingSpringWithDamping: 1.5, initialSpringVelocity: 0.0, options: [], animations: {
-                      self.view.layoutIfNeeded()
-                     self.circleView.transform = CGAffineTransform(scaleX: 3, y: 3)
-                  }, completion: nil )
-              }
-              UIView.addKeyframe(withRelativeStartTime: 0.4, relativeDuration: 0.3) {
-                  UIView.animate(withDuration: 0.4, delay: 0.0, usingSpringWithDamping: 1.5, initialSpringVelocity: 0.0, options: [.curveEaseOut], animations: {
-                      self.emailButton.center.y += 20
-                      self.emailButton.alpha = 0
-                  }, completion: { _ in self.emailButton.isHidden = true })
-              }
-              UIView.addKeyframe(withRelativeStartTime: 1.0, relativeDuration: 0.4) {
-                  self.signInButton.isHidden = false
-                  UIView.animate(withDuration: 0.4, delay: 0.3, usingSpringWithDamping: 1.5, initialSpringVelocity: 0.0, options: [.curveEaseOut, .transitionCurlUp], animations: {
-                                     self.signInButton.alpha = 1
-                      self.containerView.alpha = 1
-                                 }, completion: nil )
-              }
-          }, completion: nil)
-         
-      }
+    private func prepareConstraints() {
+        let topConstraint = circleView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor, constant: 0)
+        NSLayoutConstraint.activate([
+            
+            circleView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -80.0),
+            circleView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 80.0),
+            topConstraint,
+            circleView.heightAnchor.constraint(equalTo: circleView.widthAnchor, multiplier: 1.0/1.0),
+            
+            containerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -80.0),
+            containerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 80.0),
+            containerView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor, constant: 0),
+            containerView.heightAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 1.0/1.0),
+            
+            ttleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 79),
+            ttleLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 33.0),
+            ttleLabel.heightAnchor.constraint(equalToConstant: 43),
+            ttleLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -33),
+            
+            dscrLabel.leadingAnchor.constraint(equalTo: ttleLabel.leadingAnchor, constant: 0.0),
+            dscrLabel.trailingAnchor.constraint(equalTo: ttleLabel.trailingAnchor, constant: 0),
+            dscrLabel.topAnchor.constraint(equalTo: ttleLabel.topAnchor, constant: 40),
+            dscrLabel.heightAnchor.constraint(equalTo: ttleLabel.heightAnchor, multiplier: 1.0/1.0),
+            
+            signInButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
+            signInButton.heightAnchor.constraint(equalToConstant: 46.0),
+            signInButton.trailingAnchor.constraint(equalTo: circleView.trailingAnchor, constant: 40.0),
+            signInButton.leadingAnchor.constraint(equalTo: circleView.leadingAnchor, constant: -40.0),
+            
+            appleSignInButton.topAnchor.constraint(equalTo: circleView.bottomAnchor, constant: 60),
+            appleSignInButton.heightAnchor.constraint(equalToConstant: 46.0),
+            appleSignInButton.trailingAnchor.constraint(equalTo: circleView.trailingAnchor, constant: 40.0),
+            appleSignInButton.leadingAnchor.constraint(equalTo: circleView.leadingAnchor, constant: -40.0),
+            
+            emailButton.topAnchor.constraint(equalTo: self.appleSignInButton.bottomAnchor, constant: 20),
+            emailButton.leadingAnchor.constraint(equalTo: self.appleSignInButton.leadingAnchor, constant: 0),
+            emailButton.trailingAnchor.constraint(equalTo: self.appleSignInButton.trailingAnchor, constant: 0),
+            emailButton.heightAnchor.constraint(equalToConstant: CGFloat(46.0))
+            
+        ])
+        self.topConstraint = topConstraint
+    }
+    
+    @objc
+    private func emailAction(sender: Any) {
+        if self.isActive {
+            UIView.animateKeyframes(withDuration: 1.5, delay: 0.0, options: [], animations: {
+                self.topConstraint.constant += self.circleView.bounds.height / 1.1
+                UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.7) {
+                    UIView.animate(withDuration: 1.0, delay: 0.0, usingSpringWithDamping: 1.5, initialSpringVelocity: 0.0, options: [], animations: {
+                        self.view.layoutIfNeeded()
+                        self.circleView.transform = CGAffineTransform(scaleX: 3, y: 3)
+                    }, completion: nil )
+                }
+                UIView.addKeyframe(withRelativeStartTime: 0.4, relativeDuration: 0.3) {
+                    UIView.animate(withDuration: 0.4, delay: 0.0, usingSpringWithDamping: 1.5, initialSpringVelocity: 0.0, options: [.curveEaseOut], animations: {
+                        self.emailButton.center.y += 20
+                        self.emailButton.alpha = 0
+                    }, completion: { _ in self.emailButton.isHidden = true })
+                }
+                UIView.addKeyframe(withRelativeStartTime: 1.0, relativeDuration: 0.4) {
+                    self.signInButton.isHidden = false
+                    UIView.animate(withDuration: 0.4, delay: 0.3, usingSpringWithDamping: 1.5, initialSpringVelocity: 0.0, options: [.curveEaseOut, .transitionCurlUp], animations: {
+                        self.signInButton.alpha = 1
+                        self.containerView.alpha = 1
+                    }, completion: nil )
+                }
+            }, completion: nil)
+            self.isActive = false
+        }
+    }
 }
 extension AuthViewController: ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {

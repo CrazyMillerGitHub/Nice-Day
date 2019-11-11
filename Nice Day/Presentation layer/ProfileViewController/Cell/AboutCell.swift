@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import PMSuperButton
 
 protocol YourCellDelegate: class {
     func didCompleteOnboarding()
@@ -33,8 +32,8 @@ class AboutCell: UICollectionViewCell {
          }()
 
        // MARK: SignOut Button
-       let signOutButton: PMSuperButton = {
-           let button = PMSuperButton()
+       let signOutButton: ElasticButton = {
+           let button = ElasticButton()
            button.backgroundColor = .sunriseColor
            button.translatesAutoresizingMaskIntoConstraints = false
            button.layer.cornerRadius = 15

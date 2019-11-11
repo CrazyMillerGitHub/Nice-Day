@@ -64,7 +64,7 @@ extension ProfileViewModel: UICollectionViewDataSource {
                 return UICollectionViewCell()
             }
             cell.backgroundColor = .white
-            cell.signOutButton.touchUpInside {
+            cell.signOutButton.addAction {
                 self.profileDelegate?.didCompleteOnboarding()
             }
             return cell
