@@ -9,7 +9,7 @@
 import UIKit
 import CHIPageControl
 import Lottie
-class OnboardingViewController: UIViewController,UIScrollViewDelegate {
+class OnboardingView: UIViewController,UIScrollViewDelegate {
     
    fileprivate let stringArray = [NSLocalizedString("Do your daily activities", comment: ""),NSLocalizedString("Earn xp", comment: ""), NSLocalizedString("Be better every day!", comment: "")]
    fileprivate var progress: CGFloat =  0
@@ -35,7 +35,7 @@ class OnboardingViewController: UIViewController,UIScrollViewDelegate {
     //logInButton
     let loginButton: ElasticButton = {
         let button = ElasticButton()
-        button.setTitle(NSLocalizedString("Log in", comment: ""), for: .normal)
+        button.setTitle(NSLocalizedString("_sign_in".localized(), comment: ""), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.semibold)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 18

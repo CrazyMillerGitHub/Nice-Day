@@ -31,8 +31,10 @@ class ProfileAchievmentsModelItem: ProfileViewModelItem {
 }
 
 class ProfileViewModel: NSObject {
+    
     var items = [ProfileViewModelItem]()
     
+    weak var profileDelegate: YourCellDelegate?
     override init() {
         super.init()
         
@@ -62,7 +64,9 @@ extension ProfileViewModel: UICollectionViewDataSource {
                 return UICollectionViewCell()
             }
             cell.backgroundColor = .white
-            cell.delegate = ProfileView()
+            cell.signOutButton.touchUpInside {
+                self.profileDelegate?.didCompleteOnboarding()
+            }
             return cell
         case .achievments:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileAchievmentsCell.identifier, for: indexPath) as? ProfileAchievmentsCell else {

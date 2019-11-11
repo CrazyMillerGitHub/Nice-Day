@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PMSuperButton
 
 protocol YourCellDelegate: class {
     func didCompleteOnboarding()
@@ -16,7 +17,7 @@ class AboutCell: UICollectionViewCell {
     
     static var identifier = "about"
     
-    weak var delegate: YourCellDelegate?
+    var delegate: YourCellDelegate?
     
     var headerView: ProfileHeaderView!
     
@@ -32,8 +33,8 @@ class AboutCell: UICollectionViewCell {
          }()
 
        // MARK: SignOut Button
-       let signOutButton: ElasticButton = {
-           let button = ElasticButton()
+       let signOutButton: PMSuperButton = {
+           let button = PMSuperButton()
            button.backgroundColor = .sunriseColor
            button.translatesAutoresizingMaskIntoConstraints = false
            button.layer.cornerRadius = 15

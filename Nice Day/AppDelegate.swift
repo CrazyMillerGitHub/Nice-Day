@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         window = UIWindow(frame: UIScreen.main.bounds)
         if UserDefaults.standard.object(forKey: "loggedIn") == nil || UserDefaults.standard.object(forKey: "loggedIn") as? Bool == false {
-            window?.rootViewController = OnboardingViewController()
+            window?.rootViewController = OnboardingView()
             UserDefaults.standard.set(true, forKey: "loggedIn")
         } else {
             window?.rootViewController = SearchTabBarController()

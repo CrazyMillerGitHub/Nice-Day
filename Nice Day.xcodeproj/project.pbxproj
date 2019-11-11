@@ -14,7 +14,7 @@
 		742194532373FCD3007D0EB1 /* FiveDigitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742194522373FCD3007D0EB1 /* FiveDigitCell.swift */; };
 		742194552374028D007D0EB1 /* NewPasswordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742194542374028D007D0EB1 /* NewPasswordCell.swift */; };
 		74219457237402FD007D0EB1 /* NewPasswordAgain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74219456237402FD007D0EB1 /* NewPasswordAgain.swift */; };
-		742A39F42342899300770F68 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742A39F32342899300770F68 /* OnboardingViewController.swift */; };
+		742A39F42342899300770F68 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742A39F32342899300770F68 /* OnboardingView.swift */; };
 		745805B523491FA300B7783F /* CoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745805B423491FA300B7783F /* CoreCell.swift */; };
 		745805B723492AF800B7783F /* CoreTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745805B623492AF800B7783F /* CoreTabBarController.swift */; };
 		7459C70F2349C5F300362DFC /* Сolor+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7459C70E2349C5F300362DFC /* Сolor+extension.swift */; };
@@ -121,7 +121,7 @@
 		742194522373FCD3007D0EB1 /* FiveDigitCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiveDigitCell.swift; sourceTree = "<group>"; };
 		742194542374028D007D0EB1 /* NewPasswordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPasswordCell.swift; sourceTree = "<group>"; };
 		74219456237402FD007D0EB1 /* NewPasswordAgain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPasswordAgain.swift; sourceTree = "<group>"; };
-		742A39F32342899300770F68 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		742A39F32342899300770F68 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		745805B423491FA300B7783F /* CoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreCell.swift; sourceTree = "<group>"; };
 		745805B623492AF800B7783F /* CoreTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreTabBarController.swift; sourceTree = "<group>"; };
 		7459C70E2349C5F300362DFC /* Сolor+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Сolor+extension.swift"; sourceTree = "<group>"; };
@@ -424,7 +424,7 @@
 		74CE440E235C8CA900066B17 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				742A39F32342899300770F68 /* OnboardingViewController.swift */,
+				742A39F32342899300770F68 /* OnboardingView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -874,7 +874,7 @@
 				74F36D4223774AE3004DEBF0 /* ImageView+extension.swift in Sources */,
 				74184CB622CE3D2F00EC31DE /* ChartsCell.swift in Sources */,
 				74BF5338237055AE00CCEF3C /* EmailSupportCell.swift in Sources */,
-				742A39F42342899300770F68 /* OnboardingViewController.swift in Sources */,
+				742A39F42342899300770F68 /* OnboardingView.swift in Sources */,
 				74CE441E235C9FA400066B17 /* SearchTabBarController.swift in Sources */,
 				742194552374028D007D0EB1 /* NewPasswordCell.swift in Sources */,
 				74BCEE2122D12B6100127488 /* MoodCell.swift in Sources */,

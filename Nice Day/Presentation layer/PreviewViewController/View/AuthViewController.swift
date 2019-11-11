@@ -45,7 +45,7 @@ class AuthViewController: UIViewController {
     let emailButton: PMSuperButton = {
         let button = PMSuperButton()
         button.backgroundColor = UIColor(red:1.00, green:0.18, blue:0.33, alpha:1.0)
-        button.setTitle("Sign in with email and password", for: .normal)
+        button.setTitle("_sign_in_with_email_and_password".localized(), for: .normal)
         button.tintColor = UIColor.white
         button.titleLabel?.font =  UIFont.systemFont(ofSize: 17.0, weight: .semibold)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -53,7 +53,7 @@ class AuthViewController: UIViewController {
         button.animatedScaleWhenHighlighted = 0.9
         button.animatedScaleDurationWhenHighlighted = 0.3
         button.clipsToBounds = true
-        button.addTarget(self, action: #selector(emailDidTapped(sender:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(emailAction(sender:)), for: .touchUpInside)
         return button
     }()
     
@@ -78,7 +78,7 @@ class AuthViewController: UIViewController {
     let signInButton: ElasticButton = {
         let button = ElasticButton()
         button.backgroundColor = .clear
-        button.setTitle("Sign In", for: .normal)
+        button.setTitle("_sign_in".localized(), for: .normal)
         button.tintColor = .white
         button.layer.borderWidth = 2.0
         button.layer.borderColor = UIColor.white.cgColor
@@ -97,29 +97,33 @@ class AuthViewController: UIViewController {
         appleSignInButton.addTarget(self, action: #selector(didTapAppleIDButton(sender:)), for: .touchUpInside)
         return appleSignInButton
     }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
         self.view.backgroundColor = .bgColor
-       containerView.backgroundColor = .clear
-       let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "container")
-       addChild(controller)
-    
-       let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
-       swipeUp.direction = .down
-       self.containerView.addGestureRecognizer(swipeUp)
+        containerView.backgroundColor = .clear
+        let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "container")
+        addChild(controller)
         
-       prepareUI()
-       prepareConstraints()
-       controller.view.translatesAutoresizingMaskIntoConstraints = false
-       containerView.addSubview(controller.view)
-       NSLayoutConstraint.activate([
-           controller.view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-             controller.view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-             controller.view.topAnchor.constraint(equalTo: containerView.topAnchor),
-             controller.view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
-         ])
-       controller.didMove(toParent: self)
+        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
+        swipeUp.direction = .down
+        self.containerView.addGestureRecognizer(swipeUp)
+        
+        let touchGesture = UITapGestureRecognizer(target: self, action: #selector(emailAction(sender:)))
+        self.circleView.addGestureRecognizer(touchGesture)
+        
+        prepareUI()
+        prepareConstraints()
+        controller.view.translatesAutoresizingMaskIntoConstraints = false
+        containerView.addSubview(controller.view)
+        NSLayoutConstraint.activate([
+            controller.view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            controller.view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            controller.view.topAnchor.constraint(equalTo: containerView.topAnchor),
+            controller.view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+        ])
+        controller.didMove(toParent: self)
     }
     
     // настройка PreviewViewController
@@ -216,7 +220,7 @@ class AuthViewController: UIViewController {
           ])
           self.topConstraint = topConstraint
       }
-      @objc private func emailDidTapped(sender: Any) {
+      @objc private func emailAction(sender: Any) {
           UIView.animateKeyframes(withDuration: 1.5, delay: 0.0, options: [], animations: {
               self.topConstraint.constant += self.circleView.bounds.height / 1.1
               UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.7) {

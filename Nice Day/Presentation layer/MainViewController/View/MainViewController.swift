@@ -81,6 +81,8 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
         //colors
         self.view.backgroundColor = .bgColor
         self.collectionView.showsVerticalScrollIndicator = false
+        
+        //
         self.collectionView.register(BonusCell.self, forCellWithReuseIdentifier: BonusCell.identifier)
         self.collectionView.register(ChartsCell.self, forCellWithReuseIdentifier: ChartsCell.identifier)
         self.collectionView.register(FriendsCell.self, forCellWithReuseIdentifier: FriendsCell.identifier)

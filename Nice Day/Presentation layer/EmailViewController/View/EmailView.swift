@@ -9,10 +9,17 @@
 import UIKit
 
 class EmailView: UIViewController {
+    
     @IBOutlet private var forgotButton: UIButton!
+    @IBOutlet private var emailTextField: UITextField!
+    @IBOutlet private var passwordTextFiled: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         forgotButton.addTarget(self, action: #selector(forgotAction), for: .touchUpInside)
+        forgotButton.setTitle("_forgotPassword".localized(), for: .normal)
+        emailTextField.placeholder = "_email".localized()
+        passwordTextFiled.placeholder = "_passwd".localized()
     }
     
     @objc

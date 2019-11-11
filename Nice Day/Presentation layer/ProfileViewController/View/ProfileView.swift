@@ -21,7 +21,7 @@ class ProfileView: UIViewController {
         navigationBar.backgroundColor = UIColor.bgColor.withAlphaComponent(0.2)
         navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .heavy)]
         navigationBar.translatesAutoresizingMaskIntoConstraints = false
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(didCompleteOnboarding))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissAction(sender:)))
         navigationBar.setItems([navigationItem], animated: false)
         return navigationBar
     }()
@@ -70,6 +70,7 @@ class ProfileView: UIViewController {
         setupConstraint()
         collectionView.register(AboutCell.self, forCellWithReuseIdentifier: AboutCell.identifier)
         collectionView.register(ProfileAchievmentsCell.self, forCellWithReuseIdentifier: ProfileAchievmentsCell.identifier)
+        viewModel.profileDelegate = self
         collectionView.delegate = viewModel
         collectionView.dataSource = viewModel
         
@@ -78,9 +79,11 @@ class ProfileView: UIViewController {
     // MARK: Настройка constraint
     private func setupConstraint() {
         NSLayoutConstraint.activate([
+            
         navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
         navigationBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
         navigationBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+        
         ])
             
     }
@@ -89,12 +92,19 @@ class ProfileView: UIViewController {
         self.view.addSubview(navigationBar)
     }
     
+    @objc
+    private func dismissAction(sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
 }
 extension ProfileView: YourCellDelegate {
     
     @objc
     func didCompleteOnboarding() {
-        self.dismiss(animated: true, completion: nil)
+        let onboardingView = OnboardingView()
+        onboardingView.modalPresentationStyle = .fullScreen
+        self.present(onboardingView, animated: true, completion: nil)
     }
     
 }

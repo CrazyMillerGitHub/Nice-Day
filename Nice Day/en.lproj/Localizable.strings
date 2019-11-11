@@ -8,3 +8,8 @@
 "_friends" = "Friends";
 "_achievments" = "Achievments";
 "_special" = "Special";
+"_sign_in_with_email_and_password" = "Sign in with email and password";
+"_sign_in" = "Sign in";
+"_forgotPassword"  = "forgot password?";
+"_email" = "email";
+"_passwd" = "password";
