@@ -30,6 +30,11 @@ extension UIColor {
         return color
     }
     
+    class var foregroundColor: UIColor {
+        guard let color = UIColor(named: #function) else { return UIColor() }
+        return color
+    }
+    
     class var firstGradientColor: UIColor {
         return UIColor(red:1.00, green:0.18, blue:0.33, alpha:1.00)
     }

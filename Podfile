@@ -11,6 +11,5 @@ target 'Nice Day' do
   pod 'CHIPageControl', '~> 0.1.3'
   pod 'Charts', '~> 3.3.0'
   pod 'lottie-ios', '~> 3.1.1'
-  pod 'DeckTransition', :git => 'https://github.com/CrazyMillerGitHub/DeckTransition.git', :commit => 'v1.0'
-
+  pod 'DeckTransition', :git => 'https://github.com/CrazyMillerGitHub/DeckTransition.git', :commit => 'v1.0.1'
 end

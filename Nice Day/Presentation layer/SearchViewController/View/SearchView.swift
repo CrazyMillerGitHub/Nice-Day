@@ -135,11 +135,16 @@ extension SearchView: UITableViewDataSource, UITableViewDelegate {
         
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let modal = ActivityView()
-        let transitionDelegate = DeckTransitioningDelegate()
-        modal.transitioningDelegate = transitionDelegate
-        modal.modalPresentationStyle = .custom
-        self.present(modal, animated: true, completion: nil)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+            
+            let modal = ActivityView()
+            let transitionDelegate = DeckTransitioningDelegate()
+            modal.transitioningDelegate = transitionDelegate
+            modal.modalPresentationStyle = .custom
+            self.present(modal, animated: true, completion: nil)
+            
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

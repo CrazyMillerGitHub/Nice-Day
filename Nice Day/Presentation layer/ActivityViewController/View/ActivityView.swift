@@ -12,7 +12,7 @@ class ActivityView: UIViewController {
     
     override func loadView() {
         super.loadView()
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .foregroundColor
     }
     
     override func viewDidLoad() {
