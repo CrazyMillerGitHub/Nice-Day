@@ -23,11 +23,14 @@ class SearchView: UIViewController {
         tableView.showsVerticalScrollIndicator = false
         tableView.separatorStyle = .none
         self.view.addSubview(tableView)
+        
         NSLayoutConstraint.activate([
+            
             tableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 200),
             tableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: 0),
             tableView.leadingAnchor.constraint(equalTo:self.view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
+            
         ])
         
         self.tableView = tableView

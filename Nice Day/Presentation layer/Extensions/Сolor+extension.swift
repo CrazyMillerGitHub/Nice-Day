@@ -43,4 +43,9 @@ extension UIColor {
         return UIColor(red:0.40, green:0.70, blue:0.99, alpha:1.00)
     }
     
+    class var projectGreyColor: UIColor {
+        guard let color = UIColor(named: #function) else { return UIColor() }
+        return color
+    }
+    
 }

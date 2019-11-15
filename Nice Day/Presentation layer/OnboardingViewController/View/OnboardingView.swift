@@ -171,7 +171,7 @@ class OnboardingView: UIViewController,UIScrollViewDelegate {
             if loginButton.isHidden {
                 loginButton.isHidden = false
                 UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 1.5, initialSpringVelocity: 0.0, options: [.curveEaseOut], animations: {
-                               self.loginButton.alpha = 1.0 })
+                    self.loginButton.alpha = 1.0 })
             }
         }
         animationView.currentProgress = progress
