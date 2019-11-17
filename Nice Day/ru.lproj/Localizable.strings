@@ -4,8 +4,13 @@
 "_enterNewPassword" = "Введите новый пароль";
 "_enterNewPasswordAgain" = "Введите новый пароль еще раз";
 "_mood" = "Самочувствие";
+"_charts" = "Графики";
+"_friends" = "Друзья";
+"_achievments" = "Награды";
+"_special" = "Специальное";
 "_sign_in_with_email_and_password" = "Войти с помощью email и пароля";
 "_sign_in" = "Войти";
 "_forgotPassword"  = "забыл пароль?";
 "_email" = "адресс почты";
 "_passwd" = "пароль";
+"_search" = "Поиск";

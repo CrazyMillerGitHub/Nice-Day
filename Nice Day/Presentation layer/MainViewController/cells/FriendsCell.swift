@@ -17,6 +17,7 @@ class FriendsCell: CoreCell {
             cellTitleLabel.text = item.titleText
         }
     }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         refresh()

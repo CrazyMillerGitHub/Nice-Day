@@ -3,6 +3,16 @@
     {
       "idiom" : "universal",
       "filename" : "profile_img.pdf"
+    },
+    {
+      "idiom" : "universal",
+      "filename" : "profile_img-1.pdf",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ]
     }
   ],
   "info" : {
