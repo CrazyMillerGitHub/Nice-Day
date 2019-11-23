@@ -30,7 +30,8 @@ class SearchCell: UITableViewCell {
     // MARK: DescriptionLabel
     let dscrTitle: (Int) -> UILabel = { xpCount in
         let label = UILabel()
-        let attributedString = NSMutableAttributedString(string: "\(xpCount) xp every minute", attributes: [
+        let str = "\(xpCount) xp every minute"
+        let attributedString = NSMutableAttributedString(string: str, attributes: [
           .font: UIFont.systemFont(ofSize: 12.0, weight: .semibold),
           .foregroundColor: UIColor.inverseColor,
           .kern: -0.29
@@ -38,7 +39,7 @@ class SearchCell: UITableViewCell {
         attributedString.addAttributes([
             .font: UIFont.systemFont(ofSize: 12.0, weight: .bold),
             .foregroundColor: UIColor.green
-             ], range: NSRange(location: 5, length: 2))
+        ], range: NSRange(location: String(xpCount).count + 1, length: 2))
         label.attributedText = attributedString
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -78,6 +79,15 @@ class SearchCell: UITableViewCell {
         return stackView
     }()
     
+    fileprivate func prepareConstraints() {
+        NSLayoutConstraint.activate([
+            // stackView constraints
+            stackView.centerYAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerYAnchor),
+            stackView.widthAnchor.constraint(equalTo: self.safeAreaLayoutGuide.widthAnchor, multiplier: 0.5),
+            stackView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 18)
+        ])
+    }
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.backgroundColor = .bgColor
@@ -87,12 +97,7 @@ class SearchCell: UITableViewCell {
         stackView.addArrangedSubview(textTitle)
         stackView.addArrangedSubview(horizontalStackView)
         self.addSubview(stackView)
-        NSLayoutConstraint.activate([
-            // stackView constraints
-            stackView.centerYAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerYAnchor),
-            stackView.widthAnchor.constraint(equalTo: self.safeAreaLayoutGuide.widthAnchor, multiplier: 0.5),
-            stackView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 18)
-        ])
+        prepareConstraints()
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -11,6 +11,7 @@ import UIKit
 class MainViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, ProfileImageViewProtocol {
     
     let imagePicker = UIImagePickerController()
+    
     weak var collectionView: UICollectionView!
 
     func moveAndResizeImage() {
@@ -46,7 +47,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
     let provider = MainViewModel()
     let delegate = MainViewControllerDelegate()
     
-    /// imageView
+    // MARK: imageView
     let imageView: UIImageView = {
         guard let data = UserDefaults.standard.data(forKey: "imageView") else { return UIImageView(image: #imageLiteral(resourceName: "profile_img.pdf"))}
         let imageView = UIImageView(image: UIImage(data: data))

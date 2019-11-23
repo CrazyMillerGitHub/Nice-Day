@@ -8,10 +8,8 @@
 
 import UIKit
 
-class AchievmentsCell: CoreCell {
+class AchievmentsCell: CoreCell, UICollectionViewDelegate, UICollectionViewDataSource {
     static var identifier: String = "achievments"
-    
-    var friendViewModel = AchievmentViewModel()
     
     var item: MainViewModelItem? {
         didSet {
@@ -24,7 +22,6 @@ class AchievmentsCell: CoreCell {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = .red
-        collectionView.register(FriendCell.self, forCellWithReuseIdentifier: FriendCell.identifier)
         return collectionView
     }()
     
@@ -43,8 +40,6 @@ class AchievmentsCell: CoreCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        friendsCollectionView.delegate = self
-        friendsCollectionView.dataSource = self
         refresh()
     }
     
@@ -61,6 +56,9 @@ class AchievmentsCell: CoreCell {
         addSubview(showMoreButton)
         addSubview(friendsCollectionView)
         prepareConstraint()
+        friendsCollectionView.register(AchievmentCell.self, forCellWithReuseIdentifier: AchievmentCell.achievmentIdentifier)
+        friendsCollectionView.delegate = self
+        friendsCollectionView.dataSource = self
     }
     
     private func prepareConstraint() {
@@ -78,28 +76,18 @@ class AchievmentsCell: CoreCell {
             friendsCollectionView.bottomAnchor.constraint(equalTo: showMoreButton.topAnchor)
         ])
     }
-}
-extension AchievmentsCell:  UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+            print("jej")
+          return 1
+      }
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        print("SSSS")
+        return 3
     }
+      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+          guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AchievmentCell.achievmentIdentifier, for: indexPath) as? AchievmentCell else { fatalError() }
+          return cell
+      }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FriendCell.identifier, for: indexPath) as? FriendCell else { fatalError() }
-        print("Tuta")
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 58, height: 58)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 10, left: 50, bottom: 0, right: 10)
-    }
 }
