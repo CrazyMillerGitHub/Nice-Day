@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MoodStaticCell: UICollectionViewCell {
+class MoodStaticCell: CoreCell {
     
     static var identifier = "moodStaticCell"
     

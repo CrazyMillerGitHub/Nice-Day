@@ -12,6 +12,8 @@ class ProfileAchievmentsCell: UICollectionViewCell {
     
     static var identifier = "profileAchievments"
     
+    fileprivate let viewModel = ProfileAchievmentsViewModel()
+    
     weak var bgView: UIView!
     
     // MARK: CollectionView
@@ -19,17 +21,23 @@ class ProfileAchievmentsCell: UICollectionViewCell {
     let statsCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.backgroundColor = .clear
+        collectionView.register(MoodStaticCell.self, forCellWithReuseIdentifier: MoodStaticCell.identifier)
         return collectionView
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame:frame)
-        reset()
-        contentView.addSubview(statsCollectionView)
-        statsCollectionView.register(MoodStaticCell.self, forCellWithReuseIdentifier: MoodStaticCell.identifier)
-        statsCollectionView.delegate = self
-        statsCollectionView.dataSource = self
+       override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupViews()
+    }
+    
+    func setupViews() {
+        addSubview(statsCollectionView)
+        
+        statsCollectionView.delegate = viewModel
+        statsCollectionView.dataSource = viewModel
+        
         statsCollectionView.frame = contentView.frame
+        reset()
     }
     
     required init?(coder: NSCoder) {
@@ -47,27 +55,4 @@ class ProfileAchievmentsCell: UICollectionViewCell {
         gradient.colors = [UIColor.firstGradientColor.cgColor, UIColor.secondGradientColor.cgColor]
         contentView.layer.addSublayer(gradient)
     }
-}
-extension ProfileAchievmentsCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoodStaticCell.identifier, for: indexPath) as? MoodStaticCell else {
-            return UICollectionViewCell()
-        }
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        switch indexPath.section {
-        case 0...1:
-            return CGSize(width: UIScreen.main.bounds.width - 30, height: 130)
-        default:
-            return CGSize(width: UIScreen.main.bounds.width - 30, height: 236)
-        }
-    }
-    
 }

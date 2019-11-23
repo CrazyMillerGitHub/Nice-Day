@@ -49,7 +49,7 @@ class MainViewControllerDelegate: NSObject, UICollectionViewDelegate, UIScrollVi
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
-           return UIEdgeInsets(top: 28, left: 0, bottom: 28, right: 0)
+           return UIEdgeInsets(top: 28, left: 15, bottom: 28, right: 15)
        }
 
        func collectionView(_ collectionView: UICollectionView,
