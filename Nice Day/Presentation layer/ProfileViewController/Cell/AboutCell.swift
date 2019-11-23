@@ -7,73 +7,6 @@
 //
 
 import UIKit
-class DescriptionLabel: UILabel {
-    
-    init(textStr: String) {
-        super.init(frame: .zero)
-        text = textStr.localized()
-        contentMode = .center
-        font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        translatesAutoresizingMaskIntoConstraints = false
-        textColor = #colorLiteral(red: 0.8374180198, green: 0.8374378085, blue: 0.8374271393, alpha: 1)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-class CountLabel: UILabel {
-    
-    init(number: Int) {
-        super.init(frame: .zero)
-        contentMode = .center
-        font = UIFont.systemFont(ofSize: 18, weight: .bold)
-        translatesAutoresizingMaskIntoConstraints = false
-        textColor = .inverseColor
-        checkNumber(of: number)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func checkNumber(of number: Int) {
-       text = "\(number)"
-    }
-}
-
-class VStackView: UIStackView {
-    
-    init(elements: [UILabel]) {
-        super.init(frame: .zero)
-        axis = .vertical
-        distribution = .equalSpacing
-        alignment = .center
-        spacing = 8
-        elements.forEach { addArrangedSubview($0) }
-    }
-    
-    required init(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-class HStackView: UIStackView {
-    
-    init() {
-        super.init(frame: .zero)
-        axis = .horizontal
-        distribution = .equalSpacing
-        alignment = .center
-        spacing = 35
-        translatesAutoresizingMaskIntoConstraints = false
-    }
-    
-    required init(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
 
 protocol YourCellDelegate: class {
     func didCompleteOnboarding()
@@ -85,10 +18,10 @@ class AboutCell: UICollectionViewCell {
     
     var delegate: YourCellDelegate?
     
-    var headerView: ProfileHeaderView!
+    var headerView: ProfileHeader!
     
     //  создание imageView
-    let imageView: UIImageView = {
+    fileprivate let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 45.5
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -99,7 +32,7 @@ class AboutCell: UICollectionViewCell {
     }()
     
     // MARK: SignOut Button
-    let signOutButton: ElasticButton = {
+    internal let signOutButton: ElasticButton = {
         let button = ElasticButton()
         button.backgroundColor = .sunriseColor
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -111,18 +44,47 @@ class AboutCell: UICollectionViewCell {
         return button
     }()
     
-    // MARK: levelStackView
-    let levelStackView = VStackView(elements: [DescriptionLabel(textStr: "_level"), CountLabel(number: Int.random(in: 0...100))])
+   // MARK: levelStackView
+    fileprivate let levelStackView = CustomStackView(
+        elements: [CustomInfoLabel(labelType: .description, labelText: "_level"),
+                   CustomInfoLabel(labelType: .value, labelText: Int.random(in: 0...100))],
+        stackViewAxis: .vertical,
+        spacingCount: 8)
     
     // MARK: xpStackView
-    let xpStackView = VStackView(elements: [DescriptionLabel(textStr: "_xp"), CountLabel(number: Int.random(in: 0...100000))])
+    fileprivate let xpStackView = CustomStackView(
+        elements: [CustomInfoLabel(labelType: .description, labelText: "_xp"),
+        CustomInfoLabel(labelType: .value, labelText: Int.random(in: 0...1000))],
+        stackViewAxis: .vertical,
+        spacingCount: 8)
     
-     // MARK: stackView
-    let stackView = HStackView()
+    // MARK: stackView
+    fileprivate let stackView = CustomStackView(elements: nil, stackViewAxis: .horizontal, spacingCount: 35)
+    
+    // MARK: basicAnimationInit
+    fileprivate let basicAnimation: (CGFloat) -> CABasicAnimation = { toValue in
+        let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
+        basicAnimation.fillMode = .forwards
+        basicAnimation.toValue = toValue
+        basicAnimation.duration = 2
+        basicAnimation.isRemovedOnCompletion = false
+        basicAnimation.timingFunction = CAMediaTimingFunction(name: .easeOut)
+        return basicAnimation
+    }
+    
+    private func prepareShape() {
+        let path = UIBezierPath(arcCenter: CGPoint(x: contentView.center.x, y: contentView.center.x - 26 ), radius: 45, startAngle: -CGFloat.pi / 2, endAngle: 2 * CGFloat.pi, clockwise: true).cgPath
+        let shapeLayer = ProgressShapeLayer(shapePath: path, shapeType: .foreground)
+        let bgLayer = ProgressShapeLayer(shapePath: path, shapeType: .background)
+        contentView.layer.addSublayer(bgLayer)
+        contentView.layer.addSublayer(shapeLayer)
+        shapeLayer.add(basicAnimation(0.3), forKey: "urSoBasic")
+       
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        let headerView = ProfileHeaderView()
+        let headerView = ProfileHeader()
         
         stackView.addArrangedSubview(levelStackView)
         stackView.addArrangedSubview(xpStackView)
@@ -150,7 +112,7 @@ class AboutCell: UICollectionViewCell {
             self.stackView.trailingAnchor.constraint(equalTo: self.imageView.trailingAnchor, constant: 10),
             self.stackView.heightAnchor.constraint(equalToConstant: 45),
             
-            //SignOutButtonConstraints
+            //SignOutButton Constraints
             self.signOutButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 50),
             self.signOutButton.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
             self.signOutButton.heightAnchor.constraint(equalToConstant: 46),
@@ -158,6 +120,7 @@ class AboutCell: UICollectionViewCell {
             
         ])
         reset()
+        prepareShape()
     }
     
     required init?(coder: NSCoder) {
@@ -179,25 +142,4 @@ class AboutCell: UICollectionViewCell {
         delegate?.didCompleteOnboarding()
     }
     
-}
-
-class ProfileHeaderView: UIView {
-    
-    override func draw(_ rect: CGRect) {
-        ProfileHeader.drawCanvas1(frame: self.bounds, resizing: .aspectFill)
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        updateView()
-        translatesAutoresizingMaskIntoConstraints = false
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func updateView() {
-        self.backgroundColor = .clear
-    }
 }

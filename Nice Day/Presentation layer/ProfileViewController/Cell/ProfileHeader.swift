@@ -9,7 +9,25 @@
 import Foundation
 import UIKit
 
-public class ProfileHeader : NSObject {
+public class ProfileHeader : UIView {
+    
+    override public func draw(_ rect: CGRect) {
+        ProfileHeader.drawCanvas1(frame: self.bounds, resizing: .aspectFill)
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        updateView()
+        translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func updateView() {
+        self.backgroundColor = .clear
+    }
     
     //// Drawing Methods
     

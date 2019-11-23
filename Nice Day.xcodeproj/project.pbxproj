@@ -43,6 +43,9 @@
 		74BF53362370510500CCEF3C /* SupportViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BF53352370510500CCEF3C /* SupportViewModel.swift */; };
 		74BF5338237055AE00CCEF3C /* EmailSupportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BF5337237055AE00CCEF3C /* EmailSupportCell.swift */; };
 		74C2FED923885DD000F485B6 /* ProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C2FED823885DD000F485B6 /* ProfileHeader.swift */; };
+		74C2FEDC2389653200F485B6 /* CustomStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C2FEDB2389653200F485B6 /* CustomStackView.swift */; };
+		74C2FEDE23896FEB00F485B6 /* CustomInfoLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C2FEDD23896FEB00F485B6 /* CustomInfoLabel.swift */; };
+		74C2FEE02389701900F485B6 /* CustomShapeLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C2FEDF2389701900F485B6 /* CustomShapeLayer.swift */; };
 		74C92A3223474CAB00AB0C65 /* onboarding.json in Resources */ = {isa = PBXBuildFile; fileRef = 74C92A3123474CAB00AB0C65 /* onboarding.json */; };
 		74C962C72378851F00F5B810 /* MoodStaticCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C962C62378851F00F5B810 /* MoodStaticCell.swift */; };
 		74C962D12379DC2300F5B810 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C962D02379DC2300F5B810 /* ActivityView.swift */; };
@@ -159,6 +162,9 @@
 		74BF53352370510500CCEF3C /* SupportViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportViewModel.swift; sourceTree = "<group>"; };
 		74BF5337237055AE00CCEF3C /* EmailSupportCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSupportCell.swift; sourceTree = "<group>"; };
 		74C2FED823885DD000F485B6 /* ProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeader.swift; sourceTree = "<group>"; };
+		74C2FEDB2389653200F485B6 /* CustomStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStackView.swift; sourceTree = "<group>"; };
+		74C2FEDD23896FEB00F485B6 /* CustomInfoLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInfoLabel.swift; sourceTree = "<group>"; };
+		74C2FEDF2389701900F485B6 /* CustomShapeLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomShapeLayer.swift; sourceTree = "<group>"; };
 		74C92A3123474CAB00AB0C65 /* onboarding.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onboarding.json; sourceTree = "<group>"; };
 		74C962C62378851F00F5B810 /* MoodStaticCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodStaticCell.swift; sourceTree = "<group>"; };
 		74C962D02379DC2300F5B810 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
@@ -412,6 +418,16 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		74C2FEDA238964EA00F485B6 /* AdditionalFiles */ = {
+			isa = PBXGroup;
+			children = (
+				74C2FEDB2389653200F485B6 /* CustomStackView.swift */,
+				74C2FEDD23896FEB00F485B6 /* CustomInfoLabel.swift */,
+				74C2FEDF2389701900F485B6 /* CustomShapeLayer.swift */,
+			);
+			path = AdditionalFiles;
+			sourceTree = "<group>";
+		};
 		74C962C52378849F00F5B810 /* ProfileAchievments */ = {
 			isa = PBXGroup;
 			children = (
@@ -619,6 +635,7 @@
 		74CE4431235CD80D00066B17 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				74C2FEDA238964EA00F485B6 /* AdditionalFiles */,
 				74CE4432235CD82D00066B17 /* AboutCell.swift */,
 				74C2FED823885DD000F485B6 /* ProfileHeader.swift */,
 				74C962C52378849F00F5B810 /* ProfileAchievments */,
@@ -955,7 +972,9 @@
 				745805B723492AF800B7783F /* CoreTabBarController.swift in Sources */,
 				747F6F9822CFD11400631A30 /* BonusCell.swift in Sources */,
 				74C962C72378851F00F5B810 /* MoodStaticCell.swift in Sources */,
+				74C2FEDC2389653200F485B6 /* CustomStackView.swift in Sources */,
 				74CE4433235CD82D00066B17 /* AboutCell.swift in Sources */,
+				74C2FEE02389701900F485B6 /* CustomShapeLayer.swift in Sources */,
 				74CE441B235C9F7200066B17 /* SearchView.swift in Sources */,
 				74CE4463235D831D00066B17 /* CoreDataStack.swift in Sources */,
 				74219457237402FD007D0EB1 /* NewPasswordAgain.swift in Sources */,
@@ -992,6 +1011,7 @@
 				74CE4435235CDAA500066B17 /* ProfileAchievmentsCell.swift in Sources */,
 				74CE440A235C75D700066B17 /* RootMainViewController.swift in Sources */,
 				74A5BAC3236619F500B3B000 /* EmailView.swift in Sources */,
+				74C2FEDE23896FEB00F485B6 /* CustomInfoLabel.swift in Sources */,
 				7459C70F2349C5F300362DFC /* Сolor+extension.swift in Sources */,
 				74CE4408235C5F4E00066B17 /* MainViewModel.swift in Sources */,
 				742194532373FCD3007D0EB1 /* FiveDigitCell.swift in Sources */,
