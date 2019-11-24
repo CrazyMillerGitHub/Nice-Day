@@ -121,7 +121,6 @@ extension MainViewModel:  UICollectionViewDataSource, UICollectionViewDelegateFl
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print(items[section].rowCount)
         return items[section].rowCount
     }
     

@@ -47,6 +47,7 @@ class ProfileAchievmentsCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         reset()
+        setupViews()
     }
     
     private func reset() {

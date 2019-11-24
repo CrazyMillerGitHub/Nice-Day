@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AchievmentsCell: CoreCell, UICollectionViewDelegate, UICollectionViewDataSource {
+class AchievmentsCell: CoreCell {
     static var identifier: String = "achievments"
     
     var item: MainViewModelItem? {
@@ -18,12 +18,7 @@ class AchievmentsCell: CoreCell, UICollectionViewDelegate, UICollectionViewDataS
         }
     }
     
-    let friendsCollectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.backgroundColor = .red
-        return collectionView
-    }()
+    let viewModel = AchievmentViewModel()
     
     // MARK: showMoreButton
     fileprivate var showMoreButton: UIButton = {
@@ -38,28 +33,37 @@ class AchievmentsCell: CoreCell, UICollectionViewDelegate, UICollectionViewDataS
         return button
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        refresh()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        refresh()
-    }
-    
-    private func refresh() {
-        addSubview(showMoreButton)
+    // MARK: friendsCollectionView
+       // CollectionView для статистики
+       let friendsCollectionView: UICollectionView = {
+           let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+           collectionView.backgroundColor = .red
+           collectionView.register(AchievmentCell.self, forCellWithReuseIdentifier: AchievmentCell.achievmentIdentifier)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+           return collectionView
+       }()
+       
+          override init(frame: CGRect) {
+           super.init(frame: frame)
+           setupViews()
+       }
+       
+    func setupViews() {
         addSubview(friendsCollectionView)
+        addSubview(showMoreButton)
+        friendsCollectionView.delegate = viewModel
+        friendsCollectionView.dataSource = viewModel
         prepareConstraint()
-        friendsCollectionView.register(AchievmentCell.self, forCellWithReuseIdentifier: AchievmentCell.achievmentIdentifier)
-        friendsCollectionView.delegate = self
-        friendsCollectionView.dataSource = self
     }
+       
+       required init?(coder: NSCoder) {
+           fatalError("init(coder:) has not been implemented")
+       }
+       
+       override func prepareForReuse() {
+           super.prepareForReuse()
+           setupViews()
+       }
     
     private func prepareConstraint() {
         NSLayoutConstraint.activate([
@@ -76,18 +80,5 @@ class AchievmentsCell: CoreCell, UICollectionViewDelegate, UICollectionViewDataS
             friendsCollectionView.bottomAnchor.constraint(equalTo: showMoreButton.topAnchor)
         ])
     }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-            print("jej")
-          return 1
-      }
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        print("SSSS")
-        return 3
-    }
-      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-          guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AchievmentCell.achievmentIdentifier, for: indexPath) as? AchievmentCell else { fatalError() }
-          return cell
-      }
     
 }

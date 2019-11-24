@@ -18,6 +18,7 @@ class ProfileAchievmentsViewModel: NSObject, UICollectionViewDelegate, UICollect
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoodStaticCell.identifier, for: indexPath) as? MoodStaticCell else {
             return UICollectionViewCell()
         }
+        cell.run(mode: .analyz, text: "test")
         return cell
     }
     
@@ -27,7 +28,7 @@ class ProfileAchievmentsViewModel: NSObject, UICollectionViewDelegate, UICollect
             return CGSize(width: UIScreen.main.bounds.width - 30, height: 130)
         case 1:
             return CGSize(width: UIScreen.main.bounds.width - 30, height: 180)
-        default:
+        case _:
             return CGSize(width: UIScreen.main.bounds.width - 30, height: 410)
         }
     }

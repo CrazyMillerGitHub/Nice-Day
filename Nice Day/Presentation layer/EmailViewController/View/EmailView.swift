@@ -24,8 +24,10 @@ class EmailView: UIViewController {
     
     @objc
     private func forgotAction() {
-        let supportVC = SupportView()
-        supportVC.modalPresentationStyle = .fullScreen
-        self.present(supportVC, animated: true, completion: nil)
+        DispatchQueue.main.async {
+            let supportVC = SupportView()
+            supportVC.modalPresentationStyle = .fullScreen
+            self.present(supportVC, animated: true, completion: nil)
+        }
     }
 }

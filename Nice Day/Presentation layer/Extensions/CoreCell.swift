@@ -10,6 +10,13 @@ import UIKit
 
 class CoreCell: UICollectionViewCell {
     
+    enum StatusCell {
+        case main
+        case analyz
+    }
+    
+    var status: Bool = false
+    
     // MARK: stageTitleLabel
     // Название ячейки
     let cellTitleLabel: UILabel = {
@@ -21,20 +28,58 @@ class CoreCell: UICollectionViewCell {
         return label
     }()
     
+    // MARK: cellDescriptionLabel
+    // Название ячейки
+    let cellDescriptionLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.textColor = .black
+        label.layer.backgroundColor = UIColor.white.cgColor
+        label.layer.cornerRadius = 18
+        label.layer.shadowColor = UIColor.black.cgColor
+        label.layer.shadowOffset = CGSize(width: 0, height: 10)
+        label.layer.shadowRadius = 20
+        label.layer.shadowOpacity = 0.1
+        label.font = UIFont.systemFont(ofSize: 17, weight: .heavy)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        self.reset()
+        self.prepareForUse()
+    }
+    
+    fileprivate func analyzLabel(_ text: String) {
+        cellDescriptionLabel.text = text
+        contentView.addSubview(cellDescriptionLabel)
+        NSLayoutConstraint.activate([
+            cellDescriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: -9),
+            cellDescriptionLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -18),
+            cellDescriptionLabel.heightAnchor.constraint(equalToConstant: 36),
+            cellDescriptionLabel.widthAnchor.constraint(equalToConstant: 85)
+        ])
+    }
+    
+    func run(mode: StatusCell, text: String) {
+        switch mode {
+        case .analyz:
+            analyzLabel(text)
+        case _:
+            return
+        }
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
-        self.reset()
+        self.prepareForUse()
     }
-    func reset() {
+    
+    private func prepareForUse() {
         contentView.addSubview(cellTitleLabel)
         self.contentView.layer.cornerRadius = 15
         self.contentView.backgroundColor = .white
@@ -45,11 +90,9 @@ class CoreCell: UICollectionViewCell {
         self.contentView.layer.shadowOffset = CGSize(width: 0, height: 16)
         self.contentView.layer.masksToBounds = false
         NSLayoutConstraint.activate([
-            
             cellTitleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             cellTitleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
             cellTitleLabel.heightAnchor.constraint(equalToConstant: 20)
-            
         ])
     }
     

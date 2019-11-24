@@ -132,17 +132,18 @@ class OnboardingView: UIViewController,UIScrollViewDelegate {
         view.addSubview(pageControl)
     }
     
-    @objc private func tappedButton() {
+    @objc
+    private func tappedButton() {
+        DispatchQueue.main.async {
             let authVC = AuthViewController()
             authVC.modalPresentationStyle = .fullScreen
             self.present(authVC, animated: true, completion: nil)
-        
+        }
     }
     
     private func handlePan (recognizer:UIPanGestureRecognizer) {
         let translation = recognizer.translation(in: self.view)
         let progress = translation.x / self.view.bounds.size.width * 0.75
-        print(progress)
         animationView.currentProgress = progress
     }
     

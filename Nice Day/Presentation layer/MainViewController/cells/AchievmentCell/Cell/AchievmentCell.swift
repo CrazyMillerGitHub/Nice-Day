@@ -26,6 +26,5 @@ class AchievmentCell: UICollectionViewCell {
        }
        
        private func refresh() {
-        contentView.backgroundColor = .red
        }
 }

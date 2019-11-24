@@ -8,12 +8,13 @@
 
 import UIKit
 
-class MainViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, ProfileImageViewProtocol {
+class MainViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
     let imagePicker = UIImagePickerController()
     
     weak var collectionView: UICollectionView!
 
+    @objc
     func moveAndResizeImage() {
         guard let height = navigationController?.navigationBar.frame.height else { return }
         let coeff: CGFloat = {
@@ -45,7 +46,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
     }
     
     let provider = MainViewModel()
-    let delegate = MainViewControllerDelegate()
+    let viewSent = MainViewControllerDelegate()
     
     // MARK: imageView
     let imageView: UIImageView = {
@@ -54,25 +55,39 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
         return imageView
     }()
     
-    @objc func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
-        let profileView = ProfileView()
-        present(profileView, animated: true, completion: nil)
+    @objc
+    func imageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
+        DispatchQueue.main.async {
+            let profileView = ProfileView()
+            profileView.isModalInPresentation = true
+            self.present(profileView, animated: true, completion: nil)
+        }
     }
     
     override func loadView() {
-         super.loadView()
-               let collectionView = UICollectionView(frame: view.frame, collectionViewLayout: UICollectionViewFlowLayout())
-                      collectionView.translatesAutoresizingMaskIntoConstraints = false
-                      self.view.addSubview(collectionView)
-               NSLayoutConstraint.activate([
-                collectionView.topAnchor.constraint(equalTo: self.view.topAnchor),
-                   collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: 0),
-                   collectionView.leadingAnchor.constraint(equalTo:self.view.safeAreaLayoutGuide.leadingAnchor),
-                   collectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
-               ])
-                    
-               self.collectionView = collectionView
+        super.loadView()
+        let collectionView = UICollectionView(frame: view.frame, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(collectionView)
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: 0),
+            collectionView.leadingAnchor.constraint(equalTo:self.view.safeAreaLayoutGuide.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
+        ])
+        
+        self.collectionView = collectionView
+        createObserver()
     }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    func createObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(moveAndResizeImage), name: .moveAndResizeImage, object: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         imageView.isUserInteractionEnabled = true
@@ -98,8 +113,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
         imageView.addGestureRecognizer(tapGestureRecognizer)
         
         collectionView.dataSource = provider
-        collectionView.delegate = delegate
-        delegate.delegate = self
+        collectionView.delegate = viewSent
         setupUI()
         // Do any additional setup after loading the view.
     }

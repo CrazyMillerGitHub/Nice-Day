@@ -256,10 +256,11 @@ extension AuthViewController: ASAuthorizationControllerDelegate {
         print("Authorization completed!")
         switch authorization.credential {
         case _ as ASAuthorizationAppleIDCredential:
-//            let user = UserStruct(credentials: credentials)
-            let mainController = RootMainViewController()
-            mainController.modalPresentationStyle = .fullScreen
-            self.present(mainController, animated: true, completion: nil)
+            DispatchQueue.main.async {
+                let mainController = RootMainViewController()
+                mainController.modalPresentationStyle = .fullScreen
+                self.present(mainController, animated: true, completion: nil)
+            }
         default: break
         }
     }

@@ -8,16 +8,10 @@
 
 import UIKit
 
-protocol YourCellDelegate: class {
-    func didCompleteOnboarding()
-}
-
 class AboutCell: UICollectionViewCell {
     
     static var identifier = "about"
-    
-    var delegate: YourCellDelegate?
-    
+
     var headerView: ProfileHeader!
     
     //  создание imageView
@@ -32,13 +26,12 @@ class AboutCell: UICollectionViewCell {
     }()
     
     // MARK: SignOut Button
-    internal let signOutButton: ElasticButton = {
+    let signOutButton: ElasticButton = {
         let button = ElasticButton()
         button.backgroundColor = .sunriseColor
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 15
         button.clipsToBounds = true
-        button.addTarget(self, action: #selector(signOutAction), for: .touchUpInside)
         button.setTitle("_signOut".localized(), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
         return button
@@ -134,12 +127,15 @@ class AboutCell: UICollectionViewCell {
     
     private func reset() {
         self.contentView.backgroundColor = .bgColor
+        signOutButton.addAction {
+            self.signOutAction()
+        }
     }
     
     @objc
     private func signOutAction() {
         UserDefaults.standard.set(false, forKey: "loggedIn")
-        delegate?.didCompleteOnboarding()
+        NotificationCenter.default.post(name: .signOutNotificationKey, object: nil)
     }
     
 }

@@ -16,7 +16,7 @@ class MainViewControllerDelegate: NSObject, UICollectionViewDelegate, UIScrollVi
         let data = MainViewControllerData.shared
         return data
     }()
-    weak var delegate: ProfileImageViewProtocol?
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if (data.arr.contains(1) && indexPath.row == 1) {
             collectionView.performBatchUpdates({
@@ -26,9 +26,9 @@ class MainViewControllerDelegate: NSObject, UICollectionViewDelegate, UIScrollVi
         }
     }
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        delegate?.moveAndResizeImage()
-//        moveAndResizeImage(for: height)
+        NotificationCenter.default.post(name: .moveAndResizeImage, object: nil)
     }
+    
     /// Изменения размера ячейки при различной последовательности
     ///
     /// - Parameters:
@@ -63,7 +63,4 @@ class MainViewControllerDelegate: NSObject, UICollectionViewDelegate, UIScrollVi
                            minimumLineSpacingForSectionAt section: Int) -> CGFloat {
            return 33
        }
-}
-protocol ProfileImageViewProtocol: class {
-    func moveAndResizeImage()
 }

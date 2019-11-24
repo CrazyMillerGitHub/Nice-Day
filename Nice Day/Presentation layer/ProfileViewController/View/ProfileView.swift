@@ -70,11 +70,19 @@ class ProfileView: UIViewController {
         setupConstraint()
         collectionView.register(AboutCell.self, forCellWithReuseIdentifier: AboutCell.identifier)
         collectionView.register(ProfileAchievmentsCell.self, forCellWithReuseIdentifier: ProfileAchievmentsCell.identifier)
-        viewModel.profileDelegate = self
         collectionView.delegate = viewModel
         collectionView.dataSource = viewModel
+        createObserver()
         
     }
+    
+    func createObserver() {
+           NotificationCenter.default.addObserver(self, selector: #selector(signOutAction), name: .signOutNotificationKey, object: nil)
+       }
+    
+       deinit {
+           NotificationCenter.default.removeObserver(self)
+       }
     
     // MARK: Настройка constraint
     private func setupConstraint() {
@@ -97,14 +105,14 @@ class ProfileView: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-}
-extension ProfileView: YourCellDelegate {
-    
     @objc
-    func didCompleteOnboarding() {
+    func signOutAction() {
         let onboardingView = OnboardingView()
         onboardingView.modalPresentationStyle = .fullScreen
         self.present(onboardingView, animated: true, completion: nil)
     }
-    
+}
+extension Notification.Name {
+    static let signOutNotificationKey = Notification.Name(rawValue: "com.niceDay.signOutNotificationKey")
+    static let moveAndResizeImage = Notification.Name(rawValue: "com.niceDay.moveAndResizeImage")
 }
