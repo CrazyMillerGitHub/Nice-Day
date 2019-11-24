@@ -23,7 +23,7 @@ class AuthViewController: UIViewController {
     
     weak var topConstraint: NSLayoutConstraint!
     
-    fileprivate var isActive: Bool = true
+    var isActive: Bool = true
     
     let containerView: UIView = {
         let view = UIView()
@@ -91,15 +91,20 @@ class AuthViewController: UIViewController {
         return button
     }()
     
-    let appleSignInButton : ASAuthorizationAppleIDButton = {
-        let appleSignInButton = ASAuthorizationAppleIDButton()
+    var appleSignInButton: ASAuthorizationAppleIDButton!
+    
+    private func prepareSignInButton() -> ASAuthorizationAppleIDButton {
+        let appleSignInButton = ASAuthorizationAppleIDButton(
+            type: .signIn,
+            style: self.traitCollection.userInterfaceStyle == .dark ? .white : .black)
         appleSignInButton.translatesAutoresizingMaskIntoConstraints = false
         appleSignInButton.addTarget(self, action: #selector(didTapAppleIDButton(sender:)), for: .touchUpInside)
         return appleSignInButton
-    }()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.appleSignInButton = prepareSignInButton()
         setupView()
         self.view.backgroundColor = .bgColor
         containerView.backgroundColor = .clear
@@ -160,7 +165,8 @@ class AuthViewController: UIViewController {
         }, completion: nil)
     }
     
-    @objc private func didTapAppleIDButton(sender: Any) {
+    @objc
+    private func didTapAppleIDButton(sender: Any) {
         let provider = ASAuthorizationAppleIDProvider()
         let request = provider.createRequest()
         request.requestedScopes = [.email, .fullName]
@@ -170,14 +176,14 @@ class AuthViewController: UIViewController {
         controller.performRequests()
     }
     
-      private func prepareUI() {
-          self.view.addSubview(ttleLabel)
-          self.view.addSubview(dscrLabel)
-          self.view.addSubview(circleView)
-          self.view.addSubview(emailButton)
-          self.view.addSubview(signInButton)
-          view.addSubview(containerView)
-      }
+    private func prepareUI() {
+        self.view.addSubview(ttleLabel)
+        self.view.addSubview(dscrLabel)
+        self.view.addSubview(circleView)
+        self.view.addSubview(emailButton)
+        self.view.addSubview(signInButton)
+        view.addSubview(containerView)
+    }
     
     private func prepareConstraints() {
         let topConstraint = circleView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor, constant: 0)
@@ -251,6 +257,7 @@ class AuthViewController: UIViewController {
         }
     }
 }
+
 extension AuthViewController: ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         print("Authorization completed!")

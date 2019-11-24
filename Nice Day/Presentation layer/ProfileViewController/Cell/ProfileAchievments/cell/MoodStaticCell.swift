@@ -7,13 +7,24 @@
 //
 
 import UIKit
+import PassKit
 
 class MoodStaticCell: CoreCell {
     
     static var identifier = "moodStaticCell"
     
+    lazy var passButton: PKAddPassButton = {
+        let passButton = PKAddPassButton(addPassButtonStyle: PKAddPassButtonStyle.black)
+        passButton.frame.size.width = 280
+        passButton.frame.size.height = 60
+        return passButton
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
+        passButton.center = contentView.center
+        addSubview(passButton)
+        
     }
     
     required init?(coder: NSCoder) {

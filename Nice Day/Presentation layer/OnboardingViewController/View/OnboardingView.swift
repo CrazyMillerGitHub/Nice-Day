@@ -40,10 +40,11 @@ class OnboardingView: UIViewController,UIScrollViewDelegate {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 18
         button.setTitleColor(UIColor.inverseColor, for: .normal)
-        button.layer.shadowColor = UIColor.inverseColor.cgColor
-        button.layer.shadowRadius = 20
+        button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOffset = CGSize(width: 0, height: 10)
-        button.layer.shadowOpacity = 0.1
+        button.layer.shadowOpacity = 0.10
+        button.layer.backgroundColor = UIColor.white.cgColor
+        button.layer.shadowRadius = 20
         button.alpha = 0.0
         button.addTarget(self, action: #selector(tappedButton), for: .touchUpInside)
         button.isHidden = true
