@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        //application.isStatusBarHidden = false
+        
         UITabBar.appearance().clipsToBounds = true
         UITabBar.appearance().shadowImage = nil
         UITabBar.appearance().tintColor = .inverseColor

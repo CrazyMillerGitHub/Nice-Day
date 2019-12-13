@@ -41,6 +41,8 @@ class MainViewControllerDelegate: NSObject, UICollectionViewDelegate, UIScrollVi
             switch item.type {
             case .bonus, .mood, .special:
                 return CGSize(width: UIScreen.main.bounds.width - 30, height: 130)
+            case .friend:
+                return CGSize(width: UIScreen.main.bounds.width - 30, height: 186)
             default:
                 return CGSize(width: UIScreen.main.bounds.width - 30, height: 236)
             }

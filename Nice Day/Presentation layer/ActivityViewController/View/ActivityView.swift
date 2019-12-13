@@ -32,6 +32,19 @@ class ActivityView: UIViewController {
         return view
     }()
     
+    private var heartView: AnimatedSwitch = {
+        let animationView = AnimatedSwitch()
+        animationView.animation = Animation.named("heartAnimation")
+        animationView.contentMode = .scaleAspectFit
+        animationView.translatesAutoresizingMaskIntoConstraints = false
+        animationView.setProgressForState(fromProgress: 0, toProgress: 1, forOnState: true)
+        animationView.setProgressForState(fromProgress: 1, toProgress: 0, forOnState: false)
+        animationView.frame.size.height = 28
+        animationView.frame.size.width = 28
+        animationView.addTarget(self, action: #selector(favouriteAction(sender:)), for: .touchUpInside)
+        return animationView
+    }()
+    
     // MARK: activityLabel
     fileprivate var activityLabel: UILabel = {
         let label = UILabel()
@@ -43,18 +56,8 @@ class ActivityView: UIViewController {
         return label
     }()
     
-    // MARK: startStopButton
-    fileprivate var startStopButton: ElasticButton = {
-        let button = ElasticButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = .clear
-        button.layer.cornerRadius = 15
-        button.layer.borderWidth = 2
-        button.layer.borderColor = UIColor.sunriseColor.cgColor
-        button.layer.masksToBounds = true
-        button.setTitle("Start", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.heavy)
-        button.setTitleColor(.sunriseColor, for: .normal)
+    fileprivate var startStopButton: StartStopButton = {
+        let button = StartStopButton()
         button.addTarget(self, action: #selector(startStopAction(sender:)), for: .touchUpInside)
         return button
     }()
@@ -93,15 +96,11 @@ class ActivityView: UIViewController {
         return pageControl
     }()
     
-    // MARK: heartView
-    fileprivate var heartView: UIView = {
-        return UIView()
-    }()
-    
     // MARK: PrepareUI
     // Подготовка UI к работе
     private func prepareUI() {
         self.view.addSubview(headerView)
+        self.view.addSubview(heartView)
         self.view.addSubview(activityLabel)
         self.view.addSubview(startStopButton)
         self.view.addSubview(timerLabel)
@@ -120,6 +119,9 @@ class ActivityView: UIViewController {
             //activityLabel constraint
             self.activityLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             self.activityLabel.topAnchor.constraint(equalTo: self.headerView.bottomAnchor, constant: 31),
+            //heartView constraint
+            self.heartView.centerYAnchor.constraint(equalTo: self.activityLabel.centerYAnchor),
+            self.heartView.leadingAnchor.constraint(equalTo: activityLabel.trailingAnchor, constant: 10),
             //startStopButton constraint
             self.startStopButton.widthAnchor.constraint(equalToConstant: 150),
             self.startStopButton.heightAnchor.constraint(equalToConstant: 42),
@@ -146,11 +148,16 @@ class ActivityView: UIViewController {
         self.prepareConstraint()
     }
     
+    @objc
+    private func favouriteAction(sender: Any) {
+        print(#function)
+    }
+    
     /// startStopAction
     /// - Parameter sender: any
     @objc
     private func startStopAction(sender: Any) {
-        
+        startStopButton.isSelected = !startStopButton.isSelected
     }
     
     private func isDarkModeActivated() -> Bool {

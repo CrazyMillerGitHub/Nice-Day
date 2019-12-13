@@ -98,15 +98,9 @@ class CoreCell: UICollectionViewCell {
     
     override var isHighlighted: Bool {
         didSet {
-            if self.isHighlighted {
-                UIView.animate(withDuration: 0.6, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.0, options: [], animations: {
-                    self.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
-                }, completion: nil)
-            } else {
-                UIView.animate(withDuration: 0.8, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.0, options: [], animations: {
-                    self.transform = .identity
-                }, completion: nil)
-            }
+            UIView.animate(withDuration: 0.6, delay: 0.1, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.0, options: [], animations: {
+                self.transform = self.isHighlighted ? CGAffineTransform(scaleX: 0.9, y: 0.9) :  .identity
+            }, completion: nil )
         }
     }
 }

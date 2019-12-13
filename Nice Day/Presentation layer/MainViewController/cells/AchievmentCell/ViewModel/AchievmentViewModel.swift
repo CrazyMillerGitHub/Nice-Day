@@ -11,12 +11,11 @@ import UIKit
 class AchievmentViewModel: NSObject, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AchievmentCell.achievmentIdentifier, for: indexPath) as? AchievmentCell else { fatalError() }
-        cell.backgroundColor = .blue
         return cell
     }
     
@@ -25,10 +24,10 @@ class AchievmentViewModel: NSObject, UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+        return 18
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 17, left: 0, bottom: 0, right: 0)
+        return UIEdgeInsets(top: 22, left: 0, bottom: 22, right: 0)
     }
 }

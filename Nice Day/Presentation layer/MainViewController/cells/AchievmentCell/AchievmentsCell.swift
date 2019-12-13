@@ -34,36 +34,36 @@ class AchievmentsCell: CoreCell {
     }()
     
     // MARK: friendsCollectionView
-       // CollectionView для статистики
-       let friendsCollectionView: UICollectionView = {
-           let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-           collectionView.backgroundColor = .red
-           collectionView.register(AchievmentCell.self, forCellWithReuseIdentifier: AchievmentCell.achievmentIdentifier)
+    // CollectionView для статистики
+    let achievmentCollectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.register(AchievmentCell.self, forCellWithReuseIdentifier: AchievmentCell.achievmentIdentifier)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-           return collectionView
-       }()
-       
-          override init(frame: CGRect) {
-           super.init(frame: frame)
-           setupViews()
-       }
-       
+        collectionView.backgroundColor = .clear
+        return collectionView
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupViews()
+    }
+    
     func setupViews() {
-        addSubview(friendsCollectionView)
+        addSubview(achievmentCollectionView)
         addSubview(showMoreButton)
-        friendsCollectionView.delegate = viewModel
-        friendsCollectionView.dataSource = viewModel
+        achievmentCollectionView.delegate = viewModel
+        achievmentCollectionView.dataSource = viewModel
         prepareConstraint()
     }
-       
-       required init?(coder: NSCoder) {
-           fatalError("init(coder:) has not been implemented")
-       }
-       
-       override func prepareForReuse() {
-           super.prepareForReuse()
-           setupViews()
-       }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        setupViews()
+    }
     
     private func prepareConstraint() {
         NSLayoutConstraint.activate([
@@ -74,10 +74,10 @@ class AchievmentsCell: CoreCell {
             showMoreButton.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
             
             // friendsCollectionView
-            friendsCollectionView.topAnchor.constraint(equalTo: cellTitleLabel.bottomAnchor),
-            friendsCollectionView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
-            friendsCollectionView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
-            friendsCollectionView.bottomAnchor.constraint(equalTo: showMoreButton.topAnchor)
+            achievmentCollectionView.topAnchor.constraint(equalTo: cellTitleLabel.bottomAnchor),
+            achievmentCollectionView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+            achievmentCollectionView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+            achievmentCollectionView.bottomAnchor.constraint(equalTo: showMoreButton.topAnchor)
         ])
     }
     

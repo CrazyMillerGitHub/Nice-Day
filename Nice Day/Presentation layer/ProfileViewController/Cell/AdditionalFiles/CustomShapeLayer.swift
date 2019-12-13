@@ -15,11 +15,12 @@ class ProgressShapeLayer: CAShapeLayer {
         case foreground
     }
     
-    init(shapePath: CGPath, shapeType: ShapeType) {
+    init(shapePath: CGPath, shapeType: ShapeType, from startValue: CGFloat = 1.0) {
         super.init()
         path = shapePath
         strokeColor = shapeType == .foreground ? UIColor.foregroundColor.cgColor : UIColor.sunriseColor.cgColor
         fillColor = UIColor.clear.cgColor
+        strokeEnd = startValue
         lineWidth = shapeType == .foreground ? 10 : 9
         if (shapeType == .foreground) {
             strokeEnd = 0

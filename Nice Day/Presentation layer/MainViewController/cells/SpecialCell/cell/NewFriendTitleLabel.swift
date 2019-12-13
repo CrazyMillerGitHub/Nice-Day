@@ -14,9 +14,9 @@ class NewFriendTitleLabel: UILabel {
         super.init(frame: .zero)
         contentMode = .left
         tintColor = .black
-        text = titleText
+        text = "  \(titleText) "
         font = UIFont.systemFont(ofSize: 14, weight: .semibold)
-        translatesAutoresizingMaskIntoConstraints = true
+        translatesAutoresizingMaskIntoConstraints = false
     }
     
     required init?(coder: NSCoder) {

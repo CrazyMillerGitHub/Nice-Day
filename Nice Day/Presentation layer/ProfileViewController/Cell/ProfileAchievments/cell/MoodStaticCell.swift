@@ -13,18 +13,26 @@ class MoodStaticCell: CoreCell {
     
     static var identifier = "moodStaticCell"
     
-    lazy var passButton: PKAddPassButton = {
-        let passButton = PKAddPassButton(addPassButtonStyle: PKAddPassButtonStyle.black)
-        passButton.frame.size.width = 280
-        passButton.frame.size.height = 60
-        return passButton
+    let stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.distribution = .equalSpacing
+        stackView.alignment = .leading
+        stackView.spacing = 15
+        stackView.addArrangedSubview(EmotionLabel(text: "Happy"))
+        stackView.addArrangedSubview(EmotionLabel(text: "Normal"))
+        stackView.addArrangedSubview(EmotionLabel(text: "Sad"))
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        passButton.center = contentView.center
-        addSubview(passButton)
-        
+        addSubview(stackView)
+        NSLayoutConstraint.activate([
+            stackView.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor,constant: 34.5),
+            stackView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor)
+        ])
     }
     
     required init?(coder: NSCoder) {
