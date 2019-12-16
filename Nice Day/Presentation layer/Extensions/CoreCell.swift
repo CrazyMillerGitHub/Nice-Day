@@ -30,8 +30,9 @@ class CoreCell: UICollectionViewCell {
     
     // MARK: cellDescriptionLabel
     // Название ячейки
-    let cellDescriptionLabel: UILabel = {
+    let cellDescriptionLabel: (String) -> UILabel = { str in
         let label = UILabel()
+        label.text = "\(str)   "
         label.textAlignment = .center
         label.textColor = .black
         label.layer.backgroundColor = UIColor.white.cgColor
@@ -43,7 +44,7 @@ class CoreCell: UICollectionViewCell {
         label.font = UIFont.systemFont(ofSize: 17, weight: .heavy)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
-    }()
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -51,13 +52,12 @@ class CoreCell: UICollectionViewCell {
     }
     
     fileprivate func analyzLabel(_ text: String) {
-        cellDescriptionLabel.text = text
-        contentView.addSubview(cellDescriptionLabel)
+        let label = cellDescriptionLabel(text)
+        contentView.addSubview(label)
         NSLayoutConstraint.activate([
-            cellDescriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: -9),
-            cellDescriptionLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -18),
-            cellDescriptionLabel.heightAnchor.constraint(equalToConstant: 36),
-            cellDescriptionLabel.widthAnchor.constraint(equalToConstant: 85)
+            label.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: -9),
+            label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -18),
+            label.heightAnchor.constraint(equalToConstant: 36)
         ])
     }
     

@@ -11,7 +11,7 @@ import UIKit
 class AboutCell: UICollectionViewCell {
     
     static var identifier = "about"
-
+    
     var headerView: ProfileHeader!
     
     //  создание imageView

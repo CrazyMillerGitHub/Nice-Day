@@ -22,6 +22,7 @@ class ProfileAchievmentsCell: UICollectionViewCell {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.backgroundColor = .clear
         collectionView.register(MoodStaticCell.self, forCellWithReuseIdentifier: MoodStaticCell.identifier)
+        collectionView.register(ChartsStaticCell.self, forCellWithReuseIdentifier: ChartsStaticCell.identifier)
         return collectionView
     }()
     

@@ -146,7 +146,7 @@ class FriendsCell: CoreCell {
             vest.leadingAnchor.constraint(equalTo: statusV.trailingAnchor,constant: 10),
             vest.centerYAnchor.constraint(equalTo: statusV.centerYAnchor),
             vest.widthAnchor.constraint(equalToConstant: 82),
-            vest.heightAnchor.constraint(equalToConstant: 20),
+            vest.heightAnchor.constraint(equalToConstant: 20)
         ])
     }
        

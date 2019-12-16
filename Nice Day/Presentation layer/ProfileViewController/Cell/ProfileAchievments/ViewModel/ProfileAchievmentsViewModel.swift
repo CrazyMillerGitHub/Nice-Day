@@ -8,27 +8,101 @@
 
 import UIKit
 
-class ProfileAchievmentsViewModel: NSObject, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+enum ProfileAchievmentsViewModelItemType {
+    case mood
+    case charts
+    case achievments
+}
+
+protocol ProfileAchievmentsViewModelItem {
+    var type: ProfileAchievmentsViewModelItemType { get }
+}
+
+class MoodProfileModelItem: ProfileAchievmentsViewModelItem {
+    
+    var item: String {
+        return "_mood".localized()
+    }
+    
+    var type: ProfileAchievmentsViewModelItemType {
+        return .mood
+    }
+}
+
+class ChartsProfileModelItem: ProfileAchievmentsViewModelItem {
+    
+    var item: String {
+        return "_charts".localized()
+    }
+    
+    var type: ProfileAchievmentsViewModelItemType {
+        return .charts
+    }
+}
+
+class AchievmentsProfileModelItem: ProfileAchievmentsViewModelItem {
+    
+    var item: String {
+        return "_achievments".localized()
+    }
+    
+    var type: ProfileAchievmentsViewModelItemType {
+        return .achievments
+    }
+}
+class ProfileAchievmentsViewModel: NSObject {
+    var items = [ProfileAchievmentsViewModelItem]()
+    
+    override init() {
+        super.init()
+        
+        let mood = MoodProfileModelItem()
+        items.append(mood)
+        
+        let charts = ChartsProfileModelItem()
+        items.append(charts)
+        
+        let achievments = AchievmentsProfileModelItem()
+        items.append(achievments)
+        
+    }
+}
+
+extension ProfileAchievmentsViewModel: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return items.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoodStaticCell.identifier, for: indexPath) as? MoodStaticCell else {
-            return UICollectionViewCell()
+        let item = items[indexPath.row]
+        switch item.type {
+        case .mood:
+            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoodStaticCell.identifier, for: indexPath) as? MoodStaticCell {
+                cell.run(mode: .analyz, text: "_mood".localized())
+                return cell
+            }
+        case _:
+            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ChartsStaticCell.identifier, for: indexPath) as? ChartsStaticCell {
+                cell.run(mode: .analyz, text: "_charts".localized())
+                return cell
+            }
+//        case .achievments:
+//            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoodStaticCell.identifier, for: indexPath) as? MoodStaticCell {
+//                cell.run(mode: .analyz, text: "_achievments".localized())
+//            }
         }
-        cell.run(mode: .analyz, text: "test")
-        return cell
+        return UICollectionViewCell()
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        switch indexPath.row {
-        case 0:
+        let item = items[indexPath.row]
+        switch item.type {
+        case .mood:
             return CGSize(width: UIScreen.main.bounds.width - 30, height: 130)
-        case 1:
+        case .charts:
             return CGSize(width: UIScreen.main.bounds.width - 30, height: 180)
-        case _:
+        case .achievments:
             return CGSize(width: UIScreen.main.bounds.width - 30, height: 410)
         }
     }

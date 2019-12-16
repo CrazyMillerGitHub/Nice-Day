@@ -12,6 +12,7 @@ import Charts
 class ChartsView: LineChartView {
     
     fileprivate var lines: [LineChartDataSet] = []
+    
     init() {
         super.init(frame: .zero)
         self.xAxis.labelFont = UIFont.systemFont(ofSize: 10, weight: .semibold)
@@ -39,12 +40,19 @@ class ChartsView: LineChartView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func addLine(data: [Int], color: UIColor, label: String = "Yeys") {
+    fileprivate func isLegendHidden(_ label: String) {
+        if label == "hidden" {
+            self.legend.enabled = false
+        }
+    }
+    
+    func addLine(data: [Int], color: UIColor, label: String = "") {
         var chartEntry = [ChartDataEntry]()
         data.forEach {
             let value = ChartDataEntry(x: Double($0), y: Double.random(in: 0...100))
             chartEntry.append(value)
         }
+        isLegendHidden(label)
         let line = LineChartDataSet(entries: chartEntry, label: label)
         line.colors = [color]
         line.drawCirclesEnabled = false

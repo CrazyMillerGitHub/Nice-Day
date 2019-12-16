@@ -21,7 +21,9 @@
 		743953CC2380990E00CE698A /* AchievmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743953CB2380990E00CE698A /* AchievmentCell.swift */; };
 		743953CF2380997800CE698A /* AchievmentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743953CE2380997800CE698A /* AchievmentViewModel.swift */; };
 		743953D123813B1B00CE698A /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743953D023813B1B00CE698A /* CustomSegmentedControl.swift */; };
+		744112E223A378C400A1E6A7 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744112E123A378C400A1E6A7 /* ImagePicker.swift */; };
 		7452800923911D9600F07E76 /* heartAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 7452800823911D9600F07E76 /* heartAnimation.json */; };
+		7458059D23A3EC050051682A /* AllAchievmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7458059C23A3EC050051682A /* AllAchievmentCell.swift */; };
 		745805B523491FA300B7783F /* CoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745805B423491FA300B7783F /* CoreCell.swift */; };
 		7459C70F2349C5F300362DFC /* Сolor+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7459C70E2349C5F300362DFC /* Сolor+extension.swift */; };
 		745D8D0623956B9C008370F9 /* EmotionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745D8D0523956B9C008370F9 /* EmotionLabel.swift */; };
@@ -81,6 +83,7 @@
 		74CF0C4B232F92510091F1A8 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CF0C4A232F92510091F1A8 /* ProfileView.swift */; };
 		74D44A29239427710003192A /* StartStopButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D44A28239427710003192A /* StartStopButton.swift */; };
 		74E15F11235F060E00980F7D /* RootSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E15F10235F060E00980F7D /* RootSearchViewController.swift */; };
+		74F0BFE423A80B9A0025493B /* ChartsStaticCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F0BFE323A80B9A0025493B /* ChartsStaticCell.swift */; };
 		74F36D4023774342004DEBF0 /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F36D3F23774342004DEBF0 /* SegmentedControl.swift */; };
 		74F36D4223774AE3004DEBF0 /* ImageView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F36D4123774AE3004DEBF0 /* ImageView+extension.swift */; };
 /* End PBXBuildFile section */
@@ -143,7 +146,9 @@
 		743953CB2380990E00CE698A /* AchievmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievmentCell.swift; sourceTree = "<group>"; };
 		743953CE2380997800CE698A /* AchievmentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievmentViewModel.swift; sourceTree = "<group>"; };
 		743953D023813B1B00CE698A /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
+		744112E123A378C400A1E6A7 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		7452800823911D9600F07E76 /* heartAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = heartAnimation.json; sourceTree = "<group>"; };
+		7458059C23A3EC050051682A /* AllAchievmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllAchievmentCell.swift; sourceTree = "<group>"; };
 		745805B423491FA300B7783F /* CoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreCell.swift; sourceTree = "<group>"; };
 		7459C70E2349C5F300362DFC /* Сolor+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Сolor+extension.swift"; sourceTree = "<group>"; };
 		745D8D0523956B9C008370F9 /* EmotionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionLabel.swift; sourceTree = "<group>"; wrapsLines = 0; };
@@ -211,6 +216,7 @@
 		74CF0C4A232F92510091F1A8 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		74D44A28239427710003192A /* StartStopButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartStopButton.swift; sourceTree = "<group>"; };
 		74E15F10235F060E00980F7D /* RootSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootSearchViewController.swift; sourceTree = "<group>"; };
+		74F0BFE323A80B9A0025493B /* ChartsStaticCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsStaticCell.swift; sourceTree = "<group>"; };
 		74F36D3F23774342004DEBF0 /* SegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControl.swift; sourceTree = "<group>"; };
 		74F36D4123774AE3004DEBF0 /* ImageView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageView+extension.swift"; sourceTree = "<group>"; };
 		7BF8309A9283943692397954 /* Pods-Nice Day.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nice Day.debug.xcconfig"; path = "Target Support Files/Pods-Nice Day/Pods-Nice Day.debug.xcconfig"; sourceTree = "<group>"; };
@@ -292,6 +298,14 @@
 				743953CE2380997800CE698A /* AchievmentViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		744112E023A3789900A1E6A7 /* ImagePicker */ = {
+			isa = PBXGroup;
+			children = (
+				744112E123A378C400A1E6A7 /* ImagePicker.swift */,
+			);
+			path = ImagePicker;
 			sourceTree = "<group>";
 		};
 		7459C7102349C77E00362DFC /* Extensions */ = {
@@ -463,6 +477,8 @@
 			children = (
 				74C962C62378851F00F5B810 /* MoodStaticCell.swift */,
 				745D8D0523956B9C008370F9 /* EmotionLabel.swift */,
+				7458059C23A3EC050051682A /* AllAchievmentCell.swift */,
+				74F0BFE323A80B9A0025493B /* ChartsStaticCell.swift */,
 			);
 			path = cell;
 			sourceTree = "<group>";
@@ -550,6 +566,7 @@
 		74CE4411235C9ACD00066B17 /* ProfileViewController */ = {
 			isa = PBXGroup;
 			children = (
+				744112E023A3789900A1E6A7 /* ImagePicker */,
 				74CE4431235CD80D00066B17 /* Cell */,
 				74CE4414235C9AEE00066B17 /* Model */,
 				74CE4413235C9ADE00066B17 /* ViewModel */,
@@ -997,10 +1014,12 @@
 				743953D123813B1B00CE698A /* CustomSegmentedControl.swift in Sources */,
 				74BCEE2322D12BA500127488 /* AchievmentsCell.swift in Sources */,
 				740F62CC237F3A1C00B0068A /* ChartsView.swift in Sources */,
+				744112E223A378C400A1E6A7 /* ImagePicker.swift in Sources */,
 				745E059A23884301008F5E63 /* AnimatedLabel.swift in Sources */,
 				74CE446D235EDBF500066B17 /* SearchViewModel.swift in Sources */,
 				747C715D22CD25AB00FBEDCF /* AuthViewController.swift in Sources */,
 				74CE4469235E2E6500066B17 /* SupportView.swift in Sources */,
+				74F0BFE423A80B9A0025493B /* ChartsStaticCell.swift in Sources */,
 				747F6F9822CFD11400631A30 /* BonusCell.swift in Sources */,
 				74C962C72378851F00F5B810 /* MoodStaticCell.swift in Sources */,
 				74C2FEDC2389653200F485B6 /* CustomStackView.swift in Sources */,
@@ -1008,6 +1027,7 @@
 				74C2FEE02389701900F485B6 /* CustomShapeLayer.swift in Sources */,
 				74CE441B235C9F7200066B17 /* SearchView.swift in Sources */,
 				74CE4463235D831D00066B17 /* CoreDataStack.swift in Sources */,
+				7458059D23A3EC050051682A /* AllAchievmentCell.swift in Sources */,
 				74219457237402FD007D0EB1 /* NewPasswordAgain.swift in Sources */,
 				74F36D4223774AE3004DEBF0 /* ImageView+extension.swift in Sources */,
 				74184CB622CE3D2F00EC31DE /* ChartsCell.swift in Sources */,

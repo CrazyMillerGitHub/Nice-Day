@@ -11,8 +11,10 @@ import UIKit
 class EmotionLabel: UIStackView {
     
     let ovalView: UIView = {
-        let view = UIView(frame: CGRect(origin: .zero, size: CGSize(width: 5, height: 5)))
-        view.layer.backgroundColor = UIColor.red.cgColor
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.backgroundColor = UIColor.black.cgColor
+        view.layer.cornerRadius = 3
         return view
     }()
     
@@ -25,6 +27,13 @@ class EmotionLabel: UIStackView {
         return label
     }()
     
+    fileprivate func prepareConstraint() {
+        NSLayoutConstraint.activate([
+            ovalView.heightAnchor.constraint(equalToConstant: 6),
+            ovalView.widthAnchor.constraint(equalToConstant: 6)
+        ])
+    }
+    
     init(text: String = "happy") {
         super.init(frame: .zero)
         label.text = text
@@ -34,9 +43,9 @@ class EmotionLabel: UIStackView {
         spacing = 3
         backgroundColor = .green
         translatesAutoresizingMaskIntoConstraints = false
-        addArrangedSubview(label)
         addArrangedSubview(ovalView)
-        
+        addArrangedSubview(label)
+        prepareConstraint()
     }
     
     required init(coder: NSCoder) {
