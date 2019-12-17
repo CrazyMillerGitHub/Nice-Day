@@ -15,14 +15,14 @@ class NewFriendAdditionalLabel: UILabel {
         case match
     }
     
-    init(of:String, type:LabelType) {
+    init(ofString:String, type:LabelType) {
         super.init(frame: .zero)
-        let attributedString = NSMutableAttributedString(string: " \(of) \(type == .lvl ? "Lvl" : "Match") ", attributes: [
+        let attributedString = NSMutableAttributedString(string: " \(ofString) \(type == .lvl ? "Lvl" : "Match") ", attributes: [
           .font: UIFont.systemFont(ofSize: 11.0, weight: .bold),
           .foregroundColor: UIColor(white: 34.0 / 255.0, alpha: 1.0),
           .kern: 0.18
         ])
-        attributedString.addAttribute(.foregroundColor, value: type == .lvl ? UIColor.green : UIColor.sunriseColor, range: NSRange(location: 1, length: of.count + 1))
+        attributedString.addAttribute(.foregroundColor, value: type == .lvl ? UIColor.green : UIColor.sunriseColor, range: NSRange(location: 1, length: ofString.count + 1))
         attributedText = attributedString
         layer.backgroundColor = UIColor.white.cgColor
         layer.cornerRadius = 8
@@ -86,8 +86,8 @@ class FriendsCell: CoreCell {
         return stackView
     }()
     
-    private var statusV = NewFriendAdditionalLabel(of: "10",type: .lvl)
-    private var vest = NewFriendAdditionalLabel(of: "50%",type: .match)
+    private var statusV = NewFriendAdditionalLabel(ofString: "10",type: .lvl)
+    private var vest = NewFriendAdditionalLabel(ofString: "50%",type: .match)
     
     // MARK: newFriendTitleLabel init
     private var newFriendTitleLabel = NewFriendTitleLabel(of: "Fred Perry")

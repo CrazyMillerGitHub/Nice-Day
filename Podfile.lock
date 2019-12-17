@@ -27,7 +27,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 5.0.0-beta.5)
-  - Charts (from `https://github.com/CrazyMillerGitHub/Charts`, commit `v1.0.1`)
+  - Charts (from `https://github.com/CrazyMillerGitHub/Charts`, commit `v1.1.0`)
   - CHIPageControl (~> 0.1.3)
   - DeckTransition (from `https://github.com/CrazyMillerGitHub/DeckTransition.git`, commit `v1.0.1`)
   - Hero (~> 1.4.0)
@@ -44,7 +44,7 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   Charts:
-    :commit: v1.0.1
+    :commit: v1.1.0
     :git: https://github.com/CrazyMillerGitHub/Charts
   DeckTransition:
     :commit: v1.0.1
@@ -52,7 +52,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   Charts:
-    :commit: v1.0.1
+    :commit: v1.1.0
     :git: https://github.com/CrazyMillerGitHub/Charts
   DeckTransition:
     :commit: v1.0.1
@@ -67,6 +67,6 @@ SPEC CHECKSUMS:
   lottie-ios: 43a472d22b2dd2bed292cc4010c0b4d2e66d3ba8
   SwiftLint: fed9c66336e41fc74dc48a73678380718f0c8b0e
 
-PODFILE CHECKSUM: b0c71683a6a123e5fe777acda3cba79418106735
+PODFILE CHECKSUM: 33e835fe3b098915192962bdde012f81a8d238ea
 
 COCOAPODS: 1.8.4

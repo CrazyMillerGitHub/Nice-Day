@@ -66,7 +66,7 @@ class AboutCell: UICollectionViewCell {
     }
     
     private func prepareShape() {
-        let path = UIBezierPath(arcCenter: CGPoint(x: contentView.center.x, y: contentView.center.x - 26 ), radius: 45, startAngle: -CGFloat.pi / 2, endAngle: 2 * CGFloat.pi, clockwise: true).cgPath
+        let path = UIBezierPath(arcCenter: CGPoint(x: contentView.center.x, y: contentView.center.y - 50.5 ), radius: 45, startAngle: -CGFloat.pi / 2, endAngle: 2 * CGFloat.pi, clockwise: true).cgPath
         let shapeLayer = ProgressShapeLayer(shapePath: path, shapeType: .foreground)
         let bgLayer = ProgressShapeLayer(shapePath: path, shapeType: .background)
         contentView.layer.addSublayer(bgLayer)

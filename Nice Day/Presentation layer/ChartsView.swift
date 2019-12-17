@@ -13,8 +13,11 @@ class ChartsView: LineChartView {
     
     fileprivate var lines: [LineChartDataSet] = []
     
+    weak var axisFormatDelegate: IAxisValueFormatter?
+    
     init() {
         super.init(frame: .zero)
+        axisFormatDelegate = self
         self.xAxis.labelFont = UIFont.systemFont(ofSize: 10, weight: .semibold)
         self.scaleXEnabled = false
         self.scaleYEnabled =  false
@@ -32,6 +35,7 @@ class ChartsView: LineChartView {
         self.chartDescription?.text = ""
         self.leftAxis.axisMinimum = 0.0
         self.xAxis.axisMinimum = 0.0
+        self.xAxis.valueFormatter = axisFormatDelegate
         self.legend.form = .rectangle
         self.legend.formSize = 10.0
     }
@@ -71,26 +75,10 @@ class ChartsView: LineChartView {
         self.data = data
     }
 }
-class ChartsViewController: UIViewController {
-    
-    let charts: ChartsView = {
-        let charts = ChartsView()
-        charts.addLine(data: Array(0...10), color: .red)
-        charts.addLine(data: Array(0...10), color: .blue)
-        return charts
-    }()
-    
-    override func loadView() {
-        super.loadView()
-        self.view.backgroundColor = .white
-        charts.frame = view.frame
-        self.view.addSubview(charts)
-       
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+extension ChartsView: IAxisValueFormatter {
+    func stringForValue(_ value: Double, axis: AxisBase?) -> String {
+        let arr = ["Mon", "Wed", "Thu", "Wen", "Fri", "Sun", "Sat"]
+        return arr[Int(value)]
     }
 }

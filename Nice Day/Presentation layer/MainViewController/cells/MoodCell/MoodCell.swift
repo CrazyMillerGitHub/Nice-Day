@@ -102,11 +102,12 @@ extension MoodCell: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
+        return (collectionView.frame.width - 58 * 3) / 4
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 10, left: 50, bottom: 0, right: 10)
+        let spacing = (collectionView.frame.width - 58 * 3) / 4
+        return UIEdgeInsets(top: 10, left: spacing, bottom: 0, right: spacing)
     }
     
 }

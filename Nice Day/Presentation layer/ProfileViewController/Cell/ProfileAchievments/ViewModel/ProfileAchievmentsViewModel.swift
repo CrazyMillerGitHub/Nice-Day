@@ -82,15 +82,16 @@ extension ProfileAchievmentsViewModel: UICollectionViewDelegate, UICollectionVie
                 cell.run(mode: .analyz, text: "_mood".localized())
                 return cell
             }
-        case _:
+        case .charts:
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ChartsStaticCell.identifier, for: indexPath) as? ChartsStaticCell {
                 cell.run(mode: .analyz, text: "_charts".localized())
                 return cell
             }
-//        case .achievments:
-//            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoodStaticCell.identifier, for: indexPath) as? MoodStaticCell {
-//                cell.run(mode: .analyz, text: "_achievments".localized())
-//            }
+        case .achievments:
+            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AchievmentsStaticCell.identifier, for: indexPath) as? AchievmentsStaticCell {
+                cell.run(mode: .analyz, text: "_achievments".localized())
+                return cell
+            }
         }
         return UICollectionViewCell()
     }

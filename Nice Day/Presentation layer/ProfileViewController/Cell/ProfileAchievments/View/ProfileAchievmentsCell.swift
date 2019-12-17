@@ -23,6 +23,7 @@ class ProfileAchievmentsCell: UICollectionViewCell {
         collectionView.backgroundColor = .clear
         collectionView.register(MoodStaticCell.self, forCellWithReuseIdentifier: MoodStaticCell.identifier)
         collectionView.register(ChartsStaticCell.self, forCellWithReuseIdentifier: ChartsStaticCell.identifier)
+        collectionView.register(AchievmentsStaticCell.self, forCellWithReuseIdentifier: AchievmentsStaticCell.identifier)
         return collectionView
     }()
     

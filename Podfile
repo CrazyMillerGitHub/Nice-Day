@@ -9,7 +9,7 @@ target 'Nice Day' do
   pod 'Alamofire', '~> 5.0.0-beta.5'
   pod 'Hero', '~> 1.4.0'
   pod 'CHIPageControl', '~> 0.1.3'
-  pod 'Charts', :git => 'https://github.com/CrazyMillerGitHub/Charts', :commit => 'v1.0.1'
+  pod 'Charts', :git => 'https://github.com/CrazyMillerGitHub/Charts', :commit => 'v1.1.0'
   pod 'lottie-ios', '~> 3.1.1'
   pod 'DeckTransition', :git => 'https://github.com/CrazyMillerGitHub/DeckTransition.git', :commit => 'v1.0.1'
 end
