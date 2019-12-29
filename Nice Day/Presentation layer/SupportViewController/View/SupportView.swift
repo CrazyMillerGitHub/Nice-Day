@@ -87,11 +87,24 @@ class SupportView: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
             
         ])
+        check()
     }
     
     @objc
     private func dismissAction(sender: Any) {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    func check() {
+        for _ in 0...3 {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                self.tableView.beginUpdates()
+                let email = FiveDigitKeyModelItem()
+                self.items.items.append(email)
+                self.tableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+                self.tableView.endUpdates()
+            }
+        }
     }
     
     private func prepareUI() {

@@ -140,6 +140,7 @@ class AuthViewController: UIViewController {
     // MARK: отмена email auth
     @objc
     private func handleGesture(gesture: UISwipeGestureRecognizer) {
+        self.view.endEditing(true)
         self.isActive = true
         UIView.animateKeyframes(withDuration: 1.5, delay: 0.0, options: [], animations: {
             self.topConstraint.constant -= self.circleView.bounds.height / 1.1

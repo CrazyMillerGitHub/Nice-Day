@@ -10,8 +10,6 @@ import UIKit
 
 class MainViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
-    let imagePicker = UIImagePickerController()
-    
     weak var collectionView: UICollectionView!
 
     @objc
@@ -91,7 +89,6 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
     override func viewDidLoad() {
         super.viewDidLoad()
         imageView.isUserInteractionEnabled = true
-        imagePicker.delegate = self
         
         //colors
         self.view.backgroundColor = .bgColor
@@ -112,6 +109,7 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tapGestureRecognizer:)))
         imageView.addGestureRecognizer(tapGestureRecognizer)
         
+        provider.delegate = self
         collectionView.dataSource = provider
         collectionView.delegate = viewSent
         setupUI()
@@ -153,4 +151,12 @@ extension MainViewController {
             ])
     }
   
+}
+extension MainViewController: CloseActionProtocol {
+    
+    func closeAction() {
+        print(provider.items.count)
+        collectionView.deleteItems(at: [IndexPath(row: 0, section: 1)])
+    }
+    
 }

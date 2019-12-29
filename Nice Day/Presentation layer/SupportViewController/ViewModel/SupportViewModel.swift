@@ -67,32 +67,28 @@ class SupportViewModel: NSObject {
     override init() {
         super.init()
         
-        let email = SupportEmailModelItem()
-        items.append(email)
-        
-        let fiveDigit = FiveDigitKeyModelItem()
-        items.append(fiveDigit)
-        
-        let newPassword = NewPasswordCellModelItem()
-        items.append(newPassword)
-        
-        let passwordAgain = NewPassworAgainModelItem()
-        items.append(passwordAgain)
+//        let email = SupportEmailModelItem()
+//        items.append(email)
+//
+//        let fiveDigit = FiveDigitKeyModelItem()
+//        items.append(fiveDigit)
+//
+//        let newPassword = NewPasswordCellModelItem()
+//        items.append(newPassword)
+//
+//        let passwordAgain = NewPassworAgainModelItem()
+//        items.append(passwordAgain)
         
     }
 }
 extension SupportViewModel: UITableViewDelegate, UITableViewDataSource {
     
-    func numberOfSections(in tableView: UITableView) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items.count
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let item = items[indexPath.section]
+        let item = items[indexPath.row]
         switch item.type {
         case .email:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: EmailSupportCell.identifier, for: indexPath) as? EmailSupportCell else {

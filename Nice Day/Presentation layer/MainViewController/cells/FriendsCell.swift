@@ -19,18 +19,18 @@ class NewFriendAdditionalLabel: UILabel {
         super.init(frame: .zero)
         let attributedString = NSMutableAttributedString(string: " \(ofString) \(type == .lvl ? "Lvl" : "Match") ", attributes: [
           .font: UIFont.systemFont(ofSize: 11.0, weight: .bold),
-          .foregroundColor: UIColor(white: 34.0 / 255.0, alpha: 1.0),
+          .foregroundColor: UIColor.inverseColor,
           .kern: 0.18
         ])
         attributedString.addAttribute(.foregroundColor, value: type == .lvl ? UIColor.green : UIColor.sunriseColor, range: NSRange(location: 1, length: ofString.count + 1))
         attributedText = attributedString
-        layer.backgroundColor = UIColor.white.cgColor
+        layer.backgroundColor = UIColor.bgColor.cgColor
         layer.cornerRadius = 8
         layer.borderWidth = 1
         layer.shadowRadius = 4
         layer.shadowOpacity = 0.03
         layer.shadowOffset = CGSize(width: 0, height: 2)
-        layer.borderColor = UIColor.black.withAlphaComponent(0.02).cgColor
+        layer.borderColor = UIColor.bgColor.withAlphaComponent(0.02).cgColor
         translatesAutoresizingMaskIntoConstraints = false
     }
     
@@ -75,12 +75,12 @@ class FriendsCell: CoreCell {
         let label = UILabel()
         label.text = "400 ft"
         label.font = UIFont.systemFont(ofSize: 10, weight: .bold)
-        label.textColor = UIColor.black.withAlphaComponent(0.2)
+        label.textColor = UIColor.inverseColor.withAlphaComponent(0.2)
         label.contentMode = .left
         let location = UIImageView()
         location.image = UIImage(systemName: "location.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 7))
         location.contentMode = .scaleAspectFit
-        location.tintColor = .black
+        location.tintColor = .inverseColor
         stackView.addArrangedSubview(location)
         stackView.addArrangedSubview(label)
         return stackView

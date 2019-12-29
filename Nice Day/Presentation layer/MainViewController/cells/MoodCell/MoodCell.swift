@@ -34,7 +34,6 @@ class MoodCell: CoreCell {
         button.layer.shadowOpacity = 0.14
         button.layer.shadowOffset = CGSize(width: 0, height: 16)
         button.layer.masksToBounds = false
-        button.addTarget(self, action: #selector(closeButtonAction(sender:)), for: .touchUpInside)
         return button
     }()
     
@@ -79,10 +78,6 @@ class MoodCell: CoreCell {
                ])
     }
     
-    @objc
-    private func closeButtonAction(sender: Any) {
-        
-    }
 }
 extension MoodCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

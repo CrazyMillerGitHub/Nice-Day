@@ -8,10 +8,6 @@
 
 import UIKit
 
-class SearchViewModel:NSObject, UISearchBarDelegate {
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print(searchText)
-    }
-    
+class SearchViewModel: NSObject, UISearchBarDelegate {
+
 }

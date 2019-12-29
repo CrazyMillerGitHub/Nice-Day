@@ -48,4 +48,8 @@ extension UIColor {
         return color
     }
     
+    class var cellBackgroundColor: UIColor {
+        guard let color = UIColor(named: #function) else { return UIColor() }
+        return color
+    }
 }

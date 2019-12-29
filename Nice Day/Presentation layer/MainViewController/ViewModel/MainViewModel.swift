@@ -17,6 +17,10 @@ enum MainViewModelItemType {
     case special
 }
 
+protocol CloseActionProtocol: class {
+    func closeAction()
+}
+
 protocol MainViewModelItem {
     var type: MainViewModelItemType { get }
     var rowCount: Int { get }
@@ -85,6 +89,9 @@ class SpecialCellModelItem: MainViewModelItem {
 }
 
 class MainViewModel: NSObject {
+    
+    weak var delegate: CloseActionProtocol?
+    
     var items = [MainViewModelItem]()
     
     var data: MainViewControllerData = {
@@ -121,11 +128,14 @@ extension MainViewModel:  UICollectionViewDataSource, UICollectionViewDelegateFl
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return items[section].rowCount
+        print("Get numberOfItemsInSection", section)
+        return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         let item = items[indexPath.section]
+        
         switch item.type {
         case .achievments:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AchievmentsCell.identifier, for: indexPath) as? AchievmentsCell else { fatalError() }
@@ -157,11 +167,18 @@ extension MainViewModel:  UICollectionViewDataSource, UICollectionViewDelegateFl
         case .mood:
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoodCell.identifier, for: indexPath) as? MoodCell {
                 cell.item = item
-                
+                cell.closeButton.addTarget(self, action: #selector(closeAction(sender:)), for: .touchUpInside)
                 return cell
             }
         }
         return UICollectionViewCell()
     }
     
+    @objc
+    private func closeAction(sender: Any) {
+        items.remove(at: 1)
+        let view = MainViewControllerDelegate()
+        view.modelView.items.remove(at: 1)
+        delegate?.closeAction()
+    }
 }

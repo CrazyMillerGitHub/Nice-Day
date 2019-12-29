@@ -23,7 +23,7 @@ class ChartsView: LineChartView {
         self.scaleYEnabled =  false
         self.rightAxis.enabled = false
         self.leftAxis.enabled = false
-        self.xAxis.labelTextColor = UIColor.black.withAlphaComponent(0.6)
+        self.xAxis.labelTextColor = UIColor.inverseColor.withAlphaComponent(0.6)
         self.leftAxis.drawGridLinesEnabled = false
         self.xAxis.avoidFirstLastClippingEnabled = true
         self.rightAxis.enabled = false
@@ -37,6 +37,7 @@ class ChartsView: LineChartView {
         self.xAxis.axisMinimum = 0.0
         self.xAxis.valueFormatter = axisFormatDelegate
         self.legend.form = .rectangle
+        self.legend.textColor = .inverseColor
         self.legend.formSize = 10.0
     }
     

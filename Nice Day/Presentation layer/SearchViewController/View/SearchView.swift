@@ -14,7 +14,27 @@ class SearchView: UIViewController {
     //init
     weak var tableView: UITableView!
     
-    var viewModel = SearchViewModel()
+    private var viewModel = SearchViewModel()
+    
+    private var model = SearchModel()
+    
+    private var filteredModel = [String]()
+    
+    // MARK: searchController
+    private let searchViewController: UISearchController = {
+        let searchViewController = UISearchController(searchResultsController: nil)
+        searchViewController.obscuresBackgroundDuringPresentation = false
+        return searchViewController
+    }()
+    
+    private var searchBarIsEmpty: Bool {
+        guard let text = searchViewController.searchBar.text else { return false }
+        return text.isEmpty
+    }
+    
+    private var isFiltering: Bool {
+        return searchViewController.isActive && !searchBarIsEmpty
+    }
     
     override func loadView() {
         super.loadView()
@@ -36,29 +56,18 @@ class SearchView: UIViewController {
         self.tableView = tableView
       
     }
-   
-    // MARK: SearchBar config
-    let searchBar: UISearchBar = {
-        let searchBar = UISearchBar()
-        searchBar.searchBarStyle = UISearchBar.Style.prominent
-        searchBar.placeholder = " Search"
-        searchBar.sizeToFit()
-        searchBar.translatesAutoresizingMaskIntoConstraints = false
-        searchBar.searchTextField.backgroundColor = .searchBarColor
-        searchBar.backgroundImage = UIImage()
-        return searchBar
-    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //config UI
         prepareUI()
-        self.searchBar.delegate = viewModel
+        searchViewController.searchResultsUpdater = self
         self.tableView.dataSource = self
         self.tableView.delegate = self
         self.tableView.register(SearchCell.self, forCellReuseIdentifier: SearchCell.identifier)
         // Do any additional setup after loading the view.
     }
+    
     private func prepareUI() {
         self.view.backgroundColor = .bgColor
         self.tableView.backgroundColor = .bgColor
@@ -66,20 +75,22 @@ class SearchView: UIViewController {
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.navigationBar.topItem?.title = "_search".localized()
         self.navigationController?.navigationBar.shadowImage = UIImage()
-        let searchViewController = UISearchController(searchResultsController: nil)
         navigationItem.searchController = searchViewController
         navigationItem.hidesSearchBarWhenScrolling = false
+        definesPresentationContext = true
     }
 }
 
 extension SearchView: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        
+        return isFiltering ? filteredModel.count : model.array.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchCell.identifier, for: indexPath) as? SearchCell else { return UITableViewCell() }
+        cell.textTitle.text = isFiltering ? filteredModel[indexPath.row] : model.array[indexPath.row]
         return cell
     }
     
@@ -116,4 +127,18 @@ extension SearchView: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 95.0
     }
+}
+extension SearchView: UISearchResultsUpdating {
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        fileterContentForSearchController(text: searchController.searchBar.text ?? "")
+    }
+    
+    func fileterContentForSearchController(text: String) {
+        filteredModel = model.array.filter { (val: String) -> Bool in
+            return val.lowercased().contains(text.lowercased())
+        }
+        tableView.reloadData()
+    }
+    
 }

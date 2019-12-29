@@ -22,7 +22,7 @@ class CoreCell: UICollectionViewCell {
     let cellTitleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.textColor = .black
+        label.textColor = .inverseColor
         label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -82,7 +82,7 @@ class CoreCell: UICollectionViewCell {
     private func prepareForUse() {
         contentView.addSubview(cellTitleLabel)
         self.contentView.layer.cornerRadius = 15
-        self.contentView.backgroundColor = .white
+        self.contentView.backgroundColor = .cellBackgroundColor
         self.contentView.clipsToBounds = false
         self.contentView.layer.shadowColor = UIColor(red:0.00, green:0.00, blue:0.00, alpha:0.16).cgColor
         self.contentView.layer.shadowOpacity = 0.9

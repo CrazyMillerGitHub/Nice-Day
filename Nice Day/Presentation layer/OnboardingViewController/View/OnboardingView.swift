@@ -142,7 +142,7 @@ class OnboardingView: UIViewController,UIScrollViewDelegate {
         }
     }
     
-    private func handlePan (recognizer:UIPanGestureRecognizer) {
+    private func handlePan(recognizer:UIPanGestureRecognizer) {
         let translation = recognizer.translation(in: self.view)
         let progress = translation.x / self.view.bounds.size.width * 0.75
         animationView.currentProgress = progress
