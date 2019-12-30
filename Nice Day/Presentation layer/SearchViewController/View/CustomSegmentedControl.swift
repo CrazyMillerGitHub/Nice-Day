@@ -10,12 +10,14 @@ import UIKit
 
 class CustomSegmentedControl: UISegmentedControl {
     
+    var selectedSegmentedControlIndex: Int = 0
+    
     init(items: [String] = []) {
         super.init(frame: .zero)
         backgroundColor = .clear
         selectedSegmentTintColor = .sunriseColor
         self.updateItems(items)
-        selectedSegmentIndex = 0
+        selectedSegmentIndex = selectedSegmentedControlIndex
         setBackgroundImage(UIImage(), for: .focused, barMetrics: .default)
         setTitleTextAttributes([
             NSAttributedString.Key.foregroundColor: UIColor.white,

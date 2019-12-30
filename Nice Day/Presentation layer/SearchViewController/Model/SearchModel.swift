@@ -8,8 +8,22 @@
 
 import UIKit
 
+struct SearchElement {
+    
+    let name: String
+    let xpCount: Int
+    let category: GradeStatus
+}
+
 class SearchModel: NSObject {
     
-    var array = ["Sport", "Volleyboll", "Basketball", "Tennis", "Jerking", "Football", "Chess", "Study"]
+    var arr = ["Sport", "Volleyboll", "Basketball", "Tennis", "Jerking", "Football", "Chess", "Study"]
+    
+    var array = [SearchElement]()
+    
+    override init() {
+        super.init()
+        arr.forEach { self.array.append(SearchElement(name: $0, xpCount: Int.random(in: 0...100), category: GradeStatus.allCases.randomElement() ?? .active)) }
+    }
     
 }

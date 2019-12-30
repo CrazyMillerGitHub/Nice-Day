@@ -8,19 +8,20 @@
 
 import UIKit
 
+enum GradeStatus: CaseIterable {
+       case active
+       case passive
+   }
+
 class SearchCell: UITableViewCell {
     
     static var identifier: String = "Cell"
     
-    enum GradeStatus {
-        case active
-        case passive
-    }
+    var xpCount: Int?
     
     // MARK: textLabel
     let textTitle: UILabel = {
         let label = UILabel()
-        label.text = "LoremIpsum"
         label.font = UIFont.systemFont(ofSize: 18.0, weight: .bold)
         label.textColor = .inverseColor
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -93,7 +94,7 @@ class SearchCell: UITableViewCell {
         self.backgroundColor = .bgColor
         self.accessoryType = .disclosureIndicator
         horizontalStackView.addArrangedSubview(statusGrade(.active))
-        horizontalStackView.addArrangedSubview(dscrTitle(Int.random(in: 0...100)))
+        horizontalStackView.addArrangedSubview(dscrTitle(xpCount ?? 0))
         stackView.addArrangedSubview(textTitle)
         stackView.addArrangedSubview(horizontalStackView)
         self.addSubview(stackView)

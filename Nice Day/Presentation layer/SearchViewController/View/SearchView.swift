@@ -11,30 +11,46 @@ import DeckTransition
 
 class SearchView: UIViewController {
     
-    //init
+    // TableView
     weak var tableView: UITableView!
     
+    // ViewModel
     private var viewModel = SearchViewModel()
     
+    // Model
     private var model = SearchModel()
     
-    private var filteredModel = [String]()
+    // Filtered Model
+    private var filteredModel = [SearchElement]()
     
     // MARK: searchController
     private let searchViewController: UISearchController = {
         let searchViewController = UISearchController(searchResultsController: nil)
         searchViewController.obscuresBackgroundDuringPresentation = false
+        searchViewController.searchBar.setScopeBarButtonBackgroundImage(UIImage(), for: .focused)
+        searchViewController.searchBar.scopeButtonTitles = ["Effective", "Favourite", "Popular"]
+        searchViewController.searchBar.showsScopeBar = true
         return searchViewController
     }()
     
+    // MARK: SearchBarIsEmpty
     private var searchBarIsEmpty: Bool {
         guard let text = searchViewController.searchBar.text else { return false }
         return text.isEmpty
     }
     
+    // MARK: IsFiltering
     private var isFiltering: Bool {
-        return searchViewController.isActive && !searchBarIsEmpty
+        let searchBarScopeIsFiltering = searchViewController.searchBar.selectedScopeButtonIndex != 0
+        return searchViewController.isActive && (!searchBarIsEmpty || searchBarScopeIsFiltering)
     }
+    
+//    private var segmentedControl: CustomSegmentedControl {
+//        let segmentedControl = CustomSegmentedControl(items: ["Favourite","Effective", "Popular"])
+//        segmentedControl.addTarget(self, action: #selector(segmentedControlButtonClickAction(_:)), for: .valueChanged)
+//        segmentedControl.frame = CGRect(x: 10, y: 0, width: tableView.bounds.width - 20, height: 31)
+//        return segmentedControl
+//    }
     
     override func loadView() {
         super.loadView()
@@ -44,28 +60,18 @@ class SearchView: UIViewController {
         tableView.separatorStyle = .none
         self.view.addSubview(tableView)
         
-        NSLayoutConstraint.activate([
-            
-            tableView.topAnchor.constraint(equalTo: self.view.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo:self.view.safeAreaLayoutGuide.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
-            
-        ])
-        
         self.tableView = tableView
-      
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         //config UI
         prepareUI()
+        searchViewController.searchBar.delegate = self
         searchViewController.searchResultsUpdater = self
         self.tableView.dataSource = self
         self.tableView.delegate = self
         self.tableView.register(SearchCell.self, forCellReuseIdentifier: SearchCell.identifier)
-        // Do any additional setup after loading the view.
     }
     
     private func prepareUI() {
@@ -90,19 +96,17 @@ extension SearchView: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchCell.identifier, for: indexPath) as? SearchCell else { return UITableViewCell() }
-        cell.textTitle.text = isFiltering ? filteredModel[indexPath.row] : model.array[indexPath.row]
+        cell.textTitle.text = isFiltering ? filteredModel[indexPath.row].name : model.array[indexPath.row].name
+        cell.xpCount = isFiltering ? filteredModel[indexPath.row].xpCount : model.array[indexPath.row].xpCount
         return cell
     }
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = UIView()
-        view.backgroundColor = .bgColor
-        let segmentedControl = CustomSegmentedControl(items: ["Favourite","Effective", "Popular"])
-        
-        segmentedControl.frame = CGRect(x: 10, y: 0, width: tableView.bounds.width - 20, height: 31)
-        view.addSubview(segmentedControl)
-        return view
-    }
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        let view = UIView()
+//        view.backgroundColor = .bgColor
+//        view.addSubview(segmentedControl)
+//        return view
+//    }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 31
@@ -128,17 +132,49 @@ extension SearchView: UITableViewDataSource, UITableViewDelegate {
         return 95.0
     }
 }
+
+private extension SearchView {
+    
+    @objc
+    func segmentedControlButtonClickAction(_ sender: UISegmentedControl) {
+      
+    }
+    
+}
+
 extension SearchView: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
-        fileterContentForSearchController(text: searchController.searchBar.text ?? "")
+        
+        let searchBar = searchController.searchBar
+        
+        guard let scope = searchBar.scopeButtonTitles?[searchBar.selectedScopeButtonIndex] else { return }
+        
+        fileterContentForSearchController(searchText: searchController.searchBar.text ?? "", scope: scope)
     }
     
-    func fileterContentForSearchController(text: String) {
-        filteredModel = model.array.filter { (val: String) -> Bool in
-            return val.lowercased().contains(text.lowercased())
+    func fileterContentForSearchController(searchText: String, scope: String = "Effective") {
+        filteredModel = model.array.filter { (element: SearchElement) -> Bool in
+            
+            let doesCategoryMatch = (scope == "Favourite")
+            
+            return element.name.lowercased().contains(searchText.lowercased())
         }
+        
+        if scope == "Effective" {
+            filteredModel.sort { $0.name < $1.name }
+        }
+        
         tableView.reloadData()
+    }
+    
+}
+
+extension SearchView: UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        guard let scopeButtonTitles = searchBar.scopeButtonTitles?[selectedScope] else { return }
+        fileterContentForSearchController(searchText: searchBar.text ?? "", scope: scopeButtonTitles)
     }
     
 }
