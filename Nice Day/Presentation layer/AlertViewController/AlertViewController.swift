@@ -29,7 +29,7 @@ class AlertViewController: UIViewController {
         actionButton.addTarget(self, action: #selector(alertAction), for: .touchUpInside)
         let gesture = UISwipeGestureRecognizer(target: self, action: #selector(alertAction))
         gesture.direction = .down
-        view.addGestureRecognizer(gesture)
+        alertView.addGestureRecognizer(gesture)
     }
 
     @objc

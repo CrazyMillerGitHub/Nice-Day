@@ -98,6 +98,8 @@ extension SearchView: UITableViewDataSource, UITableViewDelegate {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchCell.identifier, for: indexPath) as? SearchCell else { return UITableViewCell() }
         cell.textTitle.text = isFiltering ? filteredModel[indexPath.row].name : model.array[indexPath.row].name
         cell.xpCount = isFiltering ? filteredModel[indexPath.row].xpCount : model.array[indexPath.row].xpCount
+        cell.status = isFiltering ? filteredModel[indexPath.row].category : model.array[indexPath.row].category
+        cell.prepareCell()
         return cell
     }
     
@@ -156,7 +158,7 @@ extension SearchView: UISearchResultsUpdating {
     func fileterContentForSearchController(searchText: String, scope: String = "Effective") {
         filteredModel = model.array.filter { (element: SearchElement) -> Bool in
             
-            let doesCategoryMatch = (scope == "Favourite")
+            //let doesCategoryMatch = (scope == "Favourite")
             
             return element.name.lowercased().contains(searchText.lowercased())
         }

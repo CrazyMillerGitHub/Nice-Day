@@ -17,7 +17,9 @@ class SearchCell: UITableViewCell {
     
     static var identifier: String = "Cell"
     
-    var xpCount: Int?
+    var xpCount = Int()
+    
+    var status: GradeStatus = .active
     
     // MARK: textLabel
     let textTitle: UILabel = {
@@ -93,8 +95,12 @@ class SearchCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.backgroundColor = .bgColor
         self.accessoryType = .disclosureIndicator
-        horizontalStackView.addArrangedSubview(statusGrade(.active))
-        horizontalStackView.addArrangedSubview(dscrTitle(xpCount ?? 0))
+        
+    }
+    
+    func prepareCell() {
+        horizontalStackView.addArrangedSubview(statusGrade(status))
+        horizontalStackView.addArrangedSubview(dscrTitle(xpCount))
         stackView.addArrangedSubview(textTitle)
         stackView.addArrangedSubview(horizontalStackView)
         self.addSubview(stackView)
@@ -105,4 +111,8 @@ class SearchCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        prepareCell()
+    }
 }

@@ -14,3 +14,5 @@
 "_email" = "email";
 "_passwd" = "password";
 "_search" = "Search";
+"_invite" = "Invite";
+"_showMore" = "Show more";

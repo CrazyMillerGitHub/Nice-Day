@@ -34,8 +34,8 @@ class CoreCell: UICollectionViewCell {
         let label = UILabel()
         label.text = "\(str)   "
         label.textAlignment = .center
-        label.textColor = .black
-        label.layer.backgroundColor = UIColor.white.cgColor
+        label.textColor = .inverseColor
+        label.layer.backgroundColor = UIColor.bgColor.cgColor
         label.layer.cornerRadius = 18
         label.layer.shadowColor = UIColor.black.cgColor
         label.layer.shadowOffset = CGSize(width: 0, height: 10)
