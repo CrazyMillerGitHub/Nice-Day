@@ -88,6 +88,7 @@ class AuthViewController: UIViewController {
         button.isHidden = true
         button.layer.cornerRadius = 15
         button.clipsToBounds = true
+        button.addTarget(self, action: #selector(signInAction), for: .touchUpInside)
         return button
     }()
     
@@ -257,23 +258,45 @@ class AuthViewController: UIViewController {
             self.isActive = false
         }
     }
+    
+    @objc
+    private func signInAction() {
+        DispatchQueue.main.async {
+            let mainController = SearchTabBarController()
+            mainController.modalPresentationStyle = .fullScreen
+            self.present(mainController, animated: true, completion: nil)
+        }
+    }
 }
 
 extension AuthViewController: ASAuthorizationControllerDelegate {
+    
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        print("Authorization completed!")
+        NSLog("Success!")
         switch authorization.credential {
         case _ as ASAuthorizationAppleIDCredential:
             DispatchQueue.main.async {
-                let mainController = RootMainViewController()
+                let mainController = SearchTabBarController()
                 mainController.modalPresentationStyle = .fullScreen
                 self.present(mainController, animated: true, completion: nil)
             }
         default: break
         }
     }
+    
+    /// Authorization via AppleID falied
+    /// - Parameter controller: ASAuthorizationController
+    /// - Parameter error: error'
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        print("Authorization failed with error: \(error)")
+        NSLog("Authorization failed with error: \(error)")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35 ) {
+            let mainController = AlertService().alert(title: "Sign in with Apple Failed",
+                                                      body: "Something went wrong. Try again later.",
+                                                      button: "Ok")
+            mainController.modalPresentationStyle = .overFullScreen
+            mainController.modalTransitionStyle = .crossDissolve
+            self.present(mainController, animated: true, completion: nil)
+        }
     }
 }
 
