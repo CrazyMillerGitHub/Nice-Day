@@ -22,6 +22,7 @@ class AboutCell: UICollectionViewCell {
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFit
         imageView.backgroundColor = .red
+        imageView.isUserInteractionEnabled = true
         return imageView
     }()
     
@@ -81,37 +82,13 @@ class AboutCell: UICollectionViewCell {
         
         stackView.addArrangedSubview(levelStackView)
         stackView.addArrangedSubview(xpStackView)
-        
         self.contentView.addSubview(stackView)
         self.contentView.addSubview(headerView)
         self.contentView.addSubview(imageView)
         self.contentView.addSubview(signOutButton)
         self.headerView = headerView
-        
-        NSLayoutConstraint.activate([
-            
-            self.headerView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
-            self.headerView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
-            self.headerView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
-            self.headerView.heightAnchor.constraint(equalToConstant: 35.0),
-            
-            self.imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 116),
-            self.imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            self.imageView.widthAnchor.constraint(equalToConstant: 91.0),
-            self.imageView.heightAnchor.constraint(equalToConstant: 91.0),
-            
-            self.stackView.topAnchor.constraint(equalTo: self.imageView.bottomAnchor, constant: 20),
-            self.stackView.leadingAnchor.constraint(equalTo: self.imageView.leadingAnchor, constant: -10),
-            self.stackView.trailingAnchor.constraint(equalTo: self.imageView.trailingAnchor, constant: 10),
-            self.stackView.heightAnchor.constraint(equalToConstant: 45),
-            
-            //SignOutButton Constraints
-            self.signOutButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 50),
-            self.signOutButton.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
-            self.signOutButton.heightAnchor.constraint(equalToConstant: 46),
-            self.signOutButton.widthAnchor.constraint(equalToConstant: 143)
-            
-        ])
+        prepareGesture()
+        prepareConstraint()
         reset()
         prepareShape()
     }
@@ -138,4 +115,46 @@ class AboutCell: UICollectionViewCell {
         NotificationCenter.default.post(name: .signOutNotificationKey, object: nil)
     }
     
+}
+
+extension AboutCell: UIGestureRecognizerDelegate {
+    
+    func prepareConstraint() {
+        NSLayoutConstraint.activate([
+            
+            self.headerView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
+            self.headerView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+            self.headerView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+            self.headerView.heightAnchor.constraint(equalToConstant: 35.0),
+            
+            self.imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 116),
+            self.imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            self.imageView.widthAnchor.constraint(equalToConstant: 91.0),
+            self.imageView.heightAnchor.constraint(equalToConstant: 91.0),
+            
+            self.stackView.topAnchor.constraint(equalTo: self.imageView.bottomAnchor, constant: 20),
+            self.stackView.leadingAnchor.constraint(equalTo: self.imageView.leadingAnchor, constant: -10),
+            self.stackView.trailingAnchor.constraint(equalTo: self.imageView.trailingAnchor, constant: 10),
+            self.stackView.heightAnchor.constraint(equalToConstant: 45),
+            
+            //SignOutButton Constraints
+            self.signOutButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 50),
+            self.signOutButton.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
+            self.signOutButton.heightAnchor.constraint(equalToConstant: 46),
+            self.signOutButton.widthAnchor.constraint(equalToConstant: 143)
+            
+        ])
+    }
+    
+    func prepareGesture() {
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(tapped(_:)))
+        gesture.numberOfTapsRequired = 1
+        gesture.numberOfTouchesRequired = 1
+        self.imageView.addGestureRecognizer(gesture)
+    }
+    
+    @objc
+    func tapped(_ sender: UITapGestureRecognizer) {
+        NotificationCenter.default.post(name: .performPicker, object: nil)
+    }
 }

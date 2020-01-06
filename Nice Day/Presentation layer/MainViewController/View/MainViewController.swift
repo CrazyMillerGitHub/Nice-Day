@@ -75,15 +75,11 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
         ])
         
         self.collectionView = collectionView
-        createObserver()
+        //createObserver()
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
-    }
-    
-    func createObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(moveAndResizeImage), name: .moveAndResizeImage, object: nil)
     }
     
     override func viewDidLoad() {

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewFriendAdditionalLabel: UILabel {
+final class NewFriendAdditionalLabel: UILabel {
     
     enum LabelType {
         case lvl
@@ -17,7 +17,7 @@ class NewFriendAdditionalLabel: UILabel {
     
     init(ofString:String, type:LabelType) {
         super.init(frame: .zero)
-        let attributedString = NSMutableAttributedString(string: " \(ofString) \(type == .lvl ? "Lvl" : "Match") ", attributes: [
+        let attributedString = NSMutableAttributedString(string: " \(ofString) \(type == .lvl ? "Lvl" : "_match".localized())  ", attributes: [
           .font: UIFont.systemFont(ofSize: 11.0, weight: .bold),
           .foregroundColor: UIColor.inverseColor,
           .kern: 0.18
@@ -86,8 +86,9 @@ class FriendsCell: CoreCell {
         return stackView
     }()
     
-    private var statusV = NewFriendAdditionalLabel(ofString: "10",type: .lvl)
-    private var vest = NewFriendAdditionalLabel(ofString: "50%",type: .match)
+    private var levelLabel = NewFriendAdditionalLabel(ofString: "10",type: .lvl)
+    
+    private var matchLabel = NewFriendAdditionalLabel(ofString: "50%",type: .match)
     
     // MARK: newFriendTitleLabel init
     private var newFriendTitleLabel = NewFriendTitleLabel(of: "Fred Perry")
@@ -118,8 +119,8 @@ class FriendsCell: CoreCell {
         addSubview(newFriendTitleLabel)
         addSubview(locationStackView)
         addSubview(inviteButton)
-        addSubview(statusV)
-        addSubview(vest)
+        addSubview(levelLabel)
+        addSubview(matchLabel)
         NSLayoutConstraint.activate([
             // newFriendImage Constraint
             newFriendImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 17),
@@ -138,15 +139,13 @@ class FriendsCell: CoreCell {
             inviteButton.heightAnchor.constraint(equalToConstant: 46),
             inviteButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             
-            statusV.topAnchor.constraint(equalTo: newFriendTitleLabel.bottomAnchor, constant: 7),
-            statusV.leadingAnchor.constraint(equalTo: newFriendTitleLabel.leadingAnchor),
-            statusV.widthAnchor.constraint(equalToConstant: 41),
-            statusV.heightAnchor.constraint(equalToConstant: 20),
+            levelLabel.topAnchor.constraint(equalTo: newFriendTitleLabel.bottomAnchor, constant: 7),
+            levelLabel.leadingAnchor.constraint(equalTo: newFriendTitleLabel.leadingAnchor),
+            levelLabel.heightAnchor.constraint(equalToConstant: 20),
             
-            vest.leadingAnchor.constraint(equalTo: statusV.trailingAnchor,constant: 10),
-            vest.centerYAnchor.constraint(equalTo: statusV.centerYAnchor),
-            vest.widthAnchor.constraint(equalToConstant: 82),
-            vest.heightAnchor.constraint(equalToConstant: 20)
+            matchLabel.leadingAnchor.constraint(equalTo: levelLabel.trailingAnchor,constant: 10),
+            matchLabel.centerYAnchor.constraint(equalTo: levelLabel.centerYAnchor),
+            matchLabel.heightAnchor.constraint(equalToConstant: 20)
         ])
     }
        

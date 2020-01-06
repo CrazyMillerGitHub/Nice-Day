@@ -112,5 +112,6 @@ class ActivityView: UIViewController {
 extension ActivityView: PageControlProtocol {
     func progress(_ progress: Double) {
         pageControl.progress = progress
+        
     }
 }

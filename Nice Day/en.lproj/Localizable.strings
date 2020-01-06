@@ -1,3 +1,4 @@
+"_welcome" = "Welcome";
 "_signOut" = "Sign Out";
 "_enterYourEmail" = "Enter your email";
 "_enterFiveDigitPassword" = "Enter 5-digit code";
@@ -16,3 +17,7 @@
 "_search" = "Search";
 "_invite" = "Invite";
 "_showMore" = "Show more";
+"_YOU" = "You";
+"_AVG" = "AVG";
+"_match" = "Match";
+

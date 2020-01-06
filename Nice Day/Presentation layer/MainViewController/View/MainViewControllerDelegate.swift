@@ -25,9 +25,6 @@ class MainViewControllerDelegate: NSObject, UICollectionViewDelegate, UIScrollVi
             }, completion:nil)
         }
     }
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        NotificationCenter.default.post(name: .moveAndResizeImage, object: nil)
-    }
     
     /// Изменения размера ячейки при различной последовательности
     ///

@@ -17,8 +17,6 @@ class SearchCell: UITableViewCell {
     
     static var identifier: String = "Cell"
     
-    var xpCount = Int()
-    
     var status: GradeStatus = .active
     
     // MARK: textLabel
@@ -31,22 +29,11 @@ class SearchCell: UITableViewCell {
     }()
     
     // MARK: DescriptionLabel
-    let dscrTitle: (Int) -> UILabel = { xpCount in
+    let dscrTitle: UILabel = {
         let label = UILabel()
-        let str = "\(xpCount) xp every minute"
-        let attributedString = NSMutableAttributedString(string: str, attributes: [
-          .font: UIFont.systemFont(ofSize: 12.0, weight: .semibold),
-          .foregroundColor: UIColor.inverseColor,
-          .kern: -0.29
-        ])
-        attributedString.addAttributes([
-            .font: UIFont.systemFont(ofSize: 12.0, weight: .bold),
-            .foregroundColor: UIColor.green
-        ], range: NSRange(location: String(xpCount).count + 1, length: 2))
-        label.attributedText = attributedString
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
-    }
+    }()
     
     // MARK: StackView
     let stackView: UIStackView = {
@@ -61,14 +48,13 @@ class SearchCell: UITableViewCell {
         return stackView
     }()
     
-    fileprivate var statusGrade: (GradeStatus) -> UIImageView = { imageName in
+    fileprivate var statusGrade: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleToFill
         imageView.frame.size.height = 16
         imageView.frame.size.width = 16
-        imageView.image = UIImage(named: imageName == .active ? "activeGrade" : "passiveGrade")
         return imageView
-    }
+    }()
     
     // MARK: HorizontalStackView
     let horizontalStackView: UIStackView = {
@@ -99,12 +85,16 @@ class SearchCell: UITableViewCell {
     }
     
     func prepareCell() {
-        horizontalStackView.addArrangedSubview(statusGrade(status))
-        horizontalStackView.addArrangedSubview(dscrTitle(xpCount))
+        horizontalStackView.addArrangedSubview(statusGrade)
+        horizontalStackView.addArrangedSubview(dscrTitle)
         stackView.addArrangedSubview(textTitle)
         stackView.addArrangedSubview(horizontalStackView)
         self.addSubview(stackView)
         prepareConstraints()
+    }
+    
+    func setStatusGrade(_ status: GradeStatus) {
+        statusGrade.image = UIImage(named: status == .active ? "activeGrade" : "passiveGrade")
     }
     
     required init?(coder aDecoder: NSCoder) {

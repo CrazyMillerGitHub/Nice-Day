@@ -97,18 +97,11 @@ extension SearchView: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchCell.identifier, for: indexPath) as? SearchCell else { return UITableViewCell() }
         cell.textTitle.text = isFiltering ? filteredModel[indexPath.row].name : model.array[indexPath.row].name
-        cell.xpCount = isFiltering ? filteredModel[indexPath.row].xpCount : model.array[indexPath.row].xpCount
-        cell.status = isFiltering ? filteredModel[indexPath.row].category : model.array[indexPath.row].category
+        cell.dscrTitle.setAttributedStringForSearch(for: isFiltering ? filteredModel[indexPath.row].xpCount : model.array[indexPath.row].xpCount)
+        cell.setStatusGrade(isFiltering ? filteredModel[indexPath.row].category : model.array[indexPath.row].category)
         cell.prepareCell()
         return cell
     }
-    
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let view = UIView()
-//        view.backgroundColor = .bgColor
-//        view.addSubview(segmentedControl)
-//        return view
-//    }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 31
@@ -121,7 +114,7 @@ extension SearchView: UITableViewDataSource, UITableViewDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
             
             let modal = ActivityView()
-            let transitionDelegate = DeckTransitioningDelegate()
+            let transitionDelegate = DeckTransitioningDelegate(isSwipeToDismissEnabled: false)
             modal.transitioningDelegate = transitionDelegate
             modal.modalPresentationStyle = .custom
             self.present(modal, animated: true, completion: nil)

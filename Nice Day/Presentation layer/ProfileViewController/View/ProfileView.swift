@@ -9,10 +9,12 @@
 import UIKit
 
 class ProfileView: UIViewController {
-
+    
     var viewModel = ProfileViewModel()
     
     lazy var aboutCell = AboutCell()
+    
+    var imagePicker: ImagePicker!
     
     let navigationBar: UINavigationBar = {
         let navigationBar: UINavigationBar = UINavigationBar()
@@ -69,6 +71,7 @@ class ProfileView: UIViewController {
         self.view.backgroundColor = .bgColor
         setupView()
         setupConstraint()
+        self.imagePicker = ImagePicker(presentationController: self, delegate: self)
         collectionView.register(AboutCell.self, forCellWithReuseIdentifier: AboutCell.identifier)
         collectionView.register(ProfileAchievmentsCell.self, forCellWithReuseIdentifier: ProfileAchievmentsCell.identifier)
         collectionView.delegate = viewModel
@@ -78,23 +81,24 @@ class ProfileView: UIViewController {
     }
     
     func createObserver() {
-           NotificationCenter.default.addObserver(self, selector: #selector(signOutAction), name: .signOutNotificationKey, object: nil)
-       }
+        NotificationCenter.default.addObserver(self, selector: #selector(signOutAction), name: .signOutNotificationKey, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(performPicker), name: .performPicker, object: nil)
+    }
     
-       deinit {
-           NotificationCenter.default.removeObserver(self)
-       }
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
     
     // MARK: Настройка constraint
     private func setupConstraint() {
         NSLayoutConstraint.activate([
             
-        navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-        navigationBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-        navigationBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
-        
-        ])
+            navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            navigationBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            navigationBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
             
+        ])
+        
     }
     
     private func setupView() {
@@ -112,8 +116,21 @@ class ProfileView: UIViewController {
         onboardingView.modalPresentationStyle = .fullScreen
         self.present(onboardingView, animated: true, completion: nil)
     }
+    
+    @objc
+    func performPicker(_ sender: Any) {
+        self.imagePicker.present(from: view)
+    }
 }
 extension Notification.Name {
     static let signOutNotificationKey = Notification.Name(rawValue: "com.niceDay.signOutNotificationKey")
-    static let moveAndResizeImage = Notification.Name(rawValue: "com.niceDay.moveAndResizeImage")
+    static let performPicker = Notification.Name(rawValue: "con.niceDay.perfomPicker")
+}
+
+extension ProfileView: ImagePickerDelegate {
+
+    func didSelect(image: UIImage?) {
+        print(image?.size ?? 0)
+    }
+    
 }

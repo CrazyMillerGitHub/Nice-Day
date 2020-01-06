@@ -15,8 +15,8 @@ class ChartsCell: CoreCell {
     let charts: UIView = {
         let view = UIView()
         let charts = ChartsView()
-        charts.addLine(data: Array(0...6), color: .sunriseColor, label: "You")
-        charts.addLine(data: Array(0...6), color: .secondGradientColor, label: "AVG")
+        charts.addLine(data: Array(0...6), color: .sunriseColor, label: "_YOU".localized())
+        charts.addLine(data: Array(0...6), color: .secondGradientColor, label: "_AVG".localized())
         charts.translatesAutoresizingMaskIntoConstraints = false
         return charts
     }()
