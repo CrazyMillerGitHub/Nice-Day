@@ -50,7 +50,7 @@ class OnboardingView: UIViewController {
         button.backgroundColor = UIColor.white
         button.layer.shadowRadius = 20
         button.alpha = 0.0
-        button.addTarget(self, action: #selector(tappedButton), for: .touchUpInside)
+        button.addTarget(self, action: #selector(signInAction(_:)), for: .touchUpInside)
         button.isHidden = true
         return button
     }()
@@ -167,12 +167,13 @@ class OnboardingView: UIViewController {
        }
     
     @objc
-    private func tappedButton() {
-        DispatchQueue.main.async {
-            let authVC = AuthViewController()
-            authVC.modalPresentationStyle = .fullScreen
-            self.present(authVC, animated: true, completion: nil)
-        }
+    private func signInAction(_ sender: Any) {
+        presentView(type: .signIn)
+    }
+    
+    @objc
+    private func newUserLabelTapped(_ sender: Any) {
+        presentView(type: .signUp)
     }
     
     private func handlePan(recognizer:UIPanGestureRecognizer) {
@@ -196,11 +197,14 @@ class OnboardingView: UIViewController {
         self.view.bringSubviewToFront(scrollView)
     }
     
-    @objc
-    private func newUserLabelTapped(_ sender: Any) {
-        print("Tapepd")
+    private func presentView(type: AuthViewType) {
+        DispatchQueue.main.async {
+            let authVC = AuthViewController()
+            authVC.authViewType = type == .signUp ? .signUp : .signIn
+            authVC.modalPresentationStyle = .fullScreen
+            self.present(authVC, animated: true, completion: nil)
+        }
     }
-   
 }
 
 extension OnboardingView: UIScrollViewDelegate {

@@ -10,9 +10,22 @@ import UIKit
 import Lottie
 import AuthenticationServices
 
+enum AuthViewType {
+    case signIn
+    case signUp
+}
+
 class AuthViewController: UIViewController {
     
-    let friendlyLabel: UILabel = {
+    fileprivate var isActive: Bool = true
+    
+    fileprivate weak var topConstraint: NSLayoutConstraint!
+    
+    var appleSignInButton: ASAuthorizationAppleIDButton!
+    
+    var authViewType: AuthViewType = .signUp
+    
+    fileprivate var friendlyLabel: UILabel = {
         let label = UILabel()
         label.text = "Hello! I’m\nyour friend,\nMike"
         label.numberOfLines = 0
@@ -21,18 +34,14 @@ class AuthViewController: UIViewController {
         return label
     }()
     
-    weak var topConstraint: NSLayoutConstraint!
-    
-    var isActive: Bool = true
-    
-    let containerView: UIView = {
+    fileprivate var containerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.alpha = 0.0
         return view
     }()
     
-    let circleView: UIView = {
+    fileprivate var circleView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(red:1.00, green:0.18, blue:0.33, alpha:1.0)
         view.layer.cornerRadius = (UIScreen.main.bounds.width - 160) / 2
@@ -44,7 +53,7 @@ class AuthViewController: UIViewController {
         return view
     }()
     
-    let emailButton: ElasticButton = {
+    fileprivate var emailButton: ElasticButton = {
         let button = ElasticButton()
         button.backgroundColor = UIColor(red:1.00, green:0.18, blue:0.33, alpha:1.0)
         button.setTitle("_sign_in_with_email_and_password".localized(), for: .normal)
@@ -57,7 +66,7 @@ class AuthViewController: UIViewController {
         return button
     }()
     
-    let ttleLabel: UILabel = {
+    fileprivate var ttleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Nice Day"
@@ -66,7 +75,7 @@ class AuthViewController: UIViewController {
         return label
     }()
     
-    let dscrLabel: UILabel = {
+    fileprivate var dscrLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Be better every day!"
@@ -75,7 +84,7 @@ class AuthViewController: UIViewController {
         return label
     }()
     
-    let signInButton: ElasticButton = {
+    fileprivate var signInButton: ElasticButton = {
         let button = ElasticButton()
         button.backgroundColor = .clear
         button.setTitle("_sign_in".localized(), for: .normal)
@@ -92,11 +101,9 @@ class AuthViewController: UIViewController {
         return button
     }()
     
-    var appleSignInButton: ASAuthorizationAppleIDButton!
-    
     private func prepareSignInButton() -> ASAuthorizationAppleIDButton {
         let appleSignInButton = ASAuthorizationAppleIDButton(
-            type: .signIn,
+            type: authViewType == .signIn ? .continue : .default,
             style: self.traitCollection.userInterfaceStyle == .dark ? .white : .black)
         appleSignInButton.translatesAutoresizingMaskIntoConstraints = false
         appleSignInButton.addTarget(self, action: #selector(didTapAppleIDButton(sender:)), for: .touchUpInside)
@@ -109,7 +116,8 @@ class AuthViewController: UIViewController {
         setupView()
         self.view.backgroundColor = .bgColor
         containerView.backgroundColor = .clear
-        let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "container")
+        let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier:
+            authViewType == .signIn ? "signInContainer" : "signUpContainer")
         addChild(controller)
         
         let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
@@ -179,12 +187,12 @@ class AuthViewController: UIViewController {
     }
     
     private func prepareUI() {
-        self.view.addSubview(ttleLabel)
-        self.view.addSubview(dscrLabel)
-        self.view.addSubview(circleView)
-        self.view.addSubview(emailButton)
-        self.view.addSubview(signInButton)
-        view.addSubview(containerView)
+        [ttleLabel,
+         dscrLabel,
+         circleView,
+         emailButton,
+         signInButton,
+         containerView].forEach(view.addSubview(_:))
     }
     
     private func prepareConstraints() {

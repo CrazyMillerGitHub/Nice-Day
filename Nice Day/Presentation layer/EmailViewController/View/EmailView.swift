@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EmailView: UIViewController {
+class SignInEmailView: UIViewController {
     
     @IBOutlet private var forgotButton: UIButton!
     @IBOutlet private var emailTextField: UITextField!
