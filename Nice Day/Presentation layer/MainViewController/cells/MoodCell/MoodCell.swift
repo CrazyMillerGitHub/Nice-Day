@@ -8,9 +8,15 @@
 
 import UIKit
 
+protocol DeleteCell: class {
+    func deleteCell(_ cell: MoodCell)
+}
+
 class MoodCell: CoreCell {
     
     static var identifier: String = "mood"
+    
+    weak var delegate: DeleteCell?
     
     var item: MainViewModelItem? {
         didSet {
@@ -53,7 +59,13 @@ class MoodCell: CoreCell {
         moodCollectionView.register(EmotionCell.self, forCellWithReuseIdentifier: EmotionCell.identifier)
         moodCollectionView.delegate = self
         moodCollectionView.dataSource = self
+        closeButton.addTarget(self, action: #selector(deleteAction), for: .touchUpInside)
         prepareConstraint()
+    }
+    
+    @objc
+    private func deleteAction() {
+        delegate?.deleteCell(self)
     }
     
     required init?(coder: NSCoder) {
@@ -66,16 +78,16 @@ class MoodCell: CoreCell {
     
     private func prepareConstraint() {
         NSLayoutConstraint.activate([
-                   
-                   closeButton.widthAnchor.constraint(equalToConstant: 46),
-                   closeButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-                   closeButton.heightAnchor.constraint(equalTo: contentView.heightAnchor),
-                   
-                   moodCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-                   moodCollectionView.trailingAnchor.constraint(equalTo: closeButton.leadingAnchor),
-                   moodCollectionView.topAnchor.constraint(equalTo: cellTitleLabel.bottomAnchor),
-                   moodCollectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
-               ])
+            
+            closeButton.widthAnchor.constraint(equalToConstant: 46),
+            closeButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            closeButton.heightAnchor.constraint(equalTo: contentView.heightAnchor),
+            
+            moodCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            moodCollectionView.trailingAnchor.constraint(equalTo: closeButton.leadingAnchor),
+            moodCollectionView.topAnchor.constraint(equalTo: cellTitleLabel.bottomAnchor),
+            moodCollectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        ])
     }
     
 }

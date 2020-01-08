@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct SearchElement {
+struct ActivityElement {
     
     let name: String
     let xpCount: Int
@@ -19,11 +19,11 @@ class SearchModel: NSObject {
     
     var arr = ["Sport", "Volleyboll", "Basketball", "Tennis", "Jerking", "Football", "Chess", "Study"]
     
-    var array = [SearchElement]()
+    var array = [ActivityElement]()
     
     override init() {
         super.init()
-        arr.forEach { self.array.append(SearchElement(name: $0, xpCount: Int.random(in: 0...100), category: GradeStatus.allCases.randomElement() ?? .active)) }
+        arr.forEach { self.array.append(ActivityElement(name: $0, xpCount: Int.random(in: 0...100), category: GradeStatus.allCases.randomElement() ?? .active)) }
     }
     
 }

@@ -24,6 +24,10 @@
 	<string>Nice Day want to take a photo</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Nice Day want to use you photos</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

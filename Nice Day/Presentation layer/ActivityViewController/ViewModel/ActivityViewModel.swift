@@ -14,6 +14,8 @@ protocol PageControlProtocol: class {
 
 class ActivityViewModel: NSObject, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
+    var activityElement: ActivityElement?
+    
     weak var delegate: PageControlProtocol?
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -22,6 +24,7 @@ class ActivityViewModel: NSObject, UICollectionViewDelegate, UICollectionViewDat
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ActivityViewCell.identifier, for: indexPath) as? ActivityViewCell {
+            cell.element = activityElement
             return cell
         }
         return UICollectionViewCell()

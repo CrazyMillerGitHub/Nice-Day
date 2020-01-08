@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainViewControllerDelegate: NSObject, UICollectionViewDelegate, UIScrollViewDelegate, UICollectionViewDelegateFlowLayout {
+class MainViewControllerDelegate: NSObject, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     var modelView = MainViewModel()
     
@@ -24,6 +24,10 @@ class MainViewControllerDelegate: NSObject, UICollectionViewDelegate, UIScrollVi
                 data.arr.remove(at: indexPath.row)
             }, completion:nil)
         }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        NotificationCenter.default.post(name: .moveAndResizeImage, object: nil)
     }
     
     /// Изменения размера ячейки при различной последовательности

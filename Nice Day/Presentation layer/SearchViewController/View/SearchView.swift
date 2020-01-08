@@ -21,7 +21,7 @@ class SearchView: UIViewController {
     private var model = SearchModel()
     
     // Filtered Model
-    private var filteredModel = [SearchElement]()
+    private var filteredModel = [ActivityElement]()
     
     // MARK: searchController
     private let searchViewController: UISearchController = {
@@ -114,7 +114,8 @@ extension SearchView: UITableViewDataSource, UITableViewDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
             
             let modal = ActivityView()
-            let transitionDelegate = DeckTransitioningDelegate(isSwipeToDismissEnabled: false)
+            modal.viewModel.activityElement = self.isFiltering ? self.filteredModel[indexPath.row] : self.model.array[indexPath.row]
+            let transitionDelegate = DeckTransitioningDelegate(isSwipeToDismissEnabled: true)
             modal.transitioningDelegate = transitionDelegate
             modal.modalPresentationStyle = .custom
             self.present(modal, animated: true, completion: nil)
@@ -149,7 +150,7 @@ extension SearchView: UISearchResultsUpdating {
     }
     
     func fileterContentForSearchController(searchText: String, scope: String = "Effective") {
-        filteredModel = model.array.filter { (element: SearchElement) -> Bool in
+        filteredModel = model.array.filter { (element: ActivityElement) -> Bool in
             
             //let doesCategoryMatch = (scope == "Favourite")
             

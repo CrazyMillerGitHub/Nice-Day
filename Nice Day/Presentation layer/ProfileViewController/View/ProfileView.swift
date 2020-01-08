@@ -125,6 +125,7 @@ class ProfileView: UIViewController {
 extension Notification.Name {
     static let signOutNotificationKey = Notification.Name(rawValue: "com.niceDay.signOutNotificationKey")
     static let performPicker = Notification.Name(rawValue: "con.niceDay.perfomPicker")
+    static let moveAndResizeImage = Notification.Name(rawValue: "com.niceDay.moveAndResizeImage")
 }
 
 extension ProfileView: ImagePickerDelegate {

@@ -18,7 +18,7 @@ enum MainViewModelItemType {
 }
 
 protocol CloseActionProtocol: class {
-    func closeAction()
+    func closeAction(_ cell: MoodCell)
 }
 
 protocol MainViewModelItem {
@@ -167,18 +167,18 @@ extension MainViewModel:  UICollectionViewDataSource, UICollectionViewDelegateFl
         case .mood:
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoodCell.identifier, for: indexPath) as? MoodCell {
                 cell.item = item
-                cell.closeButton.addTarget(self, action: #selector(closeAction(sender:)), for: .touchUpInside)
+                cell.delegate = self
                 return cell
             }
         }
         return UICollectionViewCell()
     }
     
-    @objc
-    private func closeAction(sender: Any) {
-        items.remove(at: 1)
-        let view = MainViewControllerDelegate()
-        view.modelView.items.remove(at: 1)
-        delegate?.closeAction()
+}
+extension MainViewModel: DeleteCell {
+    
+    func deleteCell(_ cell: MoodCell) {
+        delegate?.closeAction(cell)
     }
+    
 }

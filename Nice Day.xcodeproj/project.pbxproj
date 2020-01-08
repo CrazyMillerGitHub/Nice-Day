@@ -46,6 +46,7 @@
 		747F6F9322CF757900631A30 /* MainViewControllerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 747F6F9222CF757900631A30 /* MainViewControllerData.swift */; };
 		747F6F9822CFD11400631A30 /* BonusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 747F6F9722CFD11400631A30 /* BonusCell.swift */; };
 		7497169223C0C6D20092A300 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7497169123C0C6D20092A300 /* CloudKit.framework */; };
+		74A1023923C675F8006C745F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 74A1023823C675F8006C745F /* GoogleService-Info.plist */; };
 		74A5BAC3236619F500B3B000 /* EmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A5BAC2236619F500B3B000 /* EmailView.swift */; };
 		74A5BAC62366DF1800B3B000 /* CoreSupportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A5BAC52366DF1800B3B000 /* CoreSupportCell.swift */; };
 		74BCEE1F22D12B3200127488 /* FriendsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BCEE1E22D12B3200127488 /* FriendsCell.swift */; };
@@ -56,6 +57,7 @@
 		74BF53362370510500CCEF3C /* SupportViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BF53352370510500CCEF3C /* SupportViewModel.swift */; };
 		74BF5338237055AE00CCEF3C /* EmailSupportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BF5337237055AE00CCEF3C /* EmailSupportCell.swift */; };
 		74C22F9923C29CD900358A8D /* Label_extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C22F9823C29CD900358A8D /* Label_extension.swift */; };
+		74C22F9B23C3C41A00358A8D /* TimerLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C22F9A23C3C41A00358A8D /* TimerLabel.swift */; };
 		74C2FED923885DD000F485B6 /* ProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C2FED823885DD000F485B6 /* ProfileHeader.swift */; };
 		74C2FEDC2389653200F485B6 /* CustomStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C2FEDB2389653200F485B6 /* CustomStackView.swift */; };
 		74C2FEDE23896FEB00F485B6 /* CustomInfoLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C2FEDD23896FEB00F485B6 /* CustomInfoLabel.swift */; };
@@ -147,6 +149,7 @@
 		747F6F9722CFD11400631A30 /* BonusCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonusCell.swift; sourceTree = "<group>"; };
 		7497169023C0C6CF0092A300 /* Nice DayRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Nice DayRelease.entitlements"; sourceTree = "<group>"; };
 		7497169123C0C6D20092A300 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		74A1023823C675F8006C745F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		74A5BAC2236619F500B3B000 /* EmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailView.swift; sourceTree = "<group>"; };
 		74A5BAC52366DF1800B3B000 /* CoreSupportCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreSupportCell.swift; sourceTree = "<group>"; };
 		74BCEE1E22D12B3200127488 /* FriendsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsCell.swift; sourceTree = "<group>"; };
@@ -157,6 +160,7 @@
 		74BF53352370510500CCEF3C /* SupportViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportViewModel.swift; sourceTree = "<group>"; };
 		74BF5337237055AE00CCEF3C /* EmailSupportCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSupportCell.swift; sourceTree = "<group>"; };
 		74C22F9823C29CD900358A8D /* Label_extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label_extension.swift; sourceTree = "<group>"; };
+		74C22F9A23C3C41A00358A8D /* TimerLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerLabel.swift; sourceTree = "<group>"; };
 		74C2FED823885DD000F485B6 /* ProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeader.swift; sourceTree = "<group>"; };
 		74C2FEDB2389653200F485B6 /* CustomStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStackView.swift; sourceTree = "<group>"; };
 		74C2FEDD23896FEB00F485B6 /* CustomInfoLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInfoLabel.swift; sourceTree = "<group>"; };
@@ -305,6 +309,7 @@
 			isa = PBXGroup;
 			children = (
 				745B554623B939CB003C1928 /* View */,
+				74C22F9A23C3C41A00358A8D /* TimerLabel.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -360,6 +365,7 @@
 				747C716422CD25AD00FBEDCF /* Assets.xcassets */,
 				747C716622CD25AD00FBEDCF /* LaunchScreen.storyboard */,
 				747C716922CD25AD00FBEDCF /* Info.plist */,
+				74A1023823C675F8006C745F /* GoogleService-Info.plist */,
 				747C716122CD25AB00FBEDCF /* Nice_Day.xcdatamodeld */,
 				74CE442D235CCF8400066B17 /* Localizable.strings */,
 			);
@@ -900,6 +906,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				74CE442B235CCF8400066B17 /* Localizable.strings in Resources */,
+				74A1023923C675F8006C745F /* GoogleService-Info.plist in Resources */,
 				7452800923911D9600F07E76 /* heartAnimation.json in Resources */,
 				745B555123BA329D003C1928 /* AlertViewController.storyboard in Resources */,
 				747C716822CD25AD00FBEDCF /* LaunchScreen.storyboard in Resources */,
@@ -1034,6 +1041,7 @@
 				74CE440A235C75D700066B17 /* RootMainViewController.swift in Sources */,
 				74A5BAC3236619F500B3B000 /* EmailView.swift in Sources */,
 				74C2FEDE23896FEB00F485B6 /* CustomInfoLabel.swift in Sources */,
+				74C22F9B23C3C41A00358A8D /* TimerLabel.swift in Sources */,
 				7459C70F2349C5F300362DFC /* Сolor+extension.swift in Sources */,
 				74CE4408235C5F4E00066B17 /* MainViewModel.swift in Sources */,
 				741458D6239AB93F00980A63 /* NewFriendTitleLabel.swift in Sources */,
@@ -1216,7 +1224,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Nice Day/Nice Day.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 26;
+				CURRENT_PROJECT_VERSION = 29;
 				DEVELOPMENT_TEAM = 4GB4E68ZU6;
 				INFOPLIST_FILE = "Nice Day/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -1239,7 +1247,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Nice Day/Nice DayRelease.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 26;
+				CURRENT_PROJECT_VERSION = 29;
 				DEVELOPMENT_TEAM = 4GB4E68ZU6;
 				INFOPLIST_FILE = "Nice Day/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;

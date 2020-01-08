@@ -14,7 +14,7 @@ class AboutCell: UICollectionViewCell {
     
     var headerView: ProfileHeader!
     
-    //  создание imageView
+    // MARK: создание imageView
     fileprivate let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 45.5
@@ -147,10 +147,7 @@ extension AboutCell: UIGestureRecognizerDelegate {
     }
     
     func prepareGesture() {
-        let gesture = UITapGestureRecognizer(target: self, action: #selector(tapped(_:)))
-        gesture.numberOfTapsRequired = 1
-        gesture.numberOfTouchesRequired = 1
-        self.imageView.addGestureRecognizer(gesture)
+        self.imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapped(_:))))
     }
     
     @objc

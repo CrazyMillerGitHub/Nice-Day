@@ -75,12 +75,16 @@ class MainViewController: UIViewController, UINavigationControllerDelegate, UIIm
         ])
         
         self.collectionView = collectionView
-        //createObserver()
+        createObserver()
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
+    
+    func createObserver() {
+          NotificationCenter.default.addObserver(self, selector: #selector(moveAndResizeImage), name: .moveAndResizeImage, object: nil)
+      }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -150,9 +154,14 @@ extension MainViewController {
 }
 extension MainViewController: CloseActionProtocol {
     
-    func closeAction() {
-        print(provider.items.count)
-        collectionView.deleteItems(at: [IndexPath(row: 0, section: 1)])
+    func closeAction(_ cell: MoodCell) {
+        if let indexPath = collectionView.indexPath(for: cell) {
+            provider.items.remove(at: indexPath.row)
+            collectionView.deleteItems(at: [indexPath])
+        }
+//        provider.items.remove(at: 1)
+//        collectionView.deleteItems(at: [IndexPath(row: 0, section: 1)])
+
     }
     
 }

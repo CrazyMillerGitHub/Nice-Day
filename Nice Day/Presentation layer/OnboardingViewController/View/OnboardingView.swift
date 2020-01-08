@@ -99,18 +99,18 @@ class OnboardingView: UIViewController {
     override func loadView() {
         super.loadView()
         self.view.backgroundColor = .bgColor
-        if #available(iOS 11.0, *) {
-            UINavigationBar.appearance().shadowImage = UIImage()
-        } else {
-            UINavigationBar.appearance().setBackgroundImage(UIImage(),for:.default)
-            UINavigationBar.appearance().shadowImage = UIImage()
-        }
         // Add gesture for label
         newUserLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(newUserLabelTapped(_:))))
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if #available(iOS 11.0, *) {
+            UINavigationBar.appearance().shadowImage = UIImage()
+        } else {
+            UINavigationBar.appearance().setBackgroundImage(UIImage(),for:.default)
+            UINavigationBar.appearance().shadowImage = UIImage()
+        }
         preformView()
         prepareConstraint()
         setupScrollView()
