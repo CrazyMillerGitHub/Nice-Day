@@ -8,7 +8,9 @@
 
 import UIKit
 
-class SignInEmailView: UIViewController {
+class SignInView: UIViewController {
+    
+    // TODO: View fatal error because view is not inizialized here
     
     @IBOutlet private var forgotButton: UIButton!
     @IBOutlet private var emailTextField: UITextField!
@@ -22,6 +24,10 @@ class SignInEmailView: UIViewController {
         passwordTextFiled.placeholder = "_passwd".localized()
     }
     
+    func presentSignInRequest(completionHander: @escaping ([String]) -> Void) {
+        completionHander(["TestWorked"])
+    }
+    
     @objc
     private func forgotAction() {
         DispatchQueue.main.async {
@@ -30,4 +36,5 @@ class SignInEmailView: UIViewController {
             self.present(supportVC, animated: true, completion: nil)
         }
     }
+    
 }

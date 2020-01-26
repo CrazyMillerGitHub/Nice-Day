@@ -21,6 +21,16 @@ class AuthViewController: UIViewController {
     
     fileprivate weak var topConstraint: NSLayoutConstraint!
     
+    weak var signInView: SignInView? {
+        return  UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier:
+            "signInContainer") as? SignInView
+    }
+    
+    weak var signUpView: SignUpView? {
+        return  UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier:
+            "signUpContainer") as? SignUpView
+    }
+    
     var appleSignInButton: ASAuthorizationAppleIDButton!
     
     var authViewType: AuthViewType = .signUp
@@ -116,8 +126,8 @@ class AuthViewController: UIViewController {
         setupView()
         self.view.backgroundColor = .bgColor
         containerView.backgroundColor = .clear
-        let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier:
-            authViewType == .signIn ? "signInContainer" : "signUpContainer")
+        let controller = (authViewType == .signIn ? signInView : signUpView)!
+        
         addChild(controller)
         
         let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
@@ -269,10 +279,24 @@ class AuthViewController: UIViewController {
     
     @objc
     private func signInAction() {
-        DispatchQueue.main.async {
-            let mainController = SearchTabBarController()
-            mainController.modalPresentationStyle = .fullScreen
-            self.present(mainController, animated: true, completion: nil)
+        switch self.authViewType {
+        case .signIn:
+            signInView!.presentSignInRequest { [weak self] (response) in
+                guard let self = self else {
+                    return
+//                        print(response.last)
+                }
+                
+                DispatchQueue.main.async {
+                    let mainController = SearchTabBarController()
+                    mainController.modalPresentationStyle = .fullScreen
+                    self.present(mainController, animated: true, completion: nil)
+                }
+            }
+        case .signUp:
+            signUpView!.presentSignUpRequest { (response) in
+//                print(response?.last)
+            }
         }
     }
 }

@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Sign In Email View-->
+        <!--Sign In View-->
         <scene sceneID="Aro-S6-fFE">
             <objects>
-                <viewController storyboardIdentifier="signInContainer" id="w60-lR-3XX" customClass="SignInEmailView" customModule="Nice_Day" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="signInContainer" id="w60-lR-3XX" customClass="SignInView" customModule="Nice_Day" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" autoresizesSubviews="NO" contentMode="scaleToFill" id="uv2-Te-PhG">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -116,10 +116,10 @@
             </objects>
             <point key="canvasLocation" x="-1117" y="451"/>
         </scene>
-        <!--View Controller-->
+        <!--Sign Up View-->
         <scene sceneID="3qk-xJ-w1X">
             <objects>
-                <viewController storyboardIdentifier="signUpContainer" id="oqx-s3-FrQ" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="signUpContainer" id="oqx-s3-FrQ" customClass="SignUpView" customModule="Nice_Day" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" autoresizesSubviews="NO" contentMode="scaleToFill" id="Eta-Fx-8Re">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -243,6 +243,11 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="SdP-O7-bAn"/>
                     </view>
+                    <connections>
+                        <outlet property="emailTextField" destination="lO1-Q2-Ylu" id="fxq-kv-vFw"/>
+                        <outlet property="passwordTextField" destination="msr-dC-Zbz" id="I6j-7j-bqe"/>
+                        <outlet property="userNameTextfield" destination="XQs-ey-ctV" id="XWb-2f-ZKm"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IXt-OJ-BiX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

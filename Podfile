@@ -7,9 +7,11 @@ target 'Nice Day' do
   inhibit_all_warnings!
   # FireBase 
   pod 'Firebase/Auth'
+  pod 'Firebase/Firestore'
   pod 'SwiftLint'
   pod 'Alamofire', '~> 5.0.0-beta.5'
   pod 'Hero', '~> 1.4.0'
+  pod 'CocoaTextField', '~> 1.0.0'
   pod 'CHIPageControl', '~> 0.1.3'
   pod 'Charts', :git => 'https://github.com/CrazyMillerGitHub/Charts', :commit => 'v1.1.0'
   pod 'lottie-ios', '~> 3.1.1'
