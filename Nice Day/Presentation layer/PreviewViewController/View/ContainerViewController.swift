@@ -140,6 +140,9 @@ extension ContainerViewController: AnimationProtocol {
         #if DEBUG
         #endif
 
+        AuthManager.shared.checkValidateInfo((firstName: "Mike", lastName: "Borisov"), emailTextField.text!.lowercased(), password: passwordTextField.text!) { (user) in
+            print(user)
+        }
         /*
          AuthService.login { (error, result) in
          ...
