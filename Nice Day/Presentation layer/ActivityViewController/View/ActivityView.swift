@@ -29,7 +29,7 @@ class ActivityView: UIViewController {
     // MARK: Создание bgView
     private func performView() {
         self.view.backgroundColor = UIColor.bgColor.withAlphaComponent(0.5)
-        let blurEffect = UIBlurEffect(style: isDarkModeActivated() ? UIBlurEffect.Style.dark : UIBlurEffect.Style.light)
+        let blurEffect = UIBlurEffect(style: .systemMaterial)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = self.view.bounds
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -99,13 +99,6 @@ class ActivityView: UIViewController {
         viewModel.delegate = self
         collectionView.delegate = viewModel
         collectionView.dataSource = viewModel
-    }
-    
-    private func isDarkModeActivated() -> Bool {
-        if self.traitCollection.userInterfaceStyle == .dark {
-            return true
-        }
-        return false
     }
     
 }

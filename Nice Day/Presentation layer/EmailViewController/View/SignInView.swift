@@ -18,6 +18,7 @@ class SignInView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .blue
         forgotButton.addTarget(self, action: #selector(forgotAction), for: .touchUpInside)
         forgotButton.setTitle("_forgotPassword".localized(), for: .normal)
         emailTextField.placeholder = "_email".localized()
