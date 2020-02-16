@@ -27,18 +27,18 @@ extension UITextField {
         // check which type do you want to use
         switch type {
         case .password:
-            textField.placeholder = "Password"
+            textField.placeholder = "_passwd".localized
             // Set textContentType to password. This will work with keychain
             textField.textContentType = .password
             textField.isSecureTextEntry = true
             textField.returnKeyType = .done
         case .email:
-            textField.placeholder = "Email"
+            textField.placeholder = "_email".localized
             // Set keyboard type to email. Different keyboard
             textField.keyboardType = .emailAddress
             textField.textContentType = .emailAddress
         case .user:
-            textField.placeholder = "First and Last name"
+            textField.placeholder = "_user_name".localized
         }
         // disable first uppercase character
         textField.autocapitalizationType = .none
@@ -54,6 +54,8 @@ extension UITextField {
         textField.borderColor = UIColor(red: 239/255, green: 239/255, blue: 239/255, alpha: 1)
         // Set the error color to sunrizeColor
         textField.errorColor = .sunriseColor
+        // set text color
+        textField.textColor = .black
         // Set size of border width to 1
         textField.borderWidth = 1
         // Set the corner radius to 11

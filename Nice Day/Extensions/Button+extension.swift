@@ -51,8 +51,6 @@ extension UIButton {
     static var signIn: UIButton {
         // inizialization button
         let button = UIButton()
-        // set title
-        button.setTitle("_log_in".localized, for: .normal)
         // set clear background color
         button.backgroundColor = .clear
         button.tintColor = .white
@@ -92,9 +90,9 @@ extension UIButton {
         return button
     }
     
-    static var appleSignIn: ASAuthorizationAppleIDButton {
+    static var appleSignIn: (_ type: ASAuthorizationAppleIDButton.ButtonType, _ style: ASAuthorizationAppleIDButton.Style) -> ASAuthorizationAppleIDButton = { type, style in
         // inzialize sign in button
-        let appleSignInButton = ASAuthorizationAppleIDButton(type: .signIn, style: .black)
+        let appleSignInButton = ASAuthorizationAppleIDButton(type: type, style: style)
         appleSignInButton.translatesAutoresizingMaskIntoConstraints = false
         return appleSignInButton
     }

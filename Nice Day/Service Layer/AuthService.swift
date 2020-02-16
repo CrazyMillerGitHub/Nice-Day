@@ -14,56 +14,126 @@ struct AuthUser {
     let firstName: String
     let lastName: String
     let emailAdress: String
-    let password: String
+}
+
+/// Singleton Class
+class AuthManager {
+    
+    // create shared
+    static var shared = AuthService()
+    
+    private init() {
+        
+    }
+    
 }
 
 class AuthService {
     
-    func checkValidateInfo(_ user: (firstName: String, lastName: String),
-                           _ email: String,
-                           password: String,
-                           completeion: @escaping (AuthUser?) -> Void ) {
+    /// Check if user info is valid to use
+    /// - Parameters:
+    ///   - user: User Structure which contains first and last name
+    ///   - email: user email
+    ///   - password: password email
+    ///   - completeion: completion handler that should be returned
+    func signUp(_ user: (firstName: String, lastName: String),
+                _ email: String,
+                password: String,
+                completion: @escaping (_ error: String?, _ result: AuthUser?) -> Void ) {
         
-        guard (isPasswordValid(password) && isEmailValidate(email)) else {
-            completeion(nil)
-            return
-        }
+        // check if data is valid
+//        guard (isPasswordValid(password) && isEmailValidate(email)) else {
+//            // completion handler when invalid
+//            completeion("Incorrect Values", nil)
+//            return
+//        }
         
-        completeion(AuthUser(firstName: user.firstName, lastName: user.lastName, emailAdress: email, password: password))
-        
-        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
-            
+        // try to create new user using our email and password
+        Auth.auth().createUser(withEmail: email, password: password) { _, error in
+            // check if our ouptup error
             if let error = error {
-                print(error)
+                completion(error.localizedDescription, nil)
             } else {
-                let dataBase = Firestore.firestore()
-                dataBase.collection("users").addDocument(data: [
-                    "lastName": user.lastName,
-                    "firstName": user.firstName,
-                    "email": email,
-                    "UID": result!.user.uid
-                ]) { (err) in
-                    if let error = err {
-                        print(error)
+                if let currentUser = Auth.auth().currentUser?.createProfileChangeRequest() {
+                    
+                    currentUser.displayName = [user.firstName, user.lastName].joined(separator: " ")
+                    
+                    currentUser.commitChanges { err in
+                        if let err = err {
+                            completion(err.localizedDescription, nil)
+                        } else {
+                            completion(nil, AuthUser(firstName: user.firstName, lastName: user.lastName, emailAdress: email))
+                        }
+                        
                     }
                 }
+//                // inizialize database
+//                let dataBase = Firestore.firestore()
+//                // add values to our collection
+//                dataBase.collection("users").addDocument(data: [
+//                    "lastName": user.lastName,
+//                    "firstName": user.firstName,
+//                    "email": email,
+//                    "UID": result!.user.uid
+//                ]) { (err) in
+//                    if let error = err {
+//                        // copletion handler with our error if we can't create new user
+//                        completeion(error.localizedDescription, nil)
+//                    }
+//                }
+            }
+            // if all currectly done we callback completionhandler with userData
+        }
+    }
+
+    /// sign in function
+    /// - Parameters:
+    ///   - email: user email
+    ///   - password: user paasword
+    ///   - completion: completion handler
+    func signIn(_ email: String,
+                _ password: String,
+                completion: @escaping (_ error: String?, _ result: AuthUser?) -> Void ) {
+        
+        Auth.auth().signIn(withEmail: email, password: password) { _, error in
+            
+            if let error = error {
+                completion(error.localizedDescription, nil)
+                return
+            }
+            
+            if let currentUser = Auth.auth().currentUser {
+                
+                guard let userInfo = currentUser.displayName?.split(separator: " ").map(String.init) else {
+                    completion("User display name is nil", nil)
+                    return
+                }
+                completion(nil , AuthUser(firstName: userInfo.first!, lastName: userInfo.last!, emailAdress: currentUser.email!))
             }
         }
     }
     
-    func isEmailValidate(_ email:String) -> Bool {
+    /// check if user email is valid
+    /// - Parameter email: emailTextField text
+    private func isEmailValidate(_ email:String) -> Bool {
         let emailPredicate = NSPredicate(format:"SELF MATCHES %@", "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}")
         return emailPredicate.evaluate(with: email) && !(email == "")
 
     }
     
-    func isPasswordValid(_ password : String) -> Bool {
+    /// ckeck if user password valid
+    /// - Parameter password: passwordTextField text
+    private func isPasswordValid(_ password : String) -> Bool {
         let passwordTest = NSPredicate(format: "SELF MATCHES %@", "^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z])[A-Za-z\\d$@$#!%*?&]{8,}")
         return passwordTest.evaluate(with: password) && (password == "")
     }
+
+}
+
+extension AuthService {
     
-    func auth() {
-    
+    func signInWithApple() {
+        
     }
     
 }

@@ -15,26 +15,46 @@ import AnimationFramework
     func forgotPasswordAction()
 
     // signIn action
-    func signInAction()
+    func signAction()
 
 }
 
-class ContainerViewController: UIViewController {
+protocol HUDViewProtocol: class {
+    
+    // toggleHUD
+    func toggleHud(status: Bool)
+    
+}
+
+class ContainerViewController: UIViewController, UITextFieldDelegate {
+
+    private var authType: AuthViewType!
+    
+    init(authType: AuthViewType) {
+        self.authType = authType
+        super.init(nibName: nil, bundle:  nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // lazy var userNameAndPassword
+    lazy private var userTextField = UITextField.container(.user)
+    // inizialization textField
+    lazy private var emailTextField = UITextField.container(.email)
 
     // inizialization textField
-    lazy var emailTextField = UITextField.container(.email)
-
-    // inizialization textField
-    lazy var passwordTextField = UITextField.container(.password)
+    lazy private var passwordTextField = UITextField.container(.password)
 
     // inizialization property animation
     private var animation = UIViewPropertyAnimator(duration: 1, curve: .easeOut)
 
     // lazy inizialization of stackView
-    lazy var stackView = UIStackView.container
+    lazy private var stackView = UIStackView.container
 
     // lazy return label instanse with gesture when user forgot password
-    lazy var forgotPasswordLabel: UILabel = {
+    lazy private var forgotPasswordLabel: UILabel = {
         let label = UILabel.forgotPassword
         label.alpha = 0
         // add tapGesture to label
@@ -43,19 +63,28 @@ class ContainerViewController: UIViewController {
         return label
     }()
 
-    // lazy return logIn button
-    lazy var signInButton: UIButton = {
+    // lazy return sign in/up button
+    lazy private var signButton: UIButton = {
         // inizialization Button
         let button = UIButton.signIn
-        button.addTarget(self, action: #selector(signInAction), for: .touchUpInside)
+        button.addTarget(self, action: #selector(signAction), for: .touchUpInside)
         return button
     }()
+    
+    // setting up delegate
+    weak var delegate: HUDViewProtocol?
     
     // loadView()
     override func loadView() {
         super.loadView()
+        // set title for sign button
+        signButton.setTitle(authType.rawValue.localized, for: .normal)
         // set color to sunrize
         view.backgroundColor = .sunriseColor
+        // add userTextField
+        if authType == .signUp {
+            stackView.addArrangedSubview(userTextField)
+        }
         // add emailTextField
         stackView.addArrangedSubview(emailTextField)
         // add passwordtextField
@@ -65,13 +94,37 @@ class ContainerViewController: UIViewController {
         // add stackView
         view.addSubview(stackView)
         // add button
-        view.addSubview(signInButton)
+        view.addSubview(signButton)
         // prepare constraint
         prepareConstraints()
-        
-        AnimationService.delegate = self
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // add textfields' delegate
+        if authType == .signUp {
+            userTextField.delegate = self
+        }
+        // add delegate to emailTextField
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
+        // add animation service delegate
+        AnimationService.delegate = self
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        switch textField {
+        case userTextField:
+            emailTextField.becomeFirstResponder()
+        case emailTextField:
+            passwordTextField.becomeFirstResponder()
+        case _:
+            textField.resignFirstResponder()
+        }
+        
+        return false
+    }
 }
 
 // MARK: Prepare Constraints extension
@@ -88,10 +141,10 @@ private extension ContainerViewController {
             forgotPasswordLabel.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
             forgotPasswordLabel.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 10),
             // signInButton Constraint
-            signInButton.heightAnchor.constraint(equalToConstant: 56),
-            signInButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            signInButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 50),
-            signInButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5)
+            signButton.heightAnchor.constraint(equalToConstant: 56),
+            signButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            signButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 50),
+            signButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5)
         ])
     }
 
@@ -111,14 +164,14 @@ extension ContainerViewController: AnimationProtocol {
                 
                 [self.stackView,
                  self.forgotPasswordLabel,
-                 self.signInButton].forEach { $0.alpha = 0 }
+                 self.signButton].forEach { $0.alpha = 0 }
             }
         case false:
             UIView.animate(withDuration: 0.4) {
                 
                 [self.stackView,
                 self.forgotPasswordLabel,
-                self.signInButton].forEach { $0.alpha = 1 }
+                self.signButton].forEach { $0.alpha = 1 }
             }
         }
     }
@@ -128,26 +181,101 @@ extension ContainerViewController: AnimationProtocol {
 // MARK: action extension
 @objc extension ContainerViewController: ContainerViewProtocol {
 
-    // forgot password Action
+    /// action which will be when user forgot password
     func forgotPasswordAction() {
-        #if DEBUG
-        print(#function)
-        #endif
+        let supportView = SupportView()
+        supportView.modalPresentationStyle = .fullScreen
+        self.present(supportView, animated: true, completion: nil)
     }
 
     // sign in action
-    func signInAction() {
-        #if DEBUG
-        #endif
-
-        AuthManager.shared.checkValidateInfo((firstName: "Mike", lastName: "Borisov"), emailTextField.text!.lowercased(), password: passwordTextField.text!) { (user) in
-            print(user)
+    func signAction() {
+        delegate?.toggleHud(status: true)
+        authType == .signUp ? signUpAction() : signInAction()
+    }
+    
+    private func signUpAction() {
+        
+        let userInfo = userTextField.text!.capitalized.split(separator: " ").map(String.init)
+        
+        AuthManager.shared.signUp((firstName: userInfo.first!, lastName: userInfo.last!),
+                                  emailTextField.text!.lowercased(),
+                                  password: passwordTextField.text!) { [weak self] (err, authUser) in
+                                    guard let self = self else { return }
+                                    // working with error
+                                    if let err = err {
+                                        self.delegate?.toggleHud(status: false)
+                                        let alertView = AlertService().alert(title: "Something went wrong!",
+                                                                             body: err,
+                                                                             button: "Ok")
+                                        // present alierView for user
+                                        // set style to over full screen
+                                        alertView.modalPresentationStyle = .overFullScreen
+                                        alertView.modalTransitionStyle = .crossDissolve
+                                        // present View
+                                        DispatchQueue.main.async {
+                                            self.present(alertView, animated: true, completion: nil)
+                                        }
+                                        
+                                    } else {
+                                        // working with user output
+                                        if let authUser = authUser {
+                                            #if DEBUG
+                                            print(authUser)
+                                            #endif
+                                            self.delegate?.toggleHud(status: false)
+                                            // init instance of mainView
+                                            let mainView = MainView()
+                                            // set modal style to full screen
+                                            mainView.modalPresentationStyle = .fullScreen
+                                            // toggle HUD
+                                            // present view
+                                            DispatchQueue.main.async {
+                                                self.present(mainView, animated: true, completion: nil)
+                                            }
+                                        }
+                                    }
         }
-        /*
-         AuthService.login { (error, result) in
-         ...
-         }
-         */
+        
     }
 
+    private func signInAction() {
+        
+        AuthManager.shared.signIn(emailTextField.text!.lowercased(), passwordTextField.text!) { [weak self] err, authUser in
+            
+            guard let self = self else { return }
+            
+            if let err = err {
+                self.delegate?.toggleHud(status: false)
+                let alertView = AlertService().alert(title: "Something went wrong!",
+                                                     body: err,
+                                                     button: "Ok")
+                // present alierView for user
+                // set style to over full screen
+                alertView.modalPresentationStyle = .overFullScreen
+                alertView.modalTransitionStyle = .crossDissolve
+                // present View
+                DispatchQueue.main.async {
+                    self.present(alertView, animated: true, completion: nil)
+                }
+            } else {
+                if let authUser = authUser {
+                    #if DEBUG
+                    print(authUser)
+                    #endif
+                    // init instance of mainView
+                    let mainView = MainView()
+                    // set modal style to full screen
+                    mainView.modalPresentationStyle = .fullScreen
+                    // toggle HUD
+                     self.delegate?.toggleHud(status: false)
+                    // present view
+                    DispatchQueue.main.async {
+                        self.present(mainView, animated: true, completion: nil)
+                    }
+                }
+            }
+        }
+    }
+    
 }

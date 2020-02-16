@@ -40,14 +40,14 @@ class AboutCell: UICollectionViewCell {
     
    // MARK: levelStackView
     fileprivate let levelStackView = CustomStackView(
-        elements: [CustomInfoLabel(labelType: .description, labelText: "_level"),
+        elements: [CustomInfoLabel(labelType: .description, labelText: "_level".localized),
                    CustomInfoLabel(labelType: .value, labelText: Int.random(in: 0...100))],
         stackViewAxis: .vertical,
         spacingCount: 8)
     
     // MARK: xpStackView
     fileprivate let xpStackView = CustomStackView(
-        elements: [CustomInfoLabel(labelType: .description, labelText: "_xp"),
+        elements: [CustomInfoLabel(labelType: .description, labelText: "_xp".localized),
         CustomInfoLabel(labelType: .value, labelText: Int.random(in: 0...1000))],
         stackViewAxis: .vertical,
         spacingCount: 8)

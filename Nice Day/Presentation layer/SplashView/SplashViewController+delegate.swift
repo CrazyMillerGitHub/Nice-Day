@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SplashViewControllerDelegate: NSObject, UIViewControllerTransitioningDelegate {
+class SplashViewControllerTransition: NSObject, UIViewControllerTransitioningDelegate {
 
     // set transition
     let transition = FadeAnimator()

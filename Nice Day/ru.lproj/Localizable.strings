@@ -11,7 +11,10 @@
 "_special" = "Специальное";
 "_sign_in_with_email_and_password" = "Войти с помощью email и пароля";
 "_sign_in" = "Войти";
+"_sign_up" = "Зарегистрироваться";
+"_sign_up_description" = "Впервые? Присоединяйся!";
 "_forgotPassword"  = "забыл пароль?";
+"_user_name" = "имя и фамилия";
 "_email" = "адресс почты";
 "_passwd" = "пароль";
 "_search" = "Поиск";

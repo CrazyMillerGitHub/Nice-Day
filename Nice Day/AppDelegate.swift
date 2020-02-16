@@ -25,12 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().tintColor = .inverseColor
 
         window = UIWindow(frame: UIScreen.main.bounds)
-        if UserDefaults.standard.object(forKey: "loggedIn") == nil || UserDefaults.standard.object(forKey: "loggedIn") as? Bool == false {
-            window?.rootViewController = OnboardingView()
-            UserDefaults.standard.set(true, forKey: "loggedIn")
-        } else {
-            window?.rootViewController = SearchTabBarController()
-        }
+        window?.rootViewController = SplashViewController(SplashViewControllerTransition())
         window?.makeKeyAndVisible()
         FirebaseApp.configure()
         return true

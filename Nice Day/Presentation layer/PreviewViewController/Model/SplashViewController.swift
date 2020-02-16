@@ -13,7 +13,7 @@ final class SplashViewController: UIViewController {
 
     lazy var splashLabel = UILabel.splash
 
-    var transitionDelegate: SplashViewControllerDelegate
+    weak var transitionDelegate: SplashViewControllerDelegate?
 
     // dependency injection
     init(_ transitionDelegate: SplashViewControllerDelegate) {

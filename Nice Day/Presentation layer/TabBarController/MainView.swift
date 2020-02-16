@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SearchTabBarController: UITabBarController {
+class MainView: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()

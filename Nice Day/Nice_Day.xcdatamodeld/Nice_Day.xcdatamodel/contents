@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.99" systemVersion="18F132" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19D76" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Achievment" representedClassName="Achievment" syncable="YES" codeGenerationType="class">
-        <attribute name="achievmentCost" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="achievmentDescription" attributeType="String" syncable="YES"/>
-        <attribute name="achievmentTitle" attributeType="String" syncable="YES"/>
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="achievments" inverseEntity="User" syncable="YES"/>
+        <attribute name="achievmentCost" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="achievmentDescription" attributeType="String"/>
+        <attribute name="achievmentTitle" attributeType="String"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="achievments" inverseEntity="User"/>
     </entity>
     <entity name="AppUser" representedClassName="AppUser" syncable="YES" codeGenerationType="class">
-        <attribute name="isOnline" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <relationship name="currectUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="appUser" inverseEntity="User" syncable="YES"/>
-        <relationship name="friends" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Friends" inverseName="currectUser" inverseEntity="Friends" syncable="YES"/>
+        <attribute name="isOnline" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <relationship name="currectUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="appUser" inverseEntity="User"/>
+        <relationship name="friends" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Friends" inverseName="currectUser" inverseEntity="Friends"/>
     </entity>
     <entity name="Friends" representedClassName="Friends" syncable="YES" codeGenerationType="class">
-        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="surName" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="currectUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AppUser" inverseName="friends" inverseEntity="AppUser" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="surName" optional="YES" attributeType="String"/>
+        <relationship name="currectUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AppUser" inverseName="friends" inverseEntity="AppUser"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES" codeGenerationType="class">
-        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="surname" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="achievments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Achievment" inverseName="user" inverseEntity="Achievment" syncable="YES"/>
-        <relationship name="appUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AppUser" inverseName="currectUser" inverseEntity="AppUser" syncable="YES"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="surname" optional="YES" attributeType="String"/>
+        <relationship name="achievments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Achievment" inverseName="user" inverseEntity="Achievment"/>
+        <relationship name="appUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AppUser" inverseName="currectUser" inverseEntity="AppUser"/>
     </entity>
     <elements>
-        <element name="User" positionX="-435.14453125" positionY="-43.875" width="128" height="120"/>
-        <element name="Achievment" positionX="-190.55078125" positionY="126.97265625" width="128" height="120"/>
+        <element name="Achievment" positionX="-190.55078125" positionY="126.97265625" width="128" height="118"/>
         <element name="AppUser" positionX="-211.171875" positionY="-166.9296875" width="128" height="88"/>
         <element name="Friends" positionX="-17.48046875" positionY="-101.4453125" width="128" height="105"/>
+        <element name="User" positionX="-435.14453125" positionY="-43.875" width="128" height="120"/>
     </elements>
 </model>

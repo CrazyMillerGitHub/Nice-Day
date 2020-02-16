@@ -11,7 +11,10 @@
 "_special" = "Special";
 "_sign_in_with_email_and_password" = "Sign in with email and password";
 "_sign_in" = "Sign in";
+"_sign_up_description" = "New one? Let’s join!";
+"_sign_up" = "Sign up";
 "_forgotPassword"  = "forgot password?";
+"_user_name" = "first and last name";
 "_email" = "email";
 "_passwd" = "password";
 "_search" = "Search";
@@ -20,4 +23,5 @@
 "_YOU" = "You";
 "_AVG" = "AVG";
 "_match" = "Match";
-
+"_level" = "Level";
+"_xp" = "Xp";

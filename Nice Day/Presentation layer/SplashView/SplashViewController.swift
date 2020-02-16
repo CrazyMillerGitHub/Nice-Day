@@ -44,7 +44,7 @@ final class SplashViewController: UIViewController {
 private extension SplashViewController {
 
     func performAnimationToMainView() {
-        let view = AuthViewController()
+        let view = UserDefaults.standard.object(forKey: "loggedIn") == nil || UserDefaults.standard.object(forKey: "loggedIn") as? Bool == false ? OnboardingView() : MainView()
         view.modalPresentationStyle = .custom
         view.transitioningDelegate = transition
         present(view, animated: true, completion: nil)

@@ -58,7 +58,7 @@ class OnboardingView: UIViewController {
     // MARK: NewUserLabel init
     private var newUserLabel: UILabel = {
         let label = UILabel()
-        label.text = "New one? Let’s join!"
+        label.text = "_sign_up_description".localized
         label.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
         label.textColor = UIColor.inverseColor.withAlphaComponent(0.5)
         label.textAlignment = .center

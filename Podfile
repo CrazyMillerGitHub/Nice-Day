@@ -16,4 +16,6 @@ target 'Nice Day' do
   pod 'Charts', :git => 'https://github.com/CrazyMillerGitHub/Charts', :commit => 'v1.1.0'
   pod 'lottie-ios', '~> 3.1.1'
   pod 'DeckTransition', :git => 'https://github.com/CrazyMillerGitHub/DeckTransition.git', :commit => 'v1.0.1'
+  pod 'JGProgressHUD'
+  pod 'AnimationFramework', :path => "../AnimationFramework"
 end
