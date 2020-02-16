@@ -14,11 +14,12 @@ enum TextFieldType {
     case password
     // emailTextField
     case email
+    // userTextField
+    case user
 
 }
 
 extension UITextField {
-
     // MARK: ContainerTextField
     static func container(_ type: TextFieldType) -> CocoaTextField {
         // inizialize textField
@@ -29,15 +30,21 @@ extension UITextField {
             textField.placeholder = "Password"
             // Set textContentType to password. This will work with keychain
             textField.textContentType = .password
+            textField.isSecureTextEntry = true
+            textField.returnKeyType = .done
         case .email:
             textField.placeholder = "Email"
             // Set keyboard type to email. Different keyboard
             textField.keyboardType = .emailAddress
             textField.textContentType = .emailAddress
+        case .user:
+            textField.placeholder = "First and Last name"
         }
-         // Set the inactive color to grey
+        // disable first uppercase character
+        textField.autocapitalizationType = .none
+        // Set the inactive color to grey
         textField.inactiveHintColor = UIColor(red: 209/255, green: 211/255, blue: 212/255, alpha: 1)
-         // Set the active color to sunrizeColor
+        // Set the active color to sunrizeColor
         textField.activeHintColor = .sunriseColor
         // Set the default color to deep light grey
         textField.focusedBackgroundColor = UIColor(red: 236/255, green: 239/255, blue: 239/255, alpha: 1)
@@ -51,7 +58,9 @@ extension UITextField {
         textField.borderWidth = 1
         // Set the corner radius to 11
         textField.cornerRadius = 11
-
+        // set height
+        textField.height(constant: 46)
+        // return textField
         return textField
     }
 
