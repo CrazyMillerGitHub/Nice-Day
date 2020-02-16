@@ -13,11 +13,11 @@ final class SplashViewController: UIViewController {
 
     lazy var splashLabel = UILabel.splash
 
-    var transitionDelegate: SplashViewControllerDelegate
+    var transition: SplashViewControllerTransition
 
     // dependency injection
-    init(_ transitionDelegate: SplashViewControllerDelegate) {
-        self.transitionDelegate = transitionDelegate
+    init(_ transition: SplashViewControllerTransition) {
+        self.transition = transition
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -46,7 +46,7 @@ private extension SplashViewController {
     func performAnimationToMainView() {
         let view = AuthViewController()
         view.modalPresentationStyle = .custom
-        view.transitioningDelegate = transitionDelegate
+        view.transitioningDelegate = transition
         present(view, animated: true, completion: nil)
     }
 
