@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import FirebaseFirestore
+import AuthenticationServices
 
 struct AuthUser {
     let firstName: String
@@ -28,7 +29,7 @@ class AuthManager {
     
 }
 
-class AuthService {
+class AuthService: NSObject {
     
     /// Check if user info is valid to use
     /// - Parameters:
@@ -62,6 +63,7 @@ class AuthService {
                         if let err = err {
                             completion(err.localizedDescription, nil)
                         } else {
+                            UserDefaults.standard.setValue("\(user.firstName) \(user.lastName)", forKey: "userName")
                             completion(nil, AuthUser(firstName: user.firstName, lastName: user.lastName, emailAdress: email))
                         }
                         
@@ -108,6 +110,8 @@ class AuthService {
                     completion("User display name is nil", nil)
                     return
                 }
+                
+                UserDefaults.standard.setValue(userInfo.joined(separator: " "), forKey: "userName")
                 completion(nil , AuthUser(firstName: userInfo.first!, lastName: userInfo.last!, emailAdress: currentUser.email!))
             }
         }
@@ -132,8 +136,18 @@ class AuthService {
 
 extension AuthService {
     
+//    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+////        window
+//    }
+    
     func signInWithApple() {
-        
+//        let provider = ASAuthorizationAppleIDProvider()
+//        let request = provider.createRequest()
+//        request.requestedScopes = [.email, .fullName]
+//        let controller = ASAuthorizationController(authorizationRequests: [request])
+//        controller.delegate = self
+//        controller.presentationContextProvider = self
+//        controller.performRequests()
     }
     
 }

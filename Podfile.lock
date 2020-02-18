@@ -158,7 +158,7 @@ PODS:
     - abseil/base/base_internal
     - abseil/base/config
     - abseil/meta/type_traits
-  - Alamofire (5.0.0-beta.6)
+  - Alamofire (5.0.0)
   - AnimationFramework (0.0.1)
   - BoringSSL-GRPC (0.0.3):
     - BoringSSL-GRPC/Implementation (= 0.0.3)
@@ -188,34 +188,37 @@ PODS:
   - CHIPageControl/Puya (0.1.8)
   - CocoaTextField (1.0.0)
   - DeckTransition (2.2.0)
-  - Firebase/Auth (6.14.0):
+  - Firebase/Auth (6.17.0):
     - Firebase/CoreOnly
-    - FirebaseAuth (~> 6.4.1)
-  - Firebase/CoreOnly (6.14.0):
-    - FirebaseCore (= 6.5.0)
-  - Firebase/Firestore (6.14.0):
+    - FirebaseAuth (~> 6.4.3)
+  - Firebase/CoreOnly (6.17.0):
+    - FirebaseCore (= 6.6.2)
+  - Firebase/Firestore (6.17.0):
     - Firebase/CoreOnly
-    - FirebaseFirestore (~> 1.8.2)
-  - FirebaseAuth (6.4.1):
+    - FirebaseFirestore (~> 1.10.2)
+  - Firebase/Storage (6.17.0):
+    - Firebase/CoreOnly
+    - FirebaseStorage (~> 3.5.0)
+  - FirebaseAuth (6.4.3):
     - FirebaseAuthInterop (~> 1.0)
-    - FirebaseCore (~> 6.2)
-    - GoogleUtilities/AppDelegateSwizzler (~> 6.2)
-    - GoogleUtilities/Environment (~> 6.2)
+    - FirebaseCore (~> 6.6)
+    - GoogleUtilities/AppDelegateSwizzler (~> 6.5)
+    - GoogleUtilities/Environment (~> 6.5)
     - GTMSessionFetcher/Core (~> 1.1)
   - FirebaseAuthInterop (1.0.0)
-  - FirebaseCore (6.5.0):
-    - FirebaseCoreDiagnostics (~> 1.0)
-    - FirebaseCoreDiagnosticsInterop (~> 1.0)
-    - GoogleUtilities/Environment (~> 6.4)
-    - GoogleUtilities/Logger (~> 6.4)
-  - FirebaseCoreDiagnostics (1.1.2):
-    - FirebaseCoreDiagnosticsInterop (~> 1.0)
-    - GoogleDataTransportCCTSupport (~> 1.0)
-    - GoogleUtilities/Environment (~> 6.2)
-    - GoogleUtilities/Logger (~> 6.2)
+  - FirebaseCore (6.6.2):
+    - FirebaseCoreDiagnostics (~> 1.2)
+    - FirebaseCoreDiagnosticsInterop (~> 1.2)
+    - GoogleUtilities/Environment (~> 6.5)
+    - GoogleUtilities/Logger (~> 6.5)
+  - FirebaseCoreDiagnostics (1.2.0):
+    - FirebaseCoreDiagnosticsInterop (~> 1.2)
+    - GoogleDataTransportCCTSupport (~> 1.3)
+    - GoogleUtilities/Environment (~> 6.5)
+    - GoogleUtilities/Logger (~> 6.5)
     - nanopb (~> 0.3.901)
-  - FirebaseCoreDiagnosticsInterop (1.1.0)
-  - FirebaseFirestore (1.8.3):
+  - FirebaseCoreDiagnosticsInterop (1.2.0)
+  - FirebaseFirestore (1.10.2):
     - abseil/algorithm (= 0.20190808)
     - abseil/base (= 0.20190808)
     - abseil/memory (= 0.20190808)
@@ -228,23 +231,27 @@ PODS:
     - "gRPC-C++ (= 0.0.9)"
     - leveldb-library (~> 1.22)
     - nanopb (~> 0.3.901)
-  - GoogleDataTransport (3.2.0)
-  - GoogleDataTransportCCTSupport (1.2.3):
-    - GoogleDataTransport (~> 3.2)
+  - FirebaseStorage (3.5.0):
+    - FirebaseAuthInterop (~> 1.0)
+    - FirebaseCore (~> 6.0)
+    - GTMSessionFetcher/Core (~> 1.1)
+  - GoogleDataTransport (4.0.0)
+  - GoogleDataTransportCCTSupport (1.4.0):
+    - GoogleDataTransport (~> 4.0)
     - nanopb (~> 0.3.901)
-  - GoogleUtilities/AppDelegateSwizzler (6.4.0):
+  - GoogleUtilities/AppDelegateSwizzler (6.5.1):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
-  - GoogleUtilities/Environment (6.4.0)
-  - GoogleUtilities/Logger (6.4.0):
+  - GoogleUtilities/Environment (6.5.1)
+  - GoogleUtilities/Logger (6.5.1):
     - GoogleUtilities/Environment
-  - GoogleUtilities/Network (6.4.0):
+  - GoogleUtilities/Network (6.5.1):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (6.4.0)"
-  - GoogleUtilities/Reachability (6.4.0):
+  - "GoogleUtilities/NSData+zlib (6.5.1)"
+  - GoogleUtilities/Reachability (6.5.1):
     - GoogleUtilities/Logger
   - "gRPC-C++ (0.0.9)":
     - "gRPC-C++/Implementation (= 0.0.9)"
@@ -262,17 +269,17 @@ PODS:
     - gRPC-Core/Interface (= 1.21.0)
     - nanopb (~> 0.3)
   - gRPC-Core/Interface (1.21.0)
-  - GTMSessionFetcher/Core (1.3.0)
+  - GTMSessionFetcher/Core (1.3.1)
   - Hero (1.4.0)
   - JGProgressHUD (2.1)
   - leveldb-library (1.22)
-  - lottie-ios (3.1.1)
+  - lottie-ios (3.1.6)
   - nanopb (0.3.9011):
     - nanopb/decode (= 0.3.9011)
     - nanopb/encode (= 0.3.9011)
   - nanopb/decode (0.3.9011)
   - nanopb/encode (0.3.9011)
-  - SwiftLint (0.33.0)
+  - SwiftLint (0.39.1)
 
 DEPENDENCIES:
   - Alamofire (~> 5.0.0-beta.5)
@@ -283,21 +290,18 @@ DEPENDENCIES:
   - DeckTransition (from `https://github.com/CrazyMillerGitHub/DeckTransition.git`, commit `v1.0.1`)
   - Firebase/Auth
   - Firebase/Firestore
+  - Firebase/Storage
   - Hero (~> 1.4.0)
   - JGProgressHUD
   - lottie-ios (~> 3.1.1)
   - SwiftLint
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
-    - Alamofire
-    - CHIPageControl
-    - Hero
-    - lottie-ios
-    - SwiftLint
   trunk:
     - abseil
+    - Alamofire
     - BoringSSL-GRPC
+    - CHIPageControl
     - CocoaTextField
     - Firebase
     - FirebaseAuth
@@ -306,15 +310,19 @@ SPEC REPOS:
     - FirebaseCoreDiagnostics
     - FirebaseCoreDiagnosticsInterop
     - FirebaseFirestore
+    - FirebaseStorage
     - GoogleDataTransport
     - GoogleDataTransportCCTSupport
     - GoogleUtilities
     - "gRPC-C++"
     - gRPC-Core
     - GTMSessionFetcher
+    - Hero
     - JGProgressHUD
     - leveldb-library
+    - lottie-ios
     - nanopb
+    - SwiftLint
 
 EXTERNAL SOURCES:
   AnimationFramework:
@@ -336,33 +344,34 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   abseil: 18063d773f5366ff8736a050fe035a28f635fd27
-  Alamofire: cd08a4402bd12cacd0c66f23fb12fec8d6b965e4
+  Alamofire: 58ff2bfb8daaacaa233d5c36e37b10a5248f59b1
   AnimationFramework: 80079b93644e6b44c21f41e81e626f0aa8dab6fc
   BoringSSL-GRPC: db8764df3204ccea016e1c8dd15d9a9ad63ff318
   Charts: ef59ae1e7eaa53f10a16a0009c434051292ba808
   CHIPageControl: 76b35c8309d8dd155e869c109cc6ffc0aaa465ff
   CocoaTextField: e3a1e15afffb3ebcbc657aa25958e122f7a03b71
   DeckTransition: c705e1f6bf8d63a3515a91d8a41be7038005bf35
-  Firebase: 0219bb4782eb1406f1b9b0628a2e625484ce910d
-  FirebaseAuth: 831577b184ecaba38bc886768c1c22a450cc44e3
+  Firebase: 2672e5636b42f977177716317e68346ae5e9de25
+  FirebaseAuth: 5ce2b03a3d7fe56b7a6e4c5ec7ff1522890b1d6f
   FirebaseAuthInterop: 0ffa57668be100582bb7643d4fcb7615496c41fc
-  FirebaseCore: 632e05cc5e1199d9147122c16d92305eb04c34bd
-  FirebaseCoreDiagnostics: 511f4f3ed7d440bb69127e8b97c2bc8befae639e
-  FirebaseCoreDiagnosticsInterop: e9b1b023157e3a2fc6418b5cb601e79b9af7b3a0
-  FirebaseFirestore: 52120e2833f804a874ba1a9f59aab864a8ae2286
-  GoogleDataTransport: 8e9b210c97d55fbff306cc5468ff91b9cb32dcf5
-  GoogleDataTransportCCTSupport: 202d7cdf9c4a7d81a2bb7f7e7e1ba6faa421b1f2
-  GoogleUtilities: 29bd0d8f850efbd28cff6d99e8b7da1f8d236bcf
+  FirebaseCore: a1dd9dd6355a8356dd30a8f076839e242285a81c
+  FirebaseCoreDiagnostics: 5e78803ab276bc5b50340e3c539c06c3de35c649
+  FirebaseCoreDiagnosticsInterop: 296e2c5f5314500a850ad0b83e9e7c10b011a850
+  FirebaseFirestore: 2ee644acccde18e49b2fb5d434c709b1f1171b13
+  FirebaseStorage: 6c5263796af3b1be82ed173598aade47535fe125
+  GoogleDataTransport: 47fe3b8e1673e5187dfd615656a3c5034f150d69
+  GoogleDataTransportCCTSupport: 36f69887fd212db6d7ef4dd45ba44523717a434e
+  GoogleUtilities: 06eb53bb579efe7099152735900dd04bf09e7275
   "gRPC-C++": 9dfe7b44821e7b3e44aacad2af29d2c21f7cde83
   gRPC-Core: c9aef9a261a1247e881b18059b84d597293c9947
-  GTMSessionFetcher: 43b8b64263023d4f32caa0b40f4c8bfa3c5f36d8
+  GTMSessionFetcher: cea130bbfe5a7edc8d06d3f0d17288c32ffe9925
   Hero: bac92350d7201a1a940003e0767c7b52ce7c99a1
   JGProgressHUD: aa403e9a5b45cae98903c4600cccdd98c0c3ec90
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
-  lottie-ios: 43a472d22b2dd2bed292cc4010c0b4d2e66d3ba8
+  lottie-ios: 85ce835dd8c53e02509f20729fc7d6a4e6645a0a
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
-  SwiftLint: fed9c66336e41fc74dc48a73678380718f0c8b0e
+  SwiftLint: 55e96a4a4d537d4a3156859fc1c54bd24851a046
 
-PODFILE CHECKSUM: ca349b4863dcd0e0e3ef3d10a7ff6543964486ac
+PODFILE CHECKSUM: 037d86ed8043e651d5767b4a8571892687dd1c01
 
 COCOAPODS: 1.8.4

@@ -35,6 +35,7 @@
 		745B555123BA329D003C1928 /* AlertViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 745B555023BA329D003C1928 /* AlertViewController.storyboard */; };
 		745D8D0623956B9C008370F9 /* EmotionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745D8D0523956B9C008370F9 /* EmotionLabel.swift */; };
 		745E059A23884301008F5E63 /* AnimatedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745E059923884301008F5E63 /* AnimatedLabel.swift */; };
+		7465A25F23FB0376003EC339 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7465A25E23FB0376003EC339 /* UserService.swift */; };
 		7467E79C23658EFC00396FF2 /* Date+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7467E79B23658EFC00396FF2 /* Date+extension.swift */; };
 		74742F7C23EB553400EA71BB /* UILounchTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74742F7B23EB553400EA71BB /* UILounchTest.swift */; };
 		747C715B22CD25AB00FBEDCF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 747C715A22CD25AB00FBEDCF /* AppDelegate.swift */; };
@@ -153,6 +154,7 @@
 		745B555023BA329D003C1928 /* AlertViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AlertViewController.storyboard; sourceTree = "<group>"; };
 		745D8D0523956B9C008370F9 /* EmotionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionLabel.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		745E059923884301008F5E63 /* AnimatedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedLabel.swift; sourceTree = "<group>"; };
+		7465A25E23FB0376003EC339 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		7467E79B23658EFC00396FF2 /* Date+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+extension.swift"; sourceTree = "<group>"; };
 		74742F7923EB553400EA71BB /* UILounchTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UILounchTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		74742F7B23EB553400EA71BB /* UILounchTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILounchTest.swift; sourceTree = "<group>"; };
@@ -695,6 +697,7 @@
 			children = (
 				745B554B23BA04C8003C1928 /* AlertService.swift */,
 				74A1023A23C67CED006C745F /* AuthService.swift */,
+				7465A25E23FB0376003EC339 /* UserService.swift */,
 			);
 			path = "Service Layer";
 			sourceTree = "<group>";
@@ -1048,6 +1051,7 @@
 				745B554823B939E5003C1928 /* ActivityViewModel.swift in Sources */,
 				74CE441E235C9FA400066B17 /* MainView.swift in Sources */,
 				742194552374028D007D0EB1 /* NewPasswordCell.swift in Sources */,
+				7465A25F23FB0376003EC339 /* UserService.swift in Sources */,
 				74BCEE2122D12B6100127488 /* MoodCell.swift in Sources */,
 				74CF0C43232EA92A0091F1A8 /* user.swift in Sources */,
 				74D44A29239427710003192A /* StartStopButton.swift in Sources */,

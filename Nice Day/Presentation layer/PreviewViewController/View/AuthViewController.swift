@@ -41,13 +41,9 @@ class AuthViewController: UIViewController {
         return button
     }()
     // inizialize apple button
-    private var appleSignInButton: ASAuthorizationAppleIDButton!
+    private var appleSignButton: ASAuthorizationAppleIDButton!
     // inizialize HUD
-    var hud: JGProgressHUD {
-        let hud = JGProgressHUD(style: traitCollection.userInterfaceStyle == .light ? .light : .dark)
-        hud.textLabel.text = "Loading"
-        return hud
-    }
+    var hud: JGProgressHUD!
     // return Container view
     private var containerView: ContainerViewController!
     
@@ -55,8 +51,12 @@ class AuthViewController: UIViewController {
     override func loadView() {
         super.loadView()
         // perform appleSign
-        self.appleSignInButton = UIButton.appleSignIn(authViewType == .signUp ? .signIn : .`continue`,
+        appleSignButton = UIButton.appleSignIn(authViewType == .signUp ? .signIn : .`continue`,
                                                       traitCollection.userInterfaceStyle == .light ? .black : .white)
+        // perform JGProgress
+        performJGProgress()
+        // add target to button
+        appleSignButton.addTarget(self, action: #selector(appleSignAction), for: .touchUpInside)
         // perform containerView
         let containerView = ContainerViewController(authType: authViewType)
         containerView.view.translatesAutoresizingMaskIntoConstraints = false
@@ -126,12 +126,18 @@ class AuthViewController: UIViewController {
 // Prepare UI and Constraints
 private extension AuthViewController {
 
+    func performJGProgress() {
+        let hud = JGProgressHUD(style: traitCollection.userInterfaceStyle == .light ? .light : .dark)
+        hud.textLabel.text = "Loading"
+        self.hud = hud
+    }
+ 
     /// prepare ui by adding elements to superView
     func prepareUI() {
         view.addSubview(titleLabel)
         view.addSubview(descriptionLabel)
         view.addSubview(emailButton)
-        view.addSubview(appleSignInButton)
+        view.addSubview(appleSignButton)
     }
     
     func prepareConstraints() {
@@ -163,14 +169,14 @@ private extension AuthViewController {
             // set height anchor equal to titleLabel anchor
             descriptionLabel.heightAnchor.constraint(equalTo: titleLabel.heightAnchor),
             
-            appleSignInButton.topAnchor.constraint(equalTo: containerView.view.bottomAnchor, constant: 60),
-            appleSignInButton.heightAnchor.constraint(equalToConstant: 46.0),
-            appleSignInButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            appleSignInButton.widthAnchor.constraint(equalToConstant: view.frame.width / 2 + 120),
+            appleSignButton.topAnchor.constraint(equalTo: containerView.view.bottomAnchor, constant: 60),
+            appleSignButton.heightAnchor.constraint(equalToConstant: 46.0),
+            appleSignButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            appleSignButton.widthAnchor.constraint(equalToConstant: view.frame.width / 2 + 120),
             
-            emailButton.topAnchor.constraint(equalTo: self.appleSignInButton.bottomAnchor, constant: 20),
-            emailButton.leadingAnchor.constraint(equalTo: self.appleSignInButton.leadingAnchor, constant: 0),
-            emailButton.trailingAnchor.constraint(equalTo: self.appleSignInButton.trailingAnchor, constant: 0),
+            emailButton.topAnchor.constraint(equalTo: self.appleSignButton.bottomAnchor, constant: 20),
+            emailButton.leadingAnchor.constraint(equalTo: self.appleSignButton.leadingAnchor, constant: 0),
+            emailButton.trailingAnchor.constraint(equalTo: self.appleSignButton.trailingAnchor, constant: 0),
             emailButton.heightAnchor.constraint(equalToConstant: CGFloat(46.0))
         ])
         // add dependecies to properties
@@ -202,6 +208,10 @@ private extension AuthViewController {
             self.panGestureRecognizer.isEnabled.toggle()
         }
     }
+    
+    func appleSignAction() {
+        
+    }
 
 }
 
@@ -212,10 +222,10 @@ extension AuthViewController: HUDViewProtocol {
         switch status {
         case true:
             // show hud
-            self.hud.show(in: self.view)
+            hud.show(in: self.view)
         case false:
             // dismiss hud
-            self.hud.dismiss()
+            hud.dismiss(animated: true)
         }
     }
     

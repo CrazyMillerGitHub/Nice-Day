@@ -188,51 +188,28 @@ extension ContainerViewController: AnimationProtocol {
         self.present(supportView, animated: true, completion: nil)
     }
 
-    // sign in action
+    // sign action
     func signAction() {
         delegate?.toggleHud(status: true)
         authType == .signUp ? signUpAction() : signInAction()
     }
     
+    /// <#Description#>
     private func signUpAction() {
         
         let userInfo = userTextField.text!.capitalized.split(separator: " ").map(String.init)
         
-        AuthManager.shared.signUp((firstName: userInfo.first!, lastName: userInfo.last!),
+        AuthManager.shared.signUp((firstName: userInfo.first ?? "", lastName: userInfo.last ?? ""),
                                   emailTextField.text!.lowercased(),
                                   password: passwordTextField.text!) { [weak self] (err, authUser) in
                                     guard let self = self else { return }
                                     // working with error
                                     if let err = err {
-                                        self.delegate?.toggleHud(status: false)
-                                        let alertView = AlertService().alert(title: "Something went wrong!",
-                                                                             body: err,
-                                                                             button: "Ok")
-                                        // present alierView for user
-                                        // set style to over full screen
-                                        alertView.modalPresentationStyle = .overFullScreen
-                                        alertView.modalTransitionStyle = .crossDissolve
-                                        // present View
-                                        DispatchQueue.main.async {
-                                            self.present(alertView, animated: true, completion: nil)
-                                        }
-                                        
+                                        self.errorHandler(err: err)
                                     } else {
                                         // working with user output
-                                        if let authUser = authUser {
-                                            #if DEBUG
-                                            print(authUser)
-                                            #endif
-                                            self.delegate?.toggleHud(status: false)
-                                            // init instance of mainView
-                                            let mainView = MainView()
-                                            // set modal style to full screen
-                                            mainView.modalPresentationStyle = .fullScreen
-                                            // toggle HUD
-                                            // present view
-                                            DispatchQueue.main.async {
-                                                self.present(mainView, animated: true, completion: nil)
-                                            }
+                                        if authUser != nil {
+                                            self.presentView()
                                         }
                                     }
         }
@@ -246,35 +223,47 @@ extension ContainerViewController: AnimationProtocol {
             guard let self = self else { return }
             
             if let err = err {
-                self.delegate?.toggleHud(status: false)
-                let alertView = AlertService().alert(title: "Something went wrong!",
-                                                     body: err,
-                                                     button: "Ok")
-                // present alierView for user
-                // set style to over full screen
-                alertView.modalPresentationStyle = .overFullScreen
-                alertView.modalTransitionStyle = .crossDissolve
-                // present View
-                DispatchQueue.main.async {
-                    self.present(alertView, animated: true, completion: nil)
-                }
+                self.errorHandler(err: err)
             } else {
-                if let authUser = authUser {
-                    #if DEBUG
-                    print(authUser)
-                    #endif
-                    // init instance of mainView
-                    let mainView = MainView()
-                    // set modal style to full screen
-                    mainView.modalPresentationStyle = .fullScreen
-                    // toggle HUD
-                     self.delegate?.toggleHud(status: false)
-                    // present view
-                    DispatchQueue.main.async {
-                        self.present(mainView, animated: true, completion: nil)
-                    }
+                if authUser != nil {
+                    self.presentView()
                 }
             }
+        }
+    }
+    
+    /// present view
+    func presentView() {
+        // init instance of mainView
+        let mainView = MainView()
+        // set modal style to full screen
+        mainView.modalPresentationStyle = .fullScreen
+        // toggle HUD
+        self.delegate?.toggleHud(status: false)
+        // present view
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            // present MainView
+            self.present(mainView, animated: true, completion: nil)
+        }
+    }
+    
+    /// error handler action
+    /// - Parameter err: error string that need to be displayed
+    func errorHandler(err: String) {
+        // disable HUD
+        self.delegate?.toggleHud(status: false)
+        // init view with parametres
+        let alertView = AlertService().alert(title: "Something went wrong!",
+                                             body: err,
+                                             button: "Ok")
+        // present alierView for user
+        // set style to over full screen
+        alertView.modalPresentationStyle = .overFullScreen
+        alertView.modalTransitionStyle = .crossDissolve
+        // present View
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            // present AlertView
+            self.present(alertView, animated: true, completion: nil)
         }
     }
     

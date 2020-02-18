@@ -39,24 +39,35 @@ class AboutCell: UICollectionViewCell {
     }()
     
    // MARK: levelStackView
-    fileprivate let levelStackView = CustomStackView(
+    lazy private var levelStackView = CustomStackView(
         elements: [CustomInfoLabel(labelType: .description, labelText: "_level".localized),
                    CustomInfoLabel(labelType: .value, labelText: Int.random(in: 0...100))],
         stackViewAxis: .vertical,
         spacingCount: 8)
     
     // MARK: xpStackView
-    fileprivate let xpStackView = CustomStackView(
+    lazy private var xpStackView = CustomStackView(
         elements: [CustomInfoLabel(labelType: .description, labelText: "_xp".localized),
         CustomInfoLabel(labelType: .value, labelText: Int.random(in: 0...1000))],
         stackViewAxis: .vertical,
         spacingCount: 8)
     
+    // MARK: userName
+    lazy private var userName: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        label.text = UserDefaults.standard.object(forKey: "userName") as? String
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .inverseColor
+        label.textAlignment = .center
+        return label
+    }()
+    
     // MARK: stackView
-    fileprivate let stackView = CustomStackView(elements: nil, stackViewAxis: .horizontal, spacingCount: 35)
+    lazy private var stackView = CustomStackView(elements: nil, stackViewAxis: .horizontal, spacingCount: 35)
     
     // MARK: basicAnimationInit
-    fileprivate let basicAnimation: (CGFloat) -> CABasicAnimation = { toValue in
+    private let basicAnimation: (CGFloat) -> CABasicAnimation = { toValue in
         let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
         basicAnimation.fillMode = .forwards
         basicAnimation.toValue = toValue
@@ -85,6 +96,7 @@ class AboutCell: UICollectionViewCell {
         self.contentView.addSubview(stackView)
         self.contentView.addSubview(headerView)
         self.contentView.addSubview(imageView)
+        self.contentView.addSubview(userName)
         self.contentView.addSubview(signOutButton)
         self.headerView = headerView
         prepareGesture()
@@ -132,13 +144,16 @@ extension AboutCell: UIGestureRecognizerDelegate {
             self.imageView.widthAnchor.constraint(equalToConstant: 91.0),
             self.imageView.heightAnchor.constraint(equalToConstant: 91.0),
             
-            self.stackView.topAnchor.constraint(equalTo: self.imageView.bottomAnchor, constant: 20),
-            self.stackView.leadingAnchor.constraint(equalTo: self.imageView.leadingAnchor, constant: -10),
-            self.stackView.trailingAnchor.constraint(equalTo: self.imageView.trailingAnchor, constant: 10),
+            self.userName.topAnchor.constraint(equalTo: self.imageView.bottomAnchor, constant: 20),
+            self.userName.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
+            
+            self.stackView.topAnchor.constraint(equalTo: self.userName.bottomAnchor, constant: 10),
+            self.stackView.leadingAnchor.constraint(equalTo: self.imageView.leadingAnchor, constant: -15),
+            self.stackView.trailingAnchor.constraint(equalTo: self.imageView.trailingAnchor, constant: 15),
             self.stackView.heightAnchor.constraint(equalToConstant: 45),
             
             //SignOutButton Constraints
-            self.signOutButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 50),
+            self.signOutButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 30),
             self.signOutButton.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
             self.signOutButton.heightAnchor.constraint(equalToConstant: 46),
             self.signOutButton.widthAnchor.constraint(equalToConstant: 143)

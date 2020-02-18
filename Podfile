@@ -8,6 +8,7 @@ target 'Nice Day' do
   # FireBase 
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
+  pod 'Firebase/Storage'
   pod 'SwiftLint'
   pod 'Alamofire', '~> 5.0.0-beta.5'
   pod 'Hero', '~> 1.4.0'
