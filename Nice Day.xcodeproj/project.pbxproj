@@ -37,7 +37,6 @@
 		745E059A23884301008F5E63 /* AnimatedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745E059923884301008F5E63 /* AnimatedLabel.swift */; };
 		7465A25F23FB0376003EC339 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7465A25E23FB0376003EC339 /* UserService.swift */; };
 		7467E79C23658EFC00396FF2 /* Date+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7467E79B23658EFC00396FF2 /* Date+extension.swift */; };
-		74742F7C23EB553400EA71BB /* UILounchTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74742F7B23EB553400EA71BB /* UILounchTest.swift */; };
 		747C715B22CD25AB00FBEDCF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 747C715A22CD25AB00FBEDCF /* AppDelegate.swift */; };
 		747C716022CD25AB00FBEDCF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 747C715E22CD25AB00FBEDCF /* Main.storyboard */; };
 		747C716322CD25AB00FBEDCF /* Nice_Day.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 747C716122CD25AB00FBEDCF /* Nice_Day.xcdatamodeld */; };
@@ -101,16 +100,6 @@
 		74F36D4223774AE3004DEBF0 /* ImageView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F36D4123774AE3004DEBF0 /* ImageView+extension.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		74742F7E23EB553400EA71BB /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 747C714F22CD25AB00FBEDCF /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 747C715622CD25AB00FBEDCF;
-			remoteInfo = "Nice Day";
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		74CE4461235D029400066B17 /* Embed Watch Content */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -156,9 +145,6 @@
 		745E059923884301008F5E63 /* AnimatedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedLabel.swift; sourceTree = "<group>"; };
 		7465A25E23FB0376003EC339 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		7467E79B23658EFC00396FF2 /* Date+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+extension.swift"; sourceTree = "<group>"; };
-		74742F7923EB553400EA71BB /* UILounchTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UILounchTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		74742F7B23EB553400EA71BB /* UILounchTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UILounchTest.swift; sourceTree = "<group>"; };
-		74742F7D23EB553400EA71BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		747C715722CD25AB00FBEDCF /* Nice Day.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Nice Day.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		747C715A22CD25AB00FBEDCF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		747C715F22CD25AB00FBEDCF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -231,13 +217,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		74742F7623EB553400EA71BB /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		747C715422CD25AB00FBEDCF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -374,20 +353,10 @@
 			path = AlertViewController;
 			sourceTree = "<group>";
 		};
-		74742F7A23EB553400EA71BB /* UILounchTest */ = {
-			isa = PBXGroup;
-			children = (
-				74742F7B23EB553400EA71BB /* UILounchTest.swift */,
-				74742F7D23EB553400EA71BB /* Info.plist */,
-			);
-			path = UILounchTest;
-			sourceTree = "<group>";
-		};
 		747C714E22CD25AB00FBEDCF = {
 			isa = PBXGroup;
 			children = (
 				747C715922CD25AB00FBEDCF /* Nice Day */,
-				74742F7A23EB553400EA71BB /* UILounchTest */,
 				747C715822CD25AB00FBEDCF /* Products */,
 				F2B6194B865269D2B41AED0B /* Pods */,
 				986FDC537722AF7CDD7FDB8B /* Frameworks */,
@@ -398,7 +367,6 @@
 			isa = PBXGroup;
 			children = (
 				747C715722CD25AB00FBEDCF /* Nice Day.app */,
-				74742F7923EB553400EA71BB /* UILounchTest.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -406,19 +374,16 @@
 		747C715922CD25AB00FBEDCF /* Nice Day */ = {
 			isa = PBXGroup;
 			children = (
+				74F748D123FBC93E001E7424 /* Resources */,
+				74F748CE23FBC8A8001E7424 /* Supporting Files */,
+				74F748CD23FBC87C001E7424 /* Startup */,
 				7497169023C0C6CF0092A300 /* Nice DayRelease.entitlements */,
-				747C715A22CD25AB00FBEDCF /* AppDelegate.swift */,
 				74CE4421235CA22B00066B17 /* Core Layer */,
 				74CE4420235CA21B00066B17 /* Service Layer */,
 				74CE441F235CA20200066B17 /* Presentation layer */,
 				7459C7102349C77E00362DFC /* Extensions */,
-				747C715E22CD25AB00FBEDCF /* Main.storyboard */,
 				74C92A3123474CAB00AB0C65 /* onboarding.json */,
 				7452800823911D9600F07E76 /* heartAnimation.json */,
-				747C716422CD25AD00FBEDCF /* Assets.xcassets */,
-				747C716622CD25AD00FBEDCF /* LaunchScreen.storyboard */,
-				747C716922CD25AD00FBEDCF /* Info.plist */,
-				74A1023823C675F8006C745F /* GoogleService-Info.plist */,
 				747C716122CD25AB00FBEDCF /* Nice_Day.xcdatamodeld */,
 				74CE442D235CCF8400066B17 /* Localizable.strings */,
 			);
@@ -447,6 +412,7 @@
 		747F6F8D22CF707300631A30 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				747C715E22CD25AB00FBEDCF /* Main.storyboard */,
 				74184CB322CE2F9000EC31DE /* MainViewController.swift */,
 				74CE4409235C75D700066B17 /* RootMainViewController.swift */,
 				747F6F9022CF73D700631A30 /* MainViewControllerDelegate.swift */,
@@ -825,6 +791,32 @@
 			path = AchievmentStaticCell;
 			sourceTree = "<group>";
 		};
+		74F748CD23FBC87C001E7424 /* Startup */ = {
+			isa = PBXGroup;
+			children = (
+				747C715A22CD25AB00FBEDCF /* AppDelegate.swift */,
+			);
+			path = Startup;
+			sourceTree = "<group>";
+		};
+		74F748CE23FBC8A8001E7424 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				74A1023823C675F8006C745F /* GoogleService-Info.plist */,
+				747C716922CD25AD00FBEDCF /* Info.plist */,
+				747C716622CD25AD00FBEDCF /* LaunchScreen.storyboard */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		74F748D123FBC93E001E7424 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				747C716422CD25AD00FBEDCF /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		986FDC537722AF7CDD7FDB8B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -847,24 +839,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		74742F7823EB553400EA71BB /* UILounchTest */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 74742F8223EB553400EA71BB /* Build configuration list for PBXNativeTarget "UILounchTest" */;
-			buildPhases = (
-				74742F7523EB553400EA71BB /* Sources */,
-				74742F7623EB553400EA71BB /* Frameworks */,
-				74742F7723EB553400EA71BB /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				74742F7F23EB553400EA71BB /* PBXTargetDependency */,
-			);
-			name = UILounchTest;
-			productName = UILounchTest;
-			productReference = 74742F7923EB553400EA71BB /* UILounchTest.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 		747C715622CD25AB00FBEDCF /* Nice Day */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 747C716C22CD25AD00FBEDCF /* Build configuration list for PBXNativeTarget "Nice Day" */;
@@ -896,10 +870,6 @@
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Mikhail Borisov";
 				TargetAttributes = {
-					74742F7823EB553400EA71BB = {
-						CreatedOnToolsVersion = 11.3;
-						TestTargetID = 747C715622CD25AB00FBEDCF;
-					};
 					747C715622CD25AB00FBEDCF = {
 						CreatedOnToolsVersion = 10.2.1;
 					};
@@ -920,19 +890,11 @@
 			projectRoot = "";
 			targets = (
 				747C715622CD25AB00FBEDCF /* Nice Day */,
-				74742F7823EB553400EA71BB /* UILounchTest */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		74742F7723EB553400EA71BB /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		747C715522CD25AB00FBEDCF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1010,14 +972,6 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		74742F7523EB553400EA71BB /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				74742F7C23EB553400EA71BB /* UILounchTest.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		747C715322CD25AB00FBEDCF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1108,14 +1062,6 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		74742F7F23EB553400EA71BB /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 747C715622CD25AB00FBEDCF /* Nice Day */;
-			targetProxy = 74742F7E23EB553400EA71BB /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin PBXVariantGroup section */
 		747C715E22CD25AB00FBEDCF /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -1147,46 +1093,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		74742F8023EB553400EA71BB /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 4GB4E68ZU6;
-				INFOPLIST_FILE = UILounchTest/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "Mikhail-Borisov.UILounchTest";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "Nice Day";
-			};
-			name = Debug;
-		};
-		74742F8123EB553400EA71BB /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 4GB4E68ZU6;
-				INFOPLIST_FILE = UILounchTest/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "Mikhail-Borisov.UILounchTest";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "Nice Day";
-			};
-			name = Release;
-		};
 		747C716A22CD25AD00FBEDCF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1318,7 +1224,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
-				INFOPLIST_FILE = "Nice Day/Info.plist";
+				INFOPLIST_FILE = "Nice Day/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1345,7 +1251,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks",
 				);
-				INFOPLIST_FILE = "Nice Day/Info.plist";
+				INFOPLIST_FILE = "Nice Day/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1362,15 +1268,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		74742F8223EB553400EA71BB /* Build configuration list for PBXNativeTarget "UILounchTest" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				74742F8023EB553400EA71BB /* Debug */,
-				74742F8123EB553400EA71BB /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		747C715222CD25AB00FBEDCF /* Build configuration list for PBXProject "Nice Day" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
