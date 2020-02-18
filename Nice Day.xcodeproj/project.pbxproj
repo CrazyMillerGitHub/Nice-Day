@@ -27,7 +27,6 @@
 		7458059D23A3EC050051682A /* AchievmentsStaticCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7458059C23A3EC050051682A /* AchievmentsStaticCell.swift */; };
 		745805B523491FA300B7783F /* CoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745805B423491FA300B7783F /* CoreCell.swift */; };
 		7459C70F2349C5F300362DFC /* Сolor+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7459C70E2349C5F300362DFC /* Сolor+extension.swift */; };
-		745B554523B92709003C1928 /* ActivityViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745B554423B92709003C1928 /* ActivityViewCell.swift */; };
 		745B554823B939E5003C1928 /* ActivityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745B554723B939E5003C1928 /* ActivityViewModel.swift */; };
 		745B554A23B9464C003C1928 /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745B554923B9464C003C1928 /* SearchModel.swift */; };
 		745B554C23BA04C8003C1928 /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745B554B23BA04C8003C1928 /* AlertService.swift */; };
@@ -65,7 +64,6 @@
 		74BF53362370510500CCEF3C /* SupportViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BF53352370510500CCEF3C /* SupportViewModel.swift */; };
 		74BF5338237055AE00CCEF3C /* EmailSupportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BF5337237055AE00CCEF3C /* EmailSupportCell.swift */; };
 		74C22F9923C29CD900358A8D /* Label+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C22F9823C29CD900358A8D /* Label+extension.swift */; };
-		74C22F9B23C3C41A00358A8D /* TimerLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C22F9A23C3C41A00358A8D /* TimerLabel.swift */; };
 		74C2FED923885DD000F485B6 /* ProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C2FED823885DD000F485B6 /* ProfileHeader.swift */; };
 		74C2FEDC2389653200F485B6 /* CustomStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C2FEDB2389653200F485B6 /* CustomStackView.swift */; };
 		74C2FEDE23896FEB00F485B6 /* CustomInfoLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C2FEDD23896FEB00F485B6 /* CustomInfoLabel.swift */; };
@@ -73,7 +71,6 @@
 		74C2FEE22389DA9D00F485B6 /* ProfileAchievmentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C2FEE12389DA9D00F485B6 /* ProfileAchievmentsViewModel.swift */; };
 		74C92A3223474CAB00AB0C65 /* onboarding.json in Resources */ = {isa = PBXBuildFile; fileRef = 74C92A3123474CAB00AB0C65 /* onboarding.json */; };
 		74C962C72378851F00F5B810 /* MoodStaticCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C962C62378851F00F5B810 /* MoodStaticCell.swift */; };
-		74C962D12379DC2300F5B810 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C962D02379DC2300F5B810 /* ActivityView.swift */; };
 		74CE4408235C5F4E00066B17 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CE4407235C5F4E00066B17 /* MainViewModel.swift */; };
 		74CE440A235C75D700066B17 /* RootMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CE4409235C75D700066B17 /* RootMainViewController.swift */; };
 		74CE4410235C9A7B00066B17 /* Button+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CE440F235C9A7B00066B17 /* Button+extension.swift */; };
@@ -93,11 +90,14 @@
 		74CE446D235EDBF500066B17 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CE446C235EDBF500066B17 /* SearchViewModel.swift */; };
 		74CF0C43232EA92A0091F1A8 /* user.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CF0C42232EA92A0091F1A8 /* user.swift */; };
 		74CF0C4B232F92510091F1A8 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CF0C4A232F92510091F1A8 /* ProfileView.swift */; };
-		74D44A29239427710003192A /* StartStopButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74D44A28239427710003192A /* StartStopButton.swift */; };
 		74E15F11235F060E00980F7D /* RootSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E15F10235F060E00980F7D /* RootSearchViewController.swift */; };
 		74F0BFE423A80B9A0025493B /* ChartsStaticCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F0BFE323A80B9A0025493B /* ChartsStaticCell.swift */; };
 		74F36D4023774342004DEBF0 /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F36D3F23774342004DEBF0 /* SegmentedControl.swift */; };
 		74F36D4223774AE3004DEBF0 /* ImageView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F36D4123774AE3004DEBF0 /* ImageView+extension.swift */; };
+		74F748D723FBCDF2001E7424 /* StartStopButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F748D523FBCDF2001E7424 /* StartStopButton.swift */; };
+		74F748D823FBCDF2001E7424 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F748D623FBCDF2001E7424 /* ActivityView.swift */; };
+		74F748DA23FBCEB7001E7424 /* TimerLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F748D923FBCEB7001E7424 /* TimerLabel.swift */; };
+		74F748DC23FBCEBE001E7424 /* ActivityViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F748DB23FBCEBE001E7424 /* ActivityViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -135,7 +135,6 @@
 		7458059C23A3EC050051682A /* AchievmentsStaticCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievmentsStaticCell.swift; sourceTree = "<group>"; };
 		745805B423491FA300B7783F /* CoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreCell.swift; sourceTree = "<group>"; };
 		7459C70E2349C5F300362DFC /* Сolor+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Сolor+extension.swift"; sourceTree = "<group>"; };
-		745B554423B92709003C1928 /* ActivityViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewCell.swift; sourceTree = "<group>"; };
 		745B554723B939E5003C1928 /* ActivityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewModel.swift; sourceTree = "<group>"; };
 		745B554923B9464C003C1928 /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
 		745B554B23BA04C8003C1928 /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
@@ -177,7 +176,6 @@
 		74BF53352370510500CCEF3C /* SupportViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportViewModel.swift; sourceTree = "<group>"; };
 		74BF5337237055AE00CCEF3C /* EmailSupportCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSupportCell.swift; sourceTree = "<group>"; };
 		74C22F9823C29CD900358A8D /* Label+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Label+extension.swift"; sourceTree = "<group>"; };
-		74C22F9A23C3C41A00358A8D /* TimerLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerLabel.swift; sourceTree = "<group>"; };
 		74C2FED823885DD000F485B6 /* ProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeader.swift; sourceTree = "<group>"; };
 		74C2FEDB2389653200F485B6 /* CustomStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStackView.swift; sourceTree = "<group>"; };
 		74C2FEDD23896FEB00F485B6 /* CustomInfoLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInfoLabel.swift; sourceTree = "<group>"; };
@@ -185,7 +183,6 @@
 		74C2FEE12389DA9D00F485B6 /* ProfileAchievmentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAchievmentsViewModel.swift; sourceTree = "<group>"; };
 		74C92A3123474CAB00AB0C65 /* onboarding.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = onboarding.json; sourceTree = "<group>"; };
 		74C962C62378851F00F5B810 /* MoodStaticCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodStaticCell.swift; sourceTree = "<group>"; };
-		74C962D02379DC2300F5B810 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		74CE4407235C5F4E00066B17 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		74CE4409235C75D700066B17 /* RootMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootMainViewController.swift; sourceTree = "<group>"; };
 		74CE440F235C9A7B00066B17 /* Button+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Button+extension.swift"; sourceTree = "<group>"; };
@@ -208,11 +205,14 @@
 		74CE446C235EDBF500066B17 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		74CF0C42232EA92A0091F1A8 /* user.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = user.swift; sourceTree = "<group>"; };
 		74CF0C4A232F92510091F1A8 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
-		74D44A28239427710003192A /* StartStopButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartStopButton.swift; sourceTree = "<group>"; };
 		74E15F10235F060E00980F7D /* RootSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootSearchViewController.swift; sourceTree = "<group>"; };
 		74F0BFE323A80B9A0025493B /* ChartsStaticCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsStaticCell.swift; sourceTree = "<group>"; };
 		74F36D3F23774342004DEBF0 /* SegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControl.swift; sourceTree = "<group>"; };
 		74F36D4123774AE3004DEBF0 /* ImageView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageView+extension.swift"; sourceTree = "<group>"; };
+		74F748D523FBCDF2001E7424 /* StartStopButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartStopButton.swift; sourceTree = "<group>"; };
+		74F748D623FBCDF2001E7424 /* ActivityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
+		74F748D923FBCEB7001E7424 /* TimerLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerLabel.swift; sourceTree = "<group>"; };
+		74F748DB23FBCEBE001E7424 /* ActivityViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityViewCell.swift; sourceTree = "<group>"; };
 		7BF8309A9283943692397954 /* Pods-Nice Day.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nice Day.debug.xcconfig"; path = "Target Support Files/Pods-Nice Day/Pods-Nice Day.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -330,18 +330,9 @@
 		745B554323B926F1003C1928 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				745B554623B939CB003C1928 /* View */,
-				74C22F9A23C3C41A00358A8D /* TimerLabel.swift */,
+				74F748D423FBCDF2001E7424 /* View */,
 			);
 			path = Cell;
-			sourceTree = "<group>";
-		};
-		745B554623B939CB003C1928 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				745B554423B92709003C1928 /* ActivityViewCell.swift */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		745B554D23BA05B0003C1928 /* AlertViewController */ = {
@@ -511,21 +502,13 @@
 		74C962CC2379DBCC00F5B810 /* ActivityViewController */ = {
 			isa = PBXGroup;
 			children = (
+				74F748D923FBCEB7001E7424 /* TimerLabel.swift */,
+				74F748DB23FBCEBE001E7424 /* ActivityViewCell.swift */,
 				745B554323B926F1003C1928 /* Cell */,
 				74C962CF2379DBED00F5B810 /* Model */,
 				74C962CE2379DBE200F5B810 /* ViewModel */,
-				74C962CD2379DBDB00F5B810 /* View */,
 			);
 			path = ActivityViewController;
-			sourceTree = "<group>";
-		};
-		74C962CD2379DBDB00F5B810 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				74C962D02379DC2300F5B810 /* ActivityView.swift */,
-				74D44A28239427710003192A /* StartStopButton.swift */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		74C962CE2379DBE200F5B810 /* ViewModel */ = {
@@ -817,6 +800,16 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		74F748D423FBCDF2001E7424 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				74F748D523FBCDF2001E7424 /* StartStopButton.swift */,
+				74F748D623FBCDF2001E7424 /* ActivityView.swift */,
+			);
+			name = View;
+			path = ../../../../../View;
+			sourceTree = "<group>";
+		};
 		986FDC537722AF7CDD7FDB8B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1003,12 +996,12 @@
 				742A39F42342899300770F68 /* OnboardingView.swift in Sources */,
 				743953CC2380990E00CE698A /* AchievmentCell.swift in Sources */,
 				745B554823B939E5003C1928 /* ActivityViewModel.swift in Sources */,
+				74F748DC23FBCEBE001E7424 /* ActivityViewCell.swift in Sources */,
 				74CE441E235C9FA400066B17 /* MainView.swift in Sources */,
 				742194552374028D007D0EB1 /* NewPasswordCell.swift in Sources */,
 				7465A25F23FB0376003EC339 /* UserService.swift in Sources */,
 				74BCEE2122D12B6100127488 /* MoodCell.swift in Sources */,
 				74CF0C43232EA92A0091F1A8 /* user.swift in Sources */,
-				74D44A29239427710003192A /* StartStopButton.swift in Sources */,
 				745D8D0623956B9C008370F9 /* EmotionLabel.swift in Sources */,
 				74CF0C4B232F92510091F1A8 /* ProfileView.swift in Sources */,
 				74CE4437235CDC6200066B17 /* ProfileViewModel.swift in Sources */,
@@ -1016,7 +1009,6 @@
 				74A5BAC62366DF1800B3B000 /* CoreSupportCell.swift in Sources */,
 				74BF53362370510500CCEF3C /* SupportViewModel.swift in Sources */,
 				74BCEE2722D13AD800127488 /* UICollectionViewCell+IndexPath.swift in Sources */,
-				74C962D12379DC2300F5B810 /* ActivityView.swift in Sources */,
 				743953CF2380997800CE698A /* AchievmentViewModel.swift in Sources */,
 				74A1BD6423F6791900387C0A /* AuthViewController.swift in Sources */,
 				74CE4439235CE0D600066B17 /* ProfileModel.swift in Sources */,
@@ -1030,7 +1022,6 @@
 				74CE4428235CCDC500066B17 /* String+extension.swift in Sources */,
 				747F6F9122CF73D700631A30 /* MainViewControllerDelegate.swift in Sources */,
 				747F6F9322CF757900631A30 /* MainViewControllerData.swift in Sources */,
-				745B554523B92709003C1928 /* ActivityViewCell.swift in Sources */,
 				74BCEE1F22D12B3200127488 /* FriendsCell.swift in Sources */,
 				74184CB422CE2F9000EC31DE /* MainViewController.swift in Sources */,
 				74CE4424235CA28800066B17 /* CoreDataManager.swift in Sources */,
@@ -1039,12 +1030,14 @@
 				74CE4435235CDAA500066B17 /* ProfileAchievmentsCell.swift in Sources */,
 				74CE440A235C75D700066B17 /* RootMainViewController.swift in Sources */,
 				74C2FEDE23896FEB00F485B6 /* CustomInfoLabel.swift in Sources */,
-				74C22F9B23C3C41A00358A8D /* TimerLabel.swift in Sources */,
+				74F748DA23FBCEB7001E7424 /* TimerLabel.swift in Sources */,
 				7459C70F2349C5F300362DFC /* Сolor+extension.swift in Sources */,
 				74A1BD6323F6791900387C0A /* FadeAnimator.swift in Sources */,
+				74F748D723FBCDF2001E7424 /* StartStopButton.swift in Sources */,
 				74CE4408235C5F4E00066B17 /* MainViewModel.swift in Sources */,
 				741458D6239AB93F00980A63 /* NewFriendTitleLabel.swift in Sources */,
 				742194532373FCD3007D0EB1 /* FiveDigitCell.swift in Sources */,
+				74F748D823FBCDF2001E7424 /* ActivityView.swift in Sources */,
 				745B554F23BA05D0003C1928 /* AlertViewController.swift in Sources */,
 				74CE4426235CA29E00066B17 /* NetworkingManager.swift in Sources */,
 				74CE4410235C9A7B00066B17 /* Button+extension.swift in Sources */,
