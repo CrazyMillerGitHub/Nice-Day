@@ -1,0 +1,166 @@
+//
+//  AboutCell.swift
+//  Nice Day
+//
+//  Created by Михаил Борисов on 20.10.2019.
+//  Copyright © 2019 Mikhail Borisov. All rights reserved.
+//
+
+import UIKit
+
+final class AboutCell: UICollectionViewCell {
+    
+    static var identifier = String(describing: type(of: self))
+    
+    private var headerView: ProfileHeader!
+    
+    // MARK: создание imageView
+    private lazy var imageView =  UIImageView().with { imageView in
+        imageView.layer.cornerRadius = 45.5
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFit
+        imageView.backgroundColor = .red
+        imageView.isUserInteractionEnabled = true
+    }
+    
+    // MARK: SignOut Button
+    private lazy var signOutButton = ElasticButton().with { button in
+        button.backgroundColor = .sunriseColor
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.cornerRadius = 15
+        button.clipsToBounds = true
+        button.setTitle("_signOut".localized(), for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+    }
+    
+   // MARK: levelStackView
+    private lazy var levelStackView = CustomStackView(
+        elements: [CustomInfoLabel(labelType: .description, labelText: "_level".localized),
+                   CustomInfoLabel(labelType: .value, labelText: Int.random(in: 0...100))],
+        stackViewAxis: .vertical,
+        spacingCount: 8)
+    
+    // MARK: xpStackView
+    private lazy var xpStackView = CustomStackView(
+        elements: [CustomInfoLabel(labelType: .description, labelText: "_xp".localized),
+        CustomInfoLabel(labelType: .value, labelText: Int.random(in: 0...1000))],
+        stackViewAxis: .vertical,
+        spacingCount: 8)
+    
+    // MARK: userName
+    private lazy var userNameLabel = UILabel().with { label in
+        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        label.text = UserDefaults.standard.object(forKey: "userName") as? String
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .inverseColor
+        label.textAlignment = .center
+    }
+    
+    // MARK: stackView
+    lazy private var stackView = CustomStackView(elements: nil, stackViewAxis: .horizontal, spacingCount: 35)
+    
+    // MARK: basicAnimationInit
+    private let basicAnimation: (CGFloat) -> CABasicAnimation = { toValue in
+        let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
+        basicAnimation.fillMode = .forwards
+        basicAnimation.toValue = toValue
+        basicAnimation.duration = 2
+        basicAnimation.isRemovedOnCompletion = false
+        basicAnimation.timingFunction = CAMediaTimingFunction(name: .easeOut)
+        return basicAnimation
+    }
+    
+    private func prepareShape() {
+        let path = UIBezierPath(arcCenter: CGPoint(x: contentView.center.x, y: contentView.center.y - 50.5 ), radius: 45, startAngle: -CGFloat.pi / 2, endAngle: 2 * CGFloat.pi, clockwise: true).cgPath
+        let shapeLayer = ProgressShapeLayer(shapePath: path, shapeType: .foreground)
+        let bgLayer = ProgressShapeLayer(shapePath: path, shapeType: .background)
+        contentView.layer.addSublayer(bgLayer)
+        contentView.layer.addSublayer(shapeLayer)
+        shapeLayer.add(basicAnimation(0.3), forKey: "urSoBasic")
+       
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        let headerView = ProfileHeader()
+        
+        stackView.addArrangedSubview(levelStackView)
+        stackView.addArrangedSubview(xpStackView)
+        self.contentView.addSubview(stackView)
+        self.contentView.addSubview(headerView)
+        self.contentView.addSubview(imageView)
+        self.contentView.addSubview(userNameLabel)
+        self.contentView.addSubview(signOutButton)
+        self.headerView = headerView
+        prepareGesture()
+        prepareConstraint()
+        reset()
+        prepareShape()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        reset()
+    }
+    
+    private func reset() {
+        self.contentView.backgroundColor = .bgColor
+        signOutButton.addAction {
+            self.signOutAction()
+        }
+    }
+    
+    @objc
+    private func signOutAction() {
+        UserDefaults.standard.set(false, forKey: "loggedIn")
+        NotificationCenter.default.post(name: .signOutNotificationKey, object: nil)
+    }
+    
+}
+
+extension AboutCell: UIGestureRecognizerDelegate {
+    
+    func prepareConstraint() {
+        NSLayoutConstraint.activate([
+            
+            self.headerView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor),
+            self.headerView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+            self.headerView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+            self.headerView.heightAnchor.constraint(equalToConstant: 35.0),
+            
+            self.imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 116),
+            self.imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            self.imageView.widthAnchor.constraint(equalToConstant: 91.0),
+            self.imageView.heightAnchor.constraint(equalToConstant: 91.0),
+            
+            self.userNameLabel.topAnchor.constraint(equalTo: self.imageView.bottomAnchor, constant: 20),
+            self.userNameLabel.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
+            
+            self.stackView.topAnchor.constraint(equalTo: self.userNameLabel.bottomAnchor, constant: 10),
+            self.stackView.leadingAnchor.constraint(equalTo: self.imageView.leadingAnchor, constant: -30),
+            self.stackView.trailingAnchor.constraint(equalTo: self.imageView.trailingAnchor, constant: 30),
+            self.stackView.heightAnchor.constraint(equalToConstant: 45),
+            
+            //SignOutButton Constraints
+            self.signOutButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 30),
+            self.signOutButton.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
+            self.signOutButton.heightAnchor.constraint(equalToConstant: 46),
+            self.signOutButton.widthAnchor.constraint(equalToConstant: 143)
+            
+        ])
+    }
+    
+    func prepareGesture() {
+        self.imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapped(_:))))
+    }
+    
+    @objc
+    func tapped(_ sender: UITapGestureRecognizer) {
+        NotificationCenter.default.post(name: .performPicker, object: nil)
+    }
+}

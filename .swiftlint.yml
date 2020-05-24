@@ -1,9 +1,11 @@
-line_length: 200
+line_length: 210
 disabled_rules:
   - colon
   - comma
   - control_statement
   - trailing_whitespace
+cyclomatic_complexity:
+  ignores_case_statements: true
 excluded:
   - Carthage
   - Pods

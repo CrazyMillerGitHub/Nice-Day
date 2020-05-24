@@ -1,249 +1,341 @@
 //
-//  AuthViewController.swift
-//  Nice Day
+//  MainViewController.swift
+//  Stack_test
 //
-//  Created by Михаил Борисов on 03/07/2019.
-//  Copyright © 2019 Mikhail Borisov. All rights reserved.
+//  Created by Михаил Борисов on 09.02.2020.
+//  Copyright © 2020 Mikhail Borisov. All rights reserved.
 //
 
 import UIKit
-import Lottie
+import CryptoKit
+import JGProgressHUD
+import Firebase
+import FirebaseFirestore
+import AnimationFramework
 import AuthenticationServices
-import PMSuperButton
+
+enum AuthViewType: String {
+    case signIn = "_sign_in"
+    case signUp = "_sign_up"
+}
+
 class AuthViewController: UIViewController {
-    
-    let friendlyLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Hello! I’m\nyour friend,\nMike"
-        label.numberOfLines = 0
-        label.font = UIFont.systemFont(ofSize: 32.0, weight: .bold)
-        label.textColor = .black
-        return label
-    }()
-    
-    weak var topConstraint: NSLayoutConstraint!
-    
-    let containerView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.alpha = 0.0
-        return view
-    }()
-    
-    let circleView: UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(red:1.00, green:0.18, blue:0.33, alpha:1.0)
-        view.layer.cornerRadius = (UIScreen.main.bounds.width - 160) / 2
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.clipsToBounds = true
-        view.autoresizesSubviews = false
-        view.autoresizingMask = [.flexibleBottomMargin,.flexibleLeftMargin,.flexibleRightMargin,.flexibleTopMargin]
-        view.layer.masksToBounds = true
-        return view
-    }()
-    
-    let emailButton: PMSuperButton = {
-        let button = PMSuperButton()
-        button.backgroundColor = UIColor(red:1.00, green:0.18, blue:0.33, alpha:1.0)
-        button.setTitle("Sign in with email and password", for: .normal)
-        button.tintColor = UIColor.white
-        button.titleLabel?.font =  UIFont.systemFont(ofSize: 17.0, weight: .semibold)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.layer.cornerRadius = 5
-        button.animatedScaleWhenHighlighted = 0.9
-        button.animatedScaleDurationWhenHighlighted = 0.3
-        button.clipsToBounds = true
-        button.addTarget(self, action: #selector(emailDidTapped(sender:)), for: .touchUpInside)
+
+    private var appleSignInDelegates: SignInWithAppleDelegates! = nil
+
+    private var currentNonce: String?
+
+    // inizialize property panGesture recognizer
+    private weak var panGestureRecognizer: UIPanGestureRecognizer!
+    // inizialize property tapGesture recognizer
+    private weak var tapGestureRecognizer: UITapGestureRecognizer!
+    // inizialize property widthConstraint
+    private weak var widthConstraint: NSLayoutConstraint!
+    // inizialize property centerYConstraint
+    private weak var centerYConstraint: NSLayoutConstraint!
+    // create animation
+    private var animation = UIViewPropertyAnimator(duration: 1, curve: .easeOut)
+    // inizialize title Label
+    private var titleLabel = UILabel.title
+    // inizialize description label
+    private var descriptionLabel = UILabel.description
+    // set authType
+    lazy var authViewType: AuthViewType = .signIn
+    // return email button
+    private var emailButton: UIButton = {
+        let button = UIButton.emailSignIn
+        button.addTarget(self, action: #selector(tappedAction), for: .touchUpInside)
         return button
     }()
-    
-    let navigationBar: UINavigationBar = {
-        let nav = UINavigationBar()
-     //  let navItem = UINavigationItem(title: "Log in")
-        nav.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        nav.shadowImage = UIImage()
-        nav.translatesAutoresizingMaskIntoConstraints = false
-        nav.titleTextAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .heavy)]
-      //  nav.setItems([navItem], animated: false)
-        return nav
-    }()
-    let ttleLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Nice Day"
-        label.textAlignment = .left
-        label.font = UIFont.systemFont(ofSize: 32, weight: .heavy)
-        return label
-    }()
-    
-    let dscrLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Be better every day!"
-        label.textAlignment = .left
-        label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
-        return label
-    }()
-    
-    let signInButton: UIButton = {
+    // return button init
+    private lazy var returnButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .clear
-        button.setTitle("Sign In", for: .normal)
-        button.tintColor = .white
-        button.layer.borderWidth = 2.0
-        button.layer.borderColor = UIColor.white.cgColor
-        button.titleLabel?.font =  UIFont.systemFont(ofSize: 17.0, weight: .semibold)
+        button.addTarget(self, action: #selector(returnButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.alpha = 0
-        button.isHidden = true
-        button.layer.cornerRadius = 15
-        button.clipsToBounds = true
+        button.setTitle("You've just remembered something?", for: .normal)
+        button.contentEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 13.0, weight: .semibold)
+        button.setTitleColor(UIColor.inverseColor.withAlphaComponent(0.7), for: .normal)
         return button
     }()
-    
-    let appleSignInButton : ASAuthorizationAppleIDButton = {
-        let appleSignInButton = ASAuthorizationAppleIDButton()
-        appleSignInButton.translatesAutoresizingMaskIntoConstraints = false
-        appleSignInButton.addTarget(self, action: #selector(didTapAppleIDButton(sender:)), for: .touchUpInside)
-        return appleSignInButton
-    }()
+    // inizialize apple button
+    private var appleSignButton: ASAuthorizationAppleIDButton!
+    // inizialize HUD
+    var hud: JGProgressHUD!
+    // return Container view
+    private var containerView: ContainerViewController!
+
+    deinit {
+        print("Deinited")
+    }
+    // loadView()
+    override func loadView() {
+        super.loadView()
+        // perform appleSign
+        appleSignButton = UIButton.appleSignIn(authViewType == .signUp ? .signIn : .`continue`,
+                                                      traitCollection.userInterfaceStyle == .light ? .black : .white)
+        // perform JGProgress
+        performJGProgress()
+        // add target to button
+        appleSignButton.addTarget(self, action: #selector(appleSignAction), for: .touchUpInside)
+        // perform containerView
+        let containerView = ContainerViewController(authType: authViewType)
+        containerView.view.translatesAutoresizingMaskIntoConstraints = false
+        containerView.view.isUserInteractionEnabled = true
+        // set backgroundColor
+        view.backgroundColor = .bgColor
+        // create PanGesture
+        let gesture = UIPanGestureRecognizer(target: self, action: #selector(slideDown(_:)))
+        // disable gesture right now
+        gesture.isEnabled = false
+        // add dependency to propery
+        self.panGestureRecognizer = gesture
+        // create tapGesture recognizer
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tappedAction))
+        // add dependency to property
+        self.tapGestureRecognizer = tapGestureRecognizer
+        // adding gestures to container view
+        containerView.view.addGestureRecognizer(self.panGestureRecognizer)
+        containerView.view.addGestureRecognizer(self.tapGestureRecognizer)
+        // prepare you
+        prepareUI()
+        
+        self.containerView = containerView
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView()
-        self.view.backgroundColor = .bgColor
-       containerView.backgroundColor = .clear
-       
-       let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "container")
-       addChild(controller)
-       prepareUI()
-       prepareConstraints()
-       controller.view.translatesAutoresizingMaskIntoConstraints = false
-       containerView.addSubview(controller.view)
-       NSLayoutConstraint.activate([
-           controller.view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-             controller.view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-             controller.view.topAnchor.constraint(equalTo: containerView.topAnchor),
-             controller.view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
-         ])
-       controller.didMove(toParent: self)
+        // create containerView and link with superView
+        self.add(containerView)
+        // set type to containerView
+        // adding constraints
+        prepareConstraints()
+        // add Observers
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification , object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification , object: nil)
+        // set delegate
+        self.containerView.delegate = self
+    }
+
+    override func viewDidLayoutSubviews() {
+        // set corner radius to a half of container view
+        containerView.view.layer.cornerRadius = containerView.view.bounds.width / 2
     }
     
-    // настройка PreviewViewController
-    private func setupView() {
-        view.addSubview(friendlyLabel)
-        view.addSubview(appleSignInButton)
-    }
-    @objc private func didTapAppleIDButton(sender: Any) {
-        let provider = ASAuthorizationAppleIDProvider()
-        let request = provider.createRequest()
-        request.requestedScopes = [.email, .fullName]
-        let controller = ASAuthorizationController(authorizationRequests: [request])
-        controller.delegate = self
-        controller.presentationContextProvider = self
-        controller.performRequests()
-    }
-    
-      private func prepareUI() {
-          self.view.addSubview(ttleLabel)
-          self.view.addSubview(dscrLabel)
-          self.view.addSubview(circleView)
-          self.view.addSubview(navigationBar)
-          self.view.addSubview(emailButton)
-          self.view.addSubview(signInButton)
-          view.addSubview(containerView)
-      }
-    
-      private func prepareConstraints() {
-          let topConstraint = circleView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor, constant: 0)
-          NSLayoutConstraint.activate([
-          
-          circleView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -80.0),
-          circleView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 80.0),
-          topConstraint,
-          circleView.heightAnchor.constraint(equalTo: circleView.widthAnchor, multiplier: 1.0/1.0),
-          
-          containerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -80.0),
-          containerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 80.0),
-          containerView.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor, constant: 0),
-          containerView.heightAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 1.0/1.0),
-          
-          navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-          navigationBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-          navigationBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-          
-          ttleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 79),
-          ttleLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 33.0),
-          ttleLabel.heightAnchor.constraint(equalToConstant: 43),
-          ttleLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -33),
-              
-          dscrLabel.leadingAnchor.constraint(equalTo: ttleLabel.leadingAnchor, constant: 0.0),
-          dscrLabel.trailingAnchor.constraint(equalTo: ttleLabel.trailingAnchor, constant: 0),
-          dscrLabel.topAnchor.constraint(equalTo: ttleLabel.topAnchor, constant: 40),
-          dscrLabel.heightAnchor.constraint(equalTo: ttleLabel.heightAnchor, multiplier: 1.0/1.0),
-          
-          signInButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
-          signInButton.heightAnchor.constraint(equalToConstant: 46.0),
-          signInButton.trailingAnchor.constraint(equalTo: circleView.trailingAnchor, constant: 40.0),
-          signInButton.leadingAnchor.constraint(equalTo: circleView.leadingAnchor, constant: -40.0),
-          
-          appleSignInButton.topAnchor.constraint(equalTo: circleView.bottomAnchor, constant: 60),
-          appleSignInButton.heightAnchor.constraint(equalToConstant: 46.0),
-          appleSignInButton.trailingAnchor.constraint(equalTo: circleView.trailingAnchor, constant: 40.0),
-          appleSignInButton.leadingAnchor.constraint(equalTo: circleView.leadingAnchor, constant: -40.0),
-          
-          emailButton.topAnchor.constraint(equalTo: self.appleSignInButton.bottomAnchor, constant: 20),
-          emailButton.leadingAnchor.constraint(equalTo: self.appleSignInButton.leadingAnchor, constant: 0),
-          emailButton.trailingAnchor.constraint(equalTo: self.appleSignInButton.trailingAnchor, constant: 0),
-          emailButton.heightAnchor.constraint(equalToConstant: CGFloat(46.0))
-          
-          ])
-          self.topConstraint = topConstraint
-      }
-      @objc private func emailDidTapped(sender: Any) {
-          UIView.animateKeyframes(withDuration: 1.5, delay: 0.0, options: [], animations: {
-              self.topConstraint.constant += self.circleView.bounds.height / 1.1
-              UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 0.7) {
-                  UIView.animate(withDuration: 1.0, delay: 0.0, usingSpringWithDamping: 1.5, initialSpringVelocity: 0.0, options: [], animations: {
-                      self.view.layoutIfNeeded()
-                     self.circleView.transform = CGAffineTransform(scaleX: 3, y: 3)
-                  }, completion: nil )
-              }
-              UIView.addKeyframe(withRelativeStartTime: 0.4, relativeDuration: 0.3) {
-                  UIView.animate(withDuration: 0.4, delay: 0.0, usingSpringWithDamping: 1.5, initialSpringVelocity: 0.0, options: [.curveEaseOut], animations: {
-                      self.emailButton.center.y += 20
-                      self.emailButton.alpha = 0
-                  }, completion: { _ in self.emailButton.isHidden = true })
-              }
-              UIView.addKeyframe(withRelativeStartTime: 1.0, relativeDuration: 0.4) {
-                  self.signInButton.isHidden = false
-                  UIView.animate(withDuration: 0.4, delay: 0.3, usingSpringWithDamping: 1.5, initialSpringVelocity: 0.0, options: [.curveEaseOut, .transitionCurlUp], animations: {
-                                     self.signInButton.alpha = 1
-                      self.containerView.alpha = 1
-                                 }, completion: nil )
-              }
-          }, completion: nil)
-         
-      }
-}
-extension AuthViewController: ASAuthorizationControllerDelegate {
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        print("Authorization completed!")
-        switch authorization.credential {
-        case _ as ASAuthorizationAppleIDCredential:
-//            let user = UserStruct(credentials: credentials)
-            guard let mainController = storyboard?.instantiateViewController(identifier: "mainController") else { assert(false, "Not found!") }
-            mainController.modalPresentationStyle = .fullScreen
-            self.present(mainController, animated: true, completion: nil)
-        default: break
+//    deinit {
+//        // deinit observers
+//        NotificationCenter.default.removeObserver(self)
+//    }
+
+    @objc func keyboardWillShow(notification: NSNotification) {
+        guard let userInfo = notification.userInfo else { return }
+        guard let keyboardSize = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+        let keyboardFrame = keyboardSize.cgRectValue
+        if self.view.frame.origin.y == 0 {
+            self.view.frame.origin.y -= keyboardFrame.height / 2
         }
     }
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        print("Authorization failed with error: \(error)")
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if self.view.frame.origin.y != 0 {
+            self.view.frame.origin.y = 0
+        }
+    }
+
+    var counter = 0
+
+}
+
+// Prepare UI and Constraints
+private extension AuthViewController {
+
+    func performJGProgress() {
+        let hud = JGProgressHUD(style: traitCollection.userInterfaceStyle == .light ? .light : .dark)
+        hud.textLabel.text = "Loading"
+        self.hud = hud
+    }
+ 
+    /// prepare ui by adding elements to superView
+    func prepareUI() {
+        view.addSubview(titleLabel)
+        view.addSubview(descriptionLabel)
+        view.addSubview(emailButton)
+        view.addSubview(appleSignButton)
+        view.addSubview(returnButton)
+    }
+    
+    func prepareConstraints() {
+        // inizinalize width constraint
+        let widthConstraint = containerView.view.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width / 2)
+        // inizinalize centerYConstraint constraint
+        let centerYConstraint = containerView.view.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
+        NSLayoutConstraint.activate([
+            widthConstraint,
+            // add heightAnchor constraint equal to widthConstraint
+            containerView.view.heightAnchor.constraint(equalTo: containerView.view.widthAnchor),
+            // centre our container in superView
+            containerView.view.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            centerYConstraint,
+            // adding top padding to constant 79
+            titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 79),
+            // set leading anchor to 33 [leading - view - trailing]
+            titleLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 33),
+            // set title height to 43
+            titleLabel.heightAnchor.constraint(equalToConstant: 43),
+            // set trailing anchor to -33 [leading - view - trailing]
+            titleLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -33),
+            // set describtion label equal to title label leading
+            descriptionLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+            // set trailing label equal to title label trailing
+            descriptionLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
+            // set top anchor to constant 40
+            descriptionLabel.topAnchor.constraint(equalTo: titleLabel.topAnchor, constant: 40),
+            // set height anchor equal to titleLabel anchor
+            descriptionLabel.heightAnchor.constraint(equalTo: titleLabel.heightAnchor),
+            
+            appleSignButton.topAnchor.constraint(equalTo: containerView.view.bottomAnchor, constant: 60),
+            appleSignButton.heightAnchor.constraint(equalToConstant: 46.0),
+            appleSignButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            appleSignButton.widthAnchor.constraint(equalToConstant: view.frame.width / 2 + 120),
+            
+            emailButton.topAnchor.constraint(equalTo: self.appleSignButton.bottomAnchor, constant: 20),
+            emailButton.leadingAnchor.constraint(equalTo: self.appleSignButton.leadingAnchor, constant: 0),
+            emailButton.trailingAnchor.constraint(equalTo: self.appleSignButton.trailingAnchor, constant: 0),
+            emailButton.heightAnchor.constraint(equalToConstant: CGFloat(46.0)),
+
+            // return back Button
+            returnButton.heightAnchor.constraint(equalTo: emailButton.heightAnchor, multiplier: 0.7),
+            returnButton.widthAnchor.constraint(equalTo: emailButton.widthAnchor),
+            returnButton.topAnchor.constraint(equalTo: emailButton.bottomAnchor, constant: 20),
+            returnButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)
+        ])
+        // add dependecies to properties
+        self.widthConstraint = widthConstraint
+        self.centerYConstraint = centerYConstraint
+    }
+
+    @objc private func returnButtonTapped() {
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
-extension AuthViewController: ASAuthorizationControllerPresentationContextProviding {
-    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-        return view.window!
+// All about animation
+@objc private extension AuthViewController {
+   
+    func slideDown(_ sender: UIPanGestureRecognizer) {
+        // inizialize slide down animation
+        AnimationService.slideDownAnimation(to: self.view,
+                           animator: &animation,
+                           widthConstraint: widthConstraint,
+                           centerYConstraint: centerYConstraint,
+                           panGesture: panGestureRecognizer,
+                           tapGesture: tapGestureRecognizer,
+                           sender: sender)
+    }
+
+    func tappedAction() {
+        // inizialize circle tap animation
+        AnimationService.circleTapAnimation(in: self.view, widthConstraint: widthConstraint, centerYConstraint: centerYConstraint) {
+            // toggle gestures
+            self.tapGestureRecognizer.isEnabled.toggle()
+            self.panGestureRecognizer.isEnabled.toggle()
+        }
+    }
+    
+    func appleSignAction() {
+       showAppleLogin()
+    }
+
+}
+
+extension AuthViewController: HUDViewProtocol {
+    
+    func toggleHud(status: Bool) {
+        // check status of HUD
+        switch status {
+        case true:
+            // show hud
+            hud.show(in: self.view)
+        case false:
+            // dismiss hud
+            hud.dismiss(animated: true)
+        }
+    }
+}
+
+extension AuthViewController {
+
+    private func showAppleLogin() {
+        counter += 1
+        if counter == 2 {
+            let view = TestViewController()
+            self.present(view, animated: true, completion: nil)
+        } else {
+            let nonce = randomNonceString()
+            currentNonce = nonce
+            let appleIDProvider = ASAuthorizationAppleIDProvider()
+            let request = appleIDProvider.createRequest()
+            request.requestedScopes = [.fullName, .email]
+            request.nonce = sha256(nonce)
+
+            performSignIn(using: [request])
+        }
+
+    }
+
+    private func performSignIn(using requests: [ASAuthorizationRequest]) {
+        guard let currentNonce = self.currentNonce else {
+            return
+        }
+        appleSignInDelegates = SignInWithAppleDelegates(window: nil, currentNonce: currentNonce)
+
+        let authorizationController = ASAuthorizationController(authorizationRequests: requests)
+        authorizationController.delegate = appleSignInDelegates
+        authorizationController.presentationContextProvider = appleSignInDelegates
+        authorizationController.performRequests()
+    }
+
+    // Adapted from https://auth0.com/docs/api-auth/tutorials/nonce#generate-a-cryptographically-random-nonce
+    private func randomNonceString(length: Int = 32) -> String {
+        precondition(length > 0)
+        let charset: [Character] =
+        Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
+        var result = ""
+        var remainingLength = length
+
+        while remainingLength > 0 {
+            let randoms: [UInt8] = (0 ..< 16).map { _ in
+                var random: UInt8 = 0
+                let errorCode = SecRandomCopyBytes(kSecRandomDefault, 1, &random)
+                if errorCode != errSecSuccess {
+                    fatalError("Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)")
+                }
+                return random
+            }
+
+            randoms.forEach { random in
+                if length == 0 {
+                    return
+                }
+
+                if random < charset.count {
+                    result.append(charset[Int(random)])
+                    remainingLength -= 1
+                }
+            }
+        }
+
+        return result
+    }
+
+    private func sha256(_ input: String) -> String {
+        let inputData = Data(input.utf8)
+        let hashedData = SHA256.hash(data: inputData)
+        let hashString = hashedData.compactMap {
+        return String(format: "%02x", $0)
+        }.joined()
+
+        return hashString
     }
 }

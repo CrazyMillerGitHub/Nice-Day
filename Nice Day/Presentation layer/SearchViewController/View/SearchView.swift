@@ -7,86 +7,82 @@
 //
 
 import UIKit
+import DeckTransition
 
-class SearchView: UIViewController {
+// MARK: - SearchView
+final class SearchView: UIViewController {
 
-    //TODO: Add MVVM Archetecture
-    
-    //init
-    weak var collectionView: UICollectionView!
-    
+    // MARK: Presenter
+    private var presenter: SearchViewPresenter!
+
+    // MARK: - prepare properties
+    private lazy var tableView = UITableView().with { tableView in
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.showsVerticalScrollIndicator = false
+        tableView.separatorStyle = .none
+        tableView.register(SearchCell.self, forCellReuseIdentifier: SearchCell.identifier)
+    }
+
+    private let searchViewController = UISearchController().with { searchViewController in
+        searchViewController.obscuresBackgroundDuringPresentation = false
+        searchViewController.searchBar.setScopeBarButtonBackgroundImage(UIImage(), for: .focused)
+        searchViewController.searchBar.scopeButtonTitles = ["Effective", "Favourite", "Popular"]
+        searchViewController.searchBar.showsScopeBar = true
+    }
+
+    // MARK: - view cycle
     override func loadView() {
         super.loadView()
-        let collectionView = UICollectionView(frame: view.frame, collectionViewLayout: UICollectionViewFlowLayout())
-               collectionView.translatesAutoresizingMaskIntoConstraints = false
-               self.view.addSubview(collectionView)
-        NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 200),
-            collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: 0),
-            collectionView.leadingAnchor.constraint(equalTo:self.view.safeAreaLayoutGuide.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor)
-        ])
-             
-        self.collectionView = collectionView
+        view.addSubview(tableView)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //config UI
+        // config UI
         prepareUI()
-        
-        self.collectionView.dataSource = self
-        self.collectionView.delegate = self
-        self.collectionView.register(SearchCell.self, forCellWithReuseIdentifier: SearchCell.identifier)
-        self.collectionView.alwaysBounceVertical = true
-        // Do any additional setup after loading the view.
+        presenter = SearchViewPresenter(tableView: tableView, delegate: self)
+        searchViewController.searchResultsUpdater = self
+        searchViewController.searchBar.delegate = self
     }
+
+    // MARK: prepare UI
     private func prepareUI() {
-        self.view.backgroundColor = .white
-        self.collectionView.backgroundColor = .red
+        self.extendedLayoutIncludesOpaqueBars = true
+        self.navigationController?.navigationBar.isTranslucent = true
+        navigationItem.hidesSearchBarWhenScrolling = false
+        self.navigationController?.navigationBar.topItem?.title = "_search".localized()
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        navigationItem.searchController = searchViewController
+        definesPresentationContext = true
     }
 }
 
-extension SearchView: UICollectionViewDataSource, UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchCell.identifier, for: indexPath) as? SearchCell else { assert(false, "Something went wrong with cell config") }
-        cell.textLabel.text = "\(indexPath.row)"
-        cell.backgroundColor = .white
-        return cell
-    }
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-    }
-}
+// MARK: - searchUpdating
+extension SearchView: UISearchResultsUpdating, UISearchBarDelegate {
 
-extension SearchView: UICollectionViewDelegateFlowLayout {
-
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.width, height: 96)
+    func updateSearchResults(for searchController: UISearchController) {
+        presenter.items = filteredItems(for: searchController.searchBar.text)
+        presenter.applySnapshot()
     }
 
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) //.zero
+    func filteredItems(for queryOrNil: String?) -> [ActivityElement] {
+        let items = ActivityElement.elements
+        guard let query = queryOrNil, !query.isEmpty else {
+            return items
+        }
+        return items.filter { item in
+            return item.name.lowercased().contains(query.lowercased())
+        }
     }
 
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        if selectedScope == 1 {
+            let items = ActivityElement.elements
+            presenter.items = items.filter { item in
+                return item.category == .active
+            }
+            presenter.applySnapshot()
+        }
     }
 
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
 }
