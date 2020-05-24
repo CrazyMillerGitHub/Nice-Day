@@ -57,7 +57,7 @@ class FriendsCell: CoreCell {
         let button = UIButton()
         button.layer.backgroundColor = UIColor.sunriseColor.cgColor
         button.setTitle("_invite".localized(), for: .normal)
-        button.titleLabel?.textColor = UIColor.white.withAlphaComponent(0.8)
+        button.setTitleColor(UIColor.white.withAlphaComponent(0.8), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
         button.layer.cornerRadius = 15
         button.layer.maskedCorners = [.layerMaxXMaxYCorner,.layerMinXMaxYCorner]
