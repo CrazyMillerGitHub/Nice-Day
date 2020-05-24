@@ -8,60 +8,54 @@
 
 import UIKit
 
-class AboutCell: UICollectionViewCell {
+final class AboutCell: UICollectionViewCell {
     
-    static var identifier = "about"
+    static var identifier = String(describing: type(of: self))
     
-    var headerView: ProfileHeader!
+    private var headerView: ProfileHeader!
     
     // MARK: создание imageView
-    fileprivate let imageView: UIImageView = {
-        let imageView = UIImageView()
+    private lazy var imageView =  UIImageView().with { imageView in
         imageView.layer.cornerRadius = 45.5
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFit
         imageView.backgroundColor = .red
         imageView.isUserInteractionEnabled = true
-        return imageView
-    }()
+    }
     
     // MARK: SignOut Button
-    let signOutButton: ElasticButton = {
-        let button = ElasticButton()
+    private lazy var signOutButton = ElasticButton().with { button in
         button.backgroundColor = .sunriseColor
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 15
         button.clipsToBounds = true
         button.setTitle("_signOut".localized(), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
-        return button
-    }()
+    }
     
    // MARK: levelStackView
-    lazy private var levelStackView = CustomStackView(
+    private lazy var levelStackView = CustomStackView(
         elements: [CustomInfoLabel(labelType: .description, labelText: "_level".localized),
                    CustomInfoLabel(labelType: .value, labelText: Int.random(in: 0...100))],
         stackViewAxis: .vertical,
         spacingCount: 8)
     
     // MARK: xpStackView
-    lazy private var xpStackView = CustomStackView(
+    private lazy var xpStackView = CustomStackView(
         elements: [CustomInfoLabel(labelType: .description, labelText: "_xp".localized),
         CustomInfoLabel(labelType: .value, labelText: Int.random(in: 0...1000))],
         stackViewAxis: .vertical,
         spacingCount: 8)
     
     // MARK: userName
-    lazy private var userName: UILabel = {
-        let label = UILabel()
+    private lazy var userNameLabel = UILabel().with { label in
         label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         label.text = UserDefaults.standard.object(forKey: "userName") as? String
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .inverseColor
         label.textAlignment = .center
-        return label
-    }()
+    }
     
     // MARK: stackView
     lazy private var stackView = CustomStackView(elements: nil, stackViewAxis: .horizontal, spacingCount: 35)
@@ -96,7 +90,7 @@ class AboutCell: UICollectionViewCell {
         self.contentView.addSubview(stackView)
         self.contentView.addSubview(headerView)
         self.contentView.addSubview(imageView)
-        self.contentView.addSubview(userName)
+        self.contentView.addSubview(userNameLabel)
         self.contentView.addSubview(signOutButton)
         self.headerView = headerView
         prepareGesture()
@@ -144,12 +138,12 @@ extension AboutCell: UIGestureRecognizerDelegate {
             self.imageView.widthAnchor.constraint(equalToConstant: 91.0),
             self.imageView.heightAnchor.constraint(equalToConstant: 91.0),
             
-            self.userName.topAnchor.constraint(equalTo: self.imageView.bottomAnchor, constant: 20),
-            self.userName.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
+            self.userNameLabel.topAnchor.constraint(equalTo: self.imageView.bottomAnchor, constant: 20),
+            self.userNameLabel.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
             
-            self.stackView.topAnchor.constraint(equalTo: self.userName.bottomAnchor, constant: 10),
-            self.stackView.leadingAnchor.constraint(equalTo: self.imageView.leadingAnchor, constant: -15),
-            self.stackView.trailingAnchor.constraint(equalTo: self.imageView.trailingAnchor, constant: 15),
+            self.stackView.topAnchor.constraint(equalTo: self.userNameLabel.bottomAnchor, constant: 10),
+            self.stackView.leadingAnchor.constraint(equalTo: self.imageView.leadingAnchor, constant: -30),
+            self.stackView.trailingAnchor.constraint(equalTo: self.imageView.trailingAnchor, constant: 30),
             self.stackView.heightAnchor.constraint(equalToConstant: 45),
             
             //SignOutButton Constraints

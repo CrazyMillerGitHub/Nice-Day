@@ -8,27 +8,12 @@
 
 import UIKit
 
-protocol DeleteCell: class {
-    func deleteCell(_ cell: MoodCell)
-}
+final class MoodCell: CoreCell {
+    
+    static var identifier: String = String(describing: type(of: self))
 
-class MoodCell: CoreCell {
-    
-    static var identifier: String = "mood"
-    
-    weak var delegate: DeleteCell?
-    
-    var item: MainViewModelItem? {
-        didSet {
-            guard let item = item as? MoodCellModelItem else { return }
-            cellTitleLabel.text = item.titleText
-        }
-        
-    }
-    
     // MARK: Close Button (отмена измерения настроения на день)
-    let closeButton: UIButton = {
-        let button = UIButton()
+    private let closeButton = UIButton().with { button in
         button.backgroundColor = .sunriseColor
         button.setImage(UIImage(named: "close"), for: .normal)
         button.adjustsImageWhenHighlighted = false
@@ -40,23 +25,23 @@ class MoodCell: CoreCell {
         button.layer.shadowOpacity = 0.14
         button.layer.shadowOffset = CGSize(width: 0, height: 16)
         button.layer.masksToBounds = false
-        return button
-    }()
-    
+    }
+
     // MARK: CollectionView
     // CollectionView для эмоций
     let moodCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = .clear
+        collectionView.register(EmotionCell.self, forCellWithReuseIdentifier: EmotionCell.identifier)
         return collectionView
     }()
     
     override init(frame: CGRect) {
         super.init(frame:frame)
+        moodCollectionView.collectionViewLayout = createLayout()
         contentView.addSubview(moodCollectionView)
         contentView.addSubview(closeButton)
-        moodCollectionView.register(EmotionCell.self, forCellWithReuseIdentifier: EmotionCell.identifier)
         moodCollectionView.delegate = self
         moodCollectionView.dataSource = self
         closeButton.addTarget(self, action: #selector(deleteAction), for: .touchUpInside)
@@ -65,7 +50,7 @@ class MoodCell: CoreCell {
     
     @objc
     private func deleteAction() {
-        delegate?.deleteCell(self)
+        NotificationCenter.default.post(name: .removeMoodCell, object: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -83,15 +68,37 @@ class MoodCell: CoreCell {
             closeButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             closeButton.heightAnchor.constraint(equalTo: contentView.heightAnchor),
             
-            moodCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            moodCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             moodCollectionView.trailingAnchor.constraint(equalTo: closeButton.leadingAnchor),
             moodCollectionView.topAnchor.constraint(equalTo: cellTitleLabel.bottomAnchor),
             moodCollectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
-    
+
+    private func createLayout() -> UICollectionViewLayout {
+
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalHeight(1), heightDimension: .fractionalWidth(1))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20)
+
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1 / 3),heightDimension: .fractionalHeight(1))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,subitems: [item])
+
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .groupPaging
+
+        let layout = UICollectionViewCompositionalLayout(section: section)
+
+        return layout
+    }
+
 }
 extension MoodCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 3
     }
@@ -103,18 +110,4 @@ extension MoodCell: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
         cell.imageView.image = UIImage(named: "emoji\(indexPath.row + 1)")
         return cell
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 58, height: 58)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return (collectionView.frame.width - 58 * 3) / 4
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        let spacing = (collectionView.frame.width - 58 * 3) / 4
-        return UIEdgeInsets(top: 10, left: spacing, bottom: 0, right: spacing)
-    }
-    
 }

@@ -12,13 +12,6 @@ class SpecialCell: CoreCell {
     
     static var identifier: String = "special"
     
-    var item: MainViewModelItem? {
-        didSet {
-            guard let item = item as? SpecialCellModelItem else { return }
-            cellTitleLabel.text = item.titleText
-        }
-    }
-    
     private var quoreLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.italicSystemFont(ofSize: 12)

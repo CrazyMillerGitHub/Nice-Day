@@ -9,7 +9,13 @@
 import UIKit
 
 class BonusCell: CoreCell {
-    
+
+    func configure(data: String) {
+        self.cellTitleLabel.text = data
+    }
+
+    typealias DataType = String
+
     static var identifier: String = "bonus"
 
     weak var timer: Timer?
@@ -23,12 +29,6 @@ class BonusCell: CoreCell {
         label.textColor = .white
         return label
     }()
-    
-    var item: MainViewModelItem? {
-        didSet {
-            guard let item = item as? BonusCellModelItem else { return }
-        }
-    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)

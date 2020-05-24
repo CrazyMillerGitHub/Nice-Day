@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import CryptoKit
 import FirebaseFirestore
 import AuthenticationServices
 
@@ -116,7 +117,10 @@ class AuthService: NSObject {
             }
         }
     }
-    
+
+    func appleSignIn(providerID: String, idTokenString: String, nonce: String, completion: @escaping (Result<AuthDataResult, Error>) -> Void) {
+        
+    }
     /// check if user email is valid
     /// - Parameter email: emailTextField text
     private func isEmailValidate(_ email:String) -> Bool {

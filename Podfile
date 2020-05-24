@@ -2,7 +2,6 @@
  platform :ios, '13.0'
 
 target 'Nice Day' do
-  # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
   inhibit_all_warnings!
   # FireBase 
@@ -18,5 +17,5 @@ target 'Nice Day' do
   pod 'lottie-ios', '~> 3.1.1'
   pod 'DeckTransition', :git => 'https://github.com/CrazyMillerGitHub/DeckTransition.git', :commit => 'v1.0.1'
   pod 'JGProgressHUD'
-  pod 'AnimationFramework', :path => "../AnimationFramework"
+  pod 'AnimationFramework', :path => "AnimationFramework"
 end

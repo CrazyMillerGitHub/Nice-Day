@@ -9,168 +9,80 @@
 import UIKit
 import DeckTransition
 
-class SearchView: UIViewController {
-    
-    // TableView
-    weak var tableView: UITableView!
-    
-    // ViewModel
-    private var viewModel = SearchViewModel()
-    
-    // Model
-    private var model = SearchModel()
-    
-    // Filtered Model
-    private var filteredModel = [ActivityElement]()
-    
-    // MARK: searchController
-    private let searchViewController: UISearchController = {
-        let searchViewController = UISearchController(searchResultsController: nil)
+// MARK: - SearchView
+final class SearchView: UIViewController {
+
+    // MARK: Presenter
+    private var presenter: SearchViewPresenter!
+
+    // MARK: - prepare properties
+    private lazy var tableView = UITableView().with { tableView in
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.showsVerticalScrollIndicator = false
+        tableView.separatorStyle = .none
+        tableView.register(SearchCell.self, forCellReuseIdentifier: SearchCell.identifier)
+    }
+
+    private let searchViewController = UISearchController().with { searchViewController in
         searchViewController.obscuresBackgroundDuringPresentation = false
         searchViewController.searchBar.setScopeBarButtonBackgroundImage(UIImage(), for: .focused)
         searchViewController.searchBar.scopeButtonTitles = ["Effective", "Favourite", "Popular"]
         searchViewController.searchBar.showsScopeBar = true
-        return searchViewController
-    }()
-    
-    // MARK: SearchBarIsEmpty
-    private var searchBarIsEmpty: Bool {
-        guard let text = searchViewController.searchBar.text else { return false }
-        return text.isEmpty
     }
-    
-    // MARK: IsFiltering
-    private var isFiltering: Bool {
-        let searchBarScopeIsFiltering = searchViewController.searchBar.selectedScopeButtonIndex != 0
-        return searchViewController.isActive && (!searchBarIsEmpty || searchBarScopeIsFiltering)
-    }
-    
-//    private var segmentedControl: CustomSegmentedControl {
-//        let segmentedControl = CustomSegmentedControl(items: ["Favourite","Effective", "Popular"])
-//        segmentedControl.addTarget(self, action: #selector(segmentedControlButtonClickAction(_:)), for: .valueChanged)
-//        segmentedControl.frame = CGRect(x: 10, y: 0, width: tableView.bounds.width - 20, height: 31)
-//        return segmentedControl
-//    }
-    
+
+    // MARK: - view cycle
     override func loadView() {
         super.loadView()
-        let tableView = UITableView(frame: self.view.frame, style: .plain)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.showsVerticalScrollIndicator = false
-        tableView.separatorStyle = .none
-        self.view.addSubview(tableView)
-        
-        self.tableView = tableView
+        view.addSubview(tableView)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //config UI
+        // config UI
         prepareUI()
-        searchViewController.searchBar.delegate = self
+        presenter = SearchViewPresenter(tableView: tableView, delegate: self)
         searchViewController.searchResultsUpdater = self
-        self.tableView.dataSource = self
-        self.tableView.delegate = self
-        self.tableView.register(SearchCell.self, forCellReuseIdentifier: SearchCell.identifier)
+        searchViewController.searchBar.delegate = self
     }
-    
+
+    // MARK: prepare UI
     private func prepareUI() {
-        self.view.backgroundColor = .bgColor
-        self.tableView.backgroundColor = .bgColor
         self.extendedLayoutIncludesOpaqueBars = true
         self.navigationController?.navigationBar.isTranslucent = true
+        navigationItem.hidesSearchBarWhenScrolling = false
         self.navigationController?.navigationBar.topItem?.title = "_search".localized()
         self.navigationController?.navigationBar.shadowImage = UIImage()
         navigationItem.searchController = searchViewController
-        navigationItem.hidesSearchBarWhenScrolling = false
         definesPresentationContext = true
     }
 }
 
-extension SearchView: UITableViewDataSource, UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return isFiltering ? filteredModel.count : model.array.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchCell.identifier, for: indexPath) as? SearchCell else { return UITableViewCell() }
-        cell.textTitle.text = isFiltering ? filteredModel[indexPath.row].name : model.array[indexPath.row].name
-        cell.dscrTitle.setAttributedStringForSearch(for: isFiltering ? filteredModel[indexPath.row].xpCount : model.array[indexPath.row].xpCount)
-        cell.setStatusGrade(isFiltering ? filteredModel[indexPath.row].category : model.array[indexPath.row].category)
-        cell.prepareCell()
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 31
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        tableView.deselectRow(at: indexPath, animated: true)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
-            
-            let modal = ActivityView()
-            modal.viewModel.activityElement = self.isFiltering ? self.filteredModel[indexPath.row] : self.model.array[indexPath.row]
-            let transitionDelegate = DeckTransitioningDelegate(isSwipeToDismissEnabled: true)
-            modal.transitioningDelegate = transitionDelegate
-            modal.modalPresentationStyle = .custom
-            self.present(modal, animated: true, completion: nil)
-            
-        }
-        
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 95.0
-    }
-}
+// MARK: - searchUpdating
+extension SearchView: UISearchResultsUpdating, UISearchBarDelegate {
 
-private extension SearchView {
-    
-    @objc
-    func segmentedControlButtonClickAction(_ sender: UISegmentedControl) {
-      
-    }
-    
-}
-
-extension SearchView: UISearchResultsUpdating {
-    
     func updateSearchResults(for searchController: UISearchController) {
-        
-        let searchBar = searchController.searchBar
-        
-        guard let scope = searchBar.scopeButtonTitles?[searchBar.selectedScopeButtonIndex] else { return }
-        
-        fileterContentForSearchController(searchText: searchController.searchBar.text ?? "", scope: scope)
+        presenter.items = filteredItems(for: searchController.searchBar.text)
+        presenter.applySnapshot()
     }
-    
-    func fileterContentForSearchController(searchText: String, scope: String = "Effective") {
-        filteredModel = model.array.filter { (element: ActivityElement) -> Bool in
-            
-            //let doesCategoryMatch = (scope == "Favourite")
-            
-            return element.name.lowercased().contains(searchText.lowercased())
-        }
-        
-        if scope == "Effective" {
-            filteredModel.sort { $0.name < $1.name }
-        }
-        
-        tableView.reloadData()
-    }
-    
-}
 
-extension SearchView: UISearchBarDelegate {
-    
-    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        guard let scopeButtonTitles = searchBar.scopeButtonTitles?[selectedScope] else { return }
-        fileterContentForSearchController(searchText: searchBar.text ?? "", scope: scopeButtonTitles)
+    func filteredItems(for queryOrNil: String?) -> [ActivityElement] {
+        let items = ActivityElement.elements
+        guard let query = queryOrNil, !query.isEmpty else {
+            return items
+        }
+        return items.filter { item in
+            return item.name.lowercased().contains(query.lowercased())
+        }
     }
-    
+
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        if selectedScope == 1 {
+            let items = ActivityElement.elements
+            presenter.items = items.filter { item in
+                return item.category == .active
+            }
+            presenter.applySnapshot()
+        }
+    }
+
 }

@@ -8,101 +8,104 @@
 
 import UIKit
 
-enum GradeStatus: CaseIterable {
-       case active
-       case passive
-   }
+protocol Builder {}
 
-class SearchCell: UITableViewCell {
+extension Builder {
+    func with(config: (Self) -> Void) -> Self {
+        config(self)
+        return self
+    }
+}
+
+extension NSObject: Builder {}
+
+public enum Grade {
+
+    case active, passive
+}
+
+// MARK: - SearchCell
+final class SearchCell: UITableViewCell {
+
+    // MARK: setting constraints
+    private enum Constants: CGFloat {
+        
+        case vSpacing = 10.0
+        case hSpacing = 5.0
+        case gradeSize = 16.0
+        case multiplier = 0.5
+        case leadingConstraint = 18
+    }
     
-    static var identifier: String = "Cell"
-    
-    var status: GradeStatus = .active
-    
-    // MARK: textLabel
-    let textTitle: UILabel = {
-        let label = UILabel()
+    static var identifier: String = String(describing: type(of: self))
+
+    // MARK: - perofrm properties
+    private lazy var activityLabel = UILabel().with { label in
         label.font = UIFont.systemFont(ofSize: 18.0, weight: .bold)
         label.textColor = .inverseColor
         label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    // MARK: DescriptionLabel
-    let dscrTitle: UILabel = {
-        let label = UILabel()
+    }
+
+    private lazy var descriptionLabel = UILabel().with { label in
         label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    // MARK: StackView
-    let stackView: UIStackView = {
-        
-        let stackView = UIStackView()
+    }
+
+    private lazy var mainStackView = UIStackView().with { stackView in
         stackView.axis = .vertical
         stackView.distribution = .equalSpacing
         stackView.alignment = .leading
-        stackView.spacing = 10
+        stackView.spacing = Constants.vSpacing.rawValue
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        
-        return stackView
-    }()
+    }
     
-    fileprivate var statusGrade: UIImageView = {
-        let imageView = UIImageView()
+    private lazy var gradeImageView = UIImageView().with { imageView in
         imageView.contentMode = .scaleToFill
-        imageView.frame.size.height = 16
-        imageView.frame.size.width = 16
-        return imageView
-    }()
-    
-    // MARK: HorizontalStackView
-    let horizontalStackView: UIStackView = {
-        
-        let stackView = UIStackView()
+        (imageView.frame.size.height, imageView.frame.size.width) = (Constants.gradeSize.rawValue, Constants.gradeSize.rawValue)
+    }
+
+    private lazy var HStackView = UIStackView().with { stackView in
         stackView.axis = .horizontal
         stackView.distribution = .equalSpacing
         stackView.alignment = .leading
-        stackView.spacing = 5
+        stackView.spacing = Constants.hSpacing.rawValue
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
-    }()
-    
-    fileprivate func prepareConstraints() {
-        NSLayoutConstraint.activate([
-            // stackView constraints
-            stackView.centerYAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerYAnchor),
-            stackView.widthAnchor.constraint(equalTo: self.safeAreaLayoutGuide.widthAnchor, multiplier: 0.5),
-            stackView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 18)
-        ])
     }
-    
+
+    // MARK: - init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.backgroundColor = .bgColor
-        self.accessoryType = .disclosureIndicator
-        
-    }
-    
-    func prepareCell() {
-        horizontalStackView.addArrangedSubview(statusGrade)
-        horizontalStackView.addArrangedSubview(dscrTitle)
-        stackView.addArrangedSubview(textTitle)
-        stackView.addArrangedSubview(horizontalStackView)
-        self.addSubview(stackView)
+        backgroundColor = .systemBackground
+        accessoryType = .disclosureIndicator
+        // add SubViews for Main and H Stack
+        HStackView.addArrangedSubview(gradeImageView)
+        HStackView.addArrangedSubview(descriptionLabel)
+        mainStackView.addArrangedSubview(activityLabel)
+        mainStackView.addArrangedSubview(HStackView)
+        // add subview
+        addSubview(mainStackView)
+        // perform constrants
         prepareConstraints()
     }
-    
-    func setStatusGrade(_ status: GradeStatus) {
-        statusGrade.image = UIImage(named: status == .active ? "activeGrade" : "passiveGrade")
-    }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        prepareCell()
+
+    // MARK: - perform constraints
+    private func prepareConstraints() {
+        NSLayoutConstraint.activate([
+            // stackView constraints
+            mainStackView.centerYAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerYAnchor),
+            mainStackView.widthAnchor.constraint(equalTo: self.safeAreaLayoutGuide.widthAnchor, multiplier: Constants.multiplier.rawValue),
+            mainStackView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: Constants.leadingConstraint.rawValue)
+        ])
     }
+
+    // MARK: - configure Cell
+    func configureCell(model: ActivityElement) {
+        activityLabel.text = model.name
+        descriptionLabel.setAttributedStringForSearch(for: model.xpCount)
+        gradeImageView.image = UIImage(named: model.category == .active ? "activeGrade" : "passiveGrade")
+    }
+
 }

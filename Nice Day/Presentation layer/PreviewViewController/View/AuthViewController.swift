@@ -7,7 +7,10 @@
 //
 
 import UIKit
+import CryptoKit
 import JGProgressHUD
+import Firebase
+import FirebaseFirestore
 import AnimationFramework
 import AuthenticationServices
 
@@ -17,6 +20,10 @@ enum AuthViewType: String {
 }
 
 class AuthViewController: UIViewController {
+
+    private var appleSignInDelegates: SignInWithAppleDelegates! = nil
+
+    private var currentNonce: String?
 
     // inizialize property panGesture recognizer
     private weak var panGestureRecognizer: UIPanGestureRecognizer!
@@ -40,13 +47,27 @@ class AuthViewController: UIViewController {
         button.addTarget(self, action: #selector(tappedAction), for: .touchUpInside)
         return button
     }()
+    // return button init
+    private lazy var returnButton: UIButton = {
+        let button = UIButton()
+        button.addTarget(self, action: #selector(returnButtonTapped), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("You've just remembered something?", for: .normal)
+        button.contentEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 13.0, weight: .semibold)
+        button.setTitleColor(UIColor.inverseColor.withAlphaComponent(0.7), for: .normal)
+        return button
+    }()
     // inizialize apple button
     private var appleSignButton: ASAuthorizationAppleIDButton!
     // inizialize HUD
     var hud: JGProgressHUD!
     // return Container view
     private var containerView: ContainerViewController!
-    
+
+    deinit {
+        print("Deinited")
+    }
     // loadView()
     override func loadView() {
         super.loadView()
@@ -102,10 +123,10 @@ class AuthViewController: UIViewController {
         containerView.view.layer.cornerRadius = containerView.view.bounds.width / 2
     }
     
-    deinit {
-        // deinit observers
-        NotificationCenter.default.removeObserver(self)
-    }
+//    deinit {
+//        // deinit observers
+//        NotificationCenter.default.removeObserver(self)
+//    }
 
     @objc func keyboardWillShow(notification: NSNotification) {
         guard let userInfo = notification.userInfo else { return }
@@ -121,6 +142,9 @@ class AuthViewController: UIViewController {
             self.view.frame.origin.y = 0
         }
     }
+
+    var counter = 0
+
 }
 
 // Prepare UI and Constraints
@@ -138,6 +162,7 @@ private extension AuthViewController {
         view.addSubview(descriptionLabel)
         view.addSubview(emailButton)
         view.addSubview(appleSignButton)
+        view.addSubview(returnButton)
     }
     
     func prepareConstraints() {
@@ -177,13 +202,22 @@ private extension AuthViewController {
             emailButton.topAnchor.constraint(equalTo: self.appleSignButton.bottomAnchor, constant: 20),
             emailButton.leadingAnchor.constraint(equalTo: self.appleSignButton.leadingAnchor, constant: 0),
             emailButton.trailingAnchor.constraint(equalTo: self.appleSignButton.trailingAnchor, constant: 0),
-            emailButton.heightAnchor.constraint(equalToConstant: CGFloat(46.0))
+            emailButton.heightAnchor.constraint(equalToConstant: CGFloat(46.0)),
+
+            // return back Button
+            returnButton.heightAnchor.constraint(equalTo: emailButton.heightAnchor, multiplier: 0.7),
+            returnButton.widthAnchor.constraint(equalTo: emailButton.widthAnchor),
+            returnButton.topAnchor.constraint(equalTo: emailButton.bottomAnchor, constant: 20),
+            returnButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)
         ])
         // add dependecies to properties
         self.widthConstraint = widthConstraint
         self.centerYConstraint = centerYConstraint
     }
 
+    @objc private func returnButtonTapped() {
+        self.dismiss(animated: true, completion: nil)
+    }
 }
 
 // All about animation
@@ -210,7 +244,7 @@ private extension AuthViewController {
     }
     
     func appleSignAction() {
-        
+       showAppleLogin()
     }
 
 }
@@ -228,5 +262,80 @@ extension AuthViewController: HUDViewProtocol {
             hud.dismiss(animated: true)
         }
     }
-    
+}
+
+extension AuthViewController {
+
+    private func showAppleLogin() {
+        counter += 1
+        if counter == 2 {
+            let view = TestViewController()
+            self.present(view, animated: true, completion: nil)
+        } else {
+            let nonce = randomNonceString()
+            currentNonce = nonce
+            let appleIDProvider = ASAuthorizationAppleIDProvider()
+            let request = appleIDProvider.createRequest()
+            request.requestedScopes = [.fullName, .email]
+            request.nonce = sha256(nonce)
+
+            performSignIn(using: [request])
+        }
+
+    }
+
+    private func performSignIn(using requests: [ASAuthorizationRequest]) {
+        guard let currentNonce = self.currentNonce else {
+            return
+        }
+        appleSignInDelegates = SignInWithAppleDelegates(window: nil, currentNonce: currentNonce)
+
+        let authorizationController = ASAuthorizationController(authorizationRequests: requests)
+        authorizationController.delegate = appleSignInDelegates
+        authorizationController.presentationContextProvider = appleSignInDelegates
+        authorizationController.performRequests()
+    }
+
+    // Adapted from https://auth0.com/docs/api-auth/tutorials/nonce#generate-a-cryptographically-random-nonce
+    private func randomNonceString(length: Int = 32) -> String {
+        precondition(length > 0)
+        let charset: [Character] =
+        Array("0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._")
+        var result = ""
+        var remainingLength = length
+
+        while remainingLength > 0 {
+            let randoms: [UInt8] = (0 ..< 16).map { _ in
+                var random: UInt8 = 0
+                let errorCode = SecRandomCopyBytes(kSecRandomDefault, 1, &random)
+                if errorCode != errSecSuccess {
+                    fatalError("Unable to generate nonce. SecRandomCopyBytes failed with OSStatus \(errorCode)")
+                }
+                return random
+            }
+
+            randoms.forEach { random in
+                if length == 0 {
+                    return
+                }
+
+                if random < charset.count {
+                    result.append(charset[Int(random)])
+                    remainingLength -= 1
+                }
+            }
+        }
+
+        return result
+    }
+
+    private func sha256(_ input: String) -> String {
+        let inputData = Data(input.utf8)
+        let hashedData = SHA256.hash(data: inputData)
+        let hashString = hashedData.compactMap {
+        return String(format: "%02x", $0)
+        }.joined()
+
+        return hashString
+    }
 }

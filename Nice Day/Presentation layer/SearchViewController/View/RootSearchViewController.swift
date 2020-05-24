@@ -8,15 +8,13 @@
 
 import UIKit
 
-class RootSearchViewController: UINavigationController {
+final class RootSearchViewController: UINavigationController {
 
     override func viewDidLoad() {
-
         super.viewDidLoad()
-        self.navigationBar.prefersLargeTitles = true
-        self.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .heavy)]
-        let searchView = SearchView()
-        viewControllers = [searchView]
+        navigationBar.prefersLargeTitles = true
+        navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .heavy)]
+        viewControllers = [SearchView()]
     }
-    
+
 }

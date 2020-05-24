@@ -8,22 +8,30 @@
 
 import UIKit
 
-struct ActivityElement {
+struct ActivityElement: Hashable, Equatable {
     
+    static func == (lhs: ActivityElement, rhs: ActivityElement) -> Bool {
+        return lhs.identifier == rhs.identifier
+    }
+
+    let identifier = UUID()
     let name: String
     let xpCount: Int
-    let category: GradeStatus
+    let category: Grade
+
 }
 
-class SearchModel: NSObject {
-    
-    var arr = ["Sport", "Volleyboll", "Basketball", "Tennis", "Jerking", "Football", "Chess", "Study"]
-    
-    var array = [ActivityElement]()
-    
-    override init() {
-        super.init()
-        arr.forEach { self.array.append(ActivityElement(name: $0, xpCount: Int.random(in: 0...100), category: GradeStatus.allCases.randomElement() ?? .active)) }
-    }
-    
+extension ActivityElement {
+
+    static var elements: [ActivityElement] = [
+        ActivityElement(name: "Watching TV", xpCount: 10, category: .passive),
+        ActivityElement(name: "Playing Games", xpCount: 30, category: .active),
+        ActivityElement(name: "Volleyball", xpCount: 33, category: .active),
+        ActivityElement(name: "Basketball", xpCount: 22, category: .active),
+        ActivityElement(name: "Rollercast", xpCount: 11, category: .active),
+        ActivityElement(name: "Table tennis", xpCount: 12, category: .active),
+        ActivityElement(name: "Chess", xpCount: 20, category: .passive),
+        ActivityElement(name: "Shopping", xpCount: 32, category: .passive),
+        ActivityElement(name: "Workout", xpCount: 33, category: .active)
+    ]
 }

@@ -9,7 +9,8 @@
 import UIKit
 
 class ChartsCell: CoreCell {
-    static var identifier: String = "charts"
+
+    static var identifier: String = String(describing: self.self)
     
     // MARK: Charts
     let charts: UIView = {
@@ -21,12 +22,6 @@ class ChartsCell: CoreCell {
         return charts
     }()
     
-    var item: MainViewModelItem? {
-        didSet {
-            guard let item = item as? ChartsCellModelItem else { return }
-            cellTitleLabel.text = item.titleText
-        }
-    }
     override init(frame: CGRect) {
         super.init(frame: frame)
         refresh()

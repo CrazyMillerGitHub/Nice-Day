@@ -7,10 +7,10 @@
 //
 
 import UIKit
-class SquareSegmentedControl: UISegmentedControl {
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        layer.cornerRadius = 0
-        layer.backgroundColor = UIColor.white.cgColor
-    }
-}
+//class SquareSegmentedControl: UISegmentedControl {
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        layer.cornerRadius = 0
+//        layer.backgroundColor = UIColor.white.cgColor
+//    }
+//}

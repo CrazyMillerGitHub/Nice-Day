@@ -93,13 +93,6 @@ class FriendsCell: CoreCell {
     // MARK: newFriendTitleLabel init
     private var newFriendTitleLabel = NewFriendTitleLabel(of: "Fred Perry")
     
-    var item: MainViewModelItem? {
-        didSet {
-            guard let item = item as? FriendsCellModelItem else { return }
-            cellTitleLabel.text = item.titleText
-        }
-    }
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         refresh()
