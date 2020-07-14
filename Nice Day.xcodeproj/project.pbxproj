@@ -15,8 +15,6 @@
 		74137ABC243394840092B8B1 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74137AB8243394840092B8B1 /* Keychain.swift */; };
 		74137ABD243394840092B8B1 /* SharedWebCredential.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74137AB9243394840092B8B1 /* SharedWebCredential.swift */; };
 		74137ABF2433948E0092B8B1 /* SignInWithAppleToFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74137ABE2433948E0092B8B1 /* SignInWithAppleToFirebase.swift */; };
-		741458D4239AB5F700980A63 /* NewFriendCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741458D3239AB5F700980A63 /* NewFriendCollectionViewCell.swift */; };
-		741458D6239AB93F00980A63 /* NewFriendTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741458D5239AB93F00980A63 /* NewFriendTitleLabel.swift */; };
 		74184CB422CE2F9000EC31DE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74184CB322CE2F9000EC31DE /* MainViewController.swift */; };
 		74184CB622CE3D2F00EC31DE /* ChartsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74184CB522CE3D2F00EC31DE /* ChartsCell.swift */; };
 		741F27BE247146A700B95A75 /* MainViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741F27BD247146A700B95A75 /* MainViewPresenter.swift */; };
@@ -26,7 +24,6 @@
 		742A39F42342899300770F68 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 742A39F32342899300770F68 /* OnboardingView.swift */; };
 		743953CC2380990E00CE698A /* AchievmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743953CB2380990E00CE698A /* AchievmentCell.swift */; };
 		743953CF2380997800CE698A /* AchievmentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743953CE2380997800CE698A /* AchievmentViewModel.swift */; };
-		743953D123813B1B00CE698A /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 743953D023813B1B00CE698A /* CustomSegmentedControl.swift */; };
 		744112E223A378C400A1E6A7 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744112E123A378C400A1E6A7 /* ImagePicker.swift */; };
 		7452800923911D9600F07E76 /* heartAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 7452800823911D9600F07E76 /* heartAnimation.json */; };
 		7458059D23A3EC050051682A /* AchievmentsStaticCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7458059C23A3EC050051682A /* AchievmentsStaticCell.swift */; };
@@ -64,6 +61,7 @@
 		74A1BD6623F6791900387C0A /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A1BD6023F6791900387C0A /* SplashViewController.swift */; };
 		74A1BD6723F6791900387C0A /* SplashViewController+delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A1BD6123F6791900387C0A /* SplashViewController+delegate.swift */; };
 		74A5BAC62366DF1800B3B000 /* CoreSupportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A5BAC52366DF1800B3B000 /* CoreSupportCell.swift */; };
+		74B5EE1D24A1E42F001047E4 /* ActivtityService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B5EE1C24A1E42F001047E4 /* ActivtityService.swift */; };
 		74BCEE1F22D12B3200127488 /* FriendsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BCEE1E22D12B3200127488 /* FriendsCell.swift */; };
 		74BCEE2122D12B6100127488 /* MoodCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BCEE2022D12B6100127488 /* MoodCell.swift */; };
 		74BCEE2322D12BA500127488 /* AchievmentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BCEE2222D12BA500127488 /* AchievmentsCell.swift */; };
@@ -103,6 +101,7 @@
 		74F36D4023774342004DEBF0 /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F36D3F23774342004DEBF0 /* SegmentedControl.swift */; };
 		74F36D4223774AE3004DEBF0 /* ImageView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F36D4123774AE3004DEBF0 /* ImageView+extension.swift */; };
 		74F748DC23FBCEBE001E7424 /* ActivityViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F748DB23FBCEBE001E7424 /* ActivityViewCell.swift */; };
+		E9EF66AB416F5844DA6E6382 /* Pods_Nice_Day.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9845C64AD9B2214A798F24D /* Pods_Nice_Day.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -128,8 +127,6 @@
 		74137AB8243394840092B8B1 /* Keychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		74137AB9243394840092B8B1 /* SharedWebCredential.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedWebCredential.swift; sourceTree = "<group>"; };
 		74137ABE2433948E0092B8B1 /* SignInWithAppleToFirebase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInWithAppleToFirebase.swift; sourceTree = "<group>"; };
-		741458D3239AB5F700980A63 /* NewFriendCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFriendCollectionViewCell.swift; sourceTree = "<group>"; };
-		741458D5239AB93F00980A63 /* NewFriendTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFriendTitleLabel.swift; sourceTree = "<group>"; };
 		74184CB322CE2F9000EC31DE /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		74184CB522CE3D2F00EC31DE /* ChartsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsCell.swift; sourceTree = "<group>"; };
 		741F27BD247146A700B95A75 /* MainViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewPresenter.swift; sourceTree = "<group>"; };
@@ -139,7 +136,6 @@
 		742A39F32342899300770F68 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		743953CB2380990E00CE698A /* AchievmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievmentCell.swift; sourceTree = "<group>"; };
 		743953CE2380997800CE698A /* AchievmentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievmentViewModel.swift; sourceTree = "<group>"; };
-		743953D023813B1B00CE698A /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
 		744112E123A378C400A1E6A7 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		7452800823911D9600F07E76 /* heartAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = heartAnimation.json; sourceTree = "<group>"; };
 		7458059C23A3EC050051682A /* AchievmentsStaticCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievmentsStaticCell.swift; sourceTree = "<group>"; };
@@ -180,6 +176,7 @@
 		74A1BD6023F6791900387C0A /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		74A1BD6123F6791900387C0A /* SplashViewController+delegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SplashViewController+delegate.swift"; sourceTree = "<group>"; };
 		74A5BAC52366DF1800B3B000 /* CoreSupportCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreSupportCell.swift; sourceTree = "<group>"; };
+		74B5EE1C24A1E42F001047E4 /* ActivtityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivtityService.swift; sourceTree = "<group>"; };
 		74BCEE1E22D12B3200127488 /* FriendsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsCell.swift; sourceTree = "<group>"; };
 		74BCEE2022D12B6100127488 /* MoodCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodCell.swift; sourceTree = "<group>"; };
 		74BCEE2222D12BA500127488 /* AchievmentsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievmentsCell.swift; sourceTree = "<group>"; };
@@ -222,6 +219,7 @@
 		74F36D4123774AE3004DEBF0 /* ImageView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageView+extension.swift"; sourceTree = "<group>"; };
 		74F748DB23FBCEBE001E7424 /* ActivityViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityViewCell.swift; sourceTree = "<group>"; };
 		7BF8309A9283943692397954 /* Pods-Nice Day.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nice Day.debug.xcconfig"; path = "Target Support Files/Pods-Nice Day/Pods-Nice Day.debug.xcconfig"; sourceTree = "<group>"; };
+		B9845C64AD9B2214A798F24D /* Pods_Nice_Day.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Nice_Day.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -230,6 +228,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7497169223C0C6D20092A300 /* CloudKit.framework in Frameworks */,
+				E9EF66AB416F5844DA6E6382 /* Pods_Nice_Day.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,15 +279,6 @@
 				74137AB9243394840092B8B1 /* SharedWebCredential.swift */,
 			);
 			path = CredentialStorage;
-			sourceTree = "<group>";
-		};
-		741458D2239AB5E000980A63 /* cell */ = {
-			isa = PBXGroup;
-			children = (
-				741458D3239AB5F700980A63 /* NewFriendCollectionViewCell.swift */,
-				741458D5239AB93F00980A63 /* NewFriendTitleLabel.swift */,
-			);
-			path = cell;
 			sourceTree = "<group>";
 		};
 		743953C9238098CC00CE698A /* AchievmentCell */ = {
@@ -479,6 +469,14 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		74B5EE1B24A1E3F3001047E4 /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				74B5EE1C24A1E42F001047E4 /* ActivtityService.swift */,
+			);
+			path = DataSource;
+			sourceTree = "<group>";
+		};
 		74C2FEDA238964EA00F485B6 /* AdditionalFiles */ = {
 			isa = PBXGroup;
 			children = (
@@ -617,6 +615,7 @@
 		74CE4415235C9F3C00066B17 /* SearchViewController */ = {
 			isa = PBXGroup;
 			children = (
+				74B5EE1B24A1E3F3001047E4 /* DataSource */,
 				74CE446B235ED65C00066B17 /* Model */,
 				74CE446A235ED64F00066B17 /* Presenter */,
 				74CE4417235C9F5C00066B17 /* View */,
@@ -638,7 +637,6 @@
 			children = (
 				74CE441A235C9F7200066B17 /* SearchView.swift */,
 				74E15F10235F060E00980F7D /* RootSearchViewController.swift */,
-				743953D023813B1B00CE698A /* CustomSegmentedControl.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -789,7 +787,6 @@
 		74EDC7C1239AB4F100DFCAEE /* SpecialCell */ = {
 			isa = PBXGroup;
 			children = (
-				741458D2239AB5E000980A63 /* cell */,
 				74BCEE2422D12BBF00127488 /* SpecialCell.swift */,
 			);
 			path = SpecialCell;
@@ -834,6 +831,7 @@
 			isa = PBXGroup;
 			children = (
 				7497169123C0C6D20092A300 /* CloudKit.framework */,
+				B9845C64AD9B2214A798F24D /* Pods_Nice_Day.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -986,7 +984,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				743953D123813B1B00CE698A /* CustomSegmentedControl.swift in Sources */,
 				74BCEE2322D12BA500127488 /* AchievmentsCell.swift in Sources */,
 				740F62CC237F3A1C00B0068A /* ChartsView.swift in Sources */,
 				74A1BD6523F6791900387C0A /* ContainerViewController.swift in Sources */,
@@ -1060,7 +1057,6 @@
 				74C2FEDE23896FEB00F485B6 /* CustomInfoLabel.swift in Sources */,
 				7459C70F2349C5F300362DFC /* Сolor+extension.swift in Sources */,
 				74A1BD6323F6791900387C0A /* FadeAnimator.swift in Sources */,
-				741458D6239AB93F00980A63 /* NewFriendTitleLabel.swift in Sources */,
 				742194532373FCD3007D0EB1 /* FiveDigitCell.swift in Sources */,
 				745B554F23BA05D0003C1928 /* AlertViewController.swift in Sources */,
 				74CE4426235CA29E00066B17 /* NetworkingManager.swift in Sources */,
@@ -1072,8 +1068,8 @@
 				7467E79C23658EFC00396FF2 /* Date+extension.swift in Sources */,
 				74C22F9923C29CD900358A8D /* Label+extension.swift in Sources */,
 				7410E82123A945330058DC41 /* AchievmentStaticCell.swift in Sources */,
-				741458D4239AB5F700980A63 /* NewFriendCollectionViewCell.swift in Sources */,
 				74CE4419235C9F6C00066B17 /* SearchCell.swift in Sources */,
+				74B5EE1D24A1E42F001047E4 /* ActivtityService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1226,12 +1222,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Nice Day/Nice Day.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 29;
+				CURRENT_PROJECT_VERSION = 30;
 				DEVELOPMENT_TEAM = 4GB4E68ZU6;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Nice Day/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1253,12 +1246,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Nice Day/Nice DayRelease.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 29;
+				CURRENT_PROJECT_VERSION = 30;
 				DEVELOPMENT_TEAM = 4GB4E68ZU6;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Nice Day/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
