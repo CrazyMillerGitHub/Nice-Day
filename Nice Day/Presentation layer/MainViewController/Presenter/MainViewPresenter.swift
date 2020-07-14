@@ -24,7 +24,8 @@ final class MainViewPresenter {
         let items = [MainItem(type: .bonus),
                      MainItem(type: .mood),
                      MainItem(type: .charts),
-                     MainItem(type: .friend),
+                     // TODO: friend
+//                     MainItem(type: .friend),
                      MainItem(type: .achievments),
                      MainItem(type: .special)]
         view?.show(items: items)

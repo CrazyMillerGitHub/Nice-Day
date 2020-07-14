@@ -51,6 +51,7 @@ final class AchievmentsCell: CoreCell {
         addSubview(showMoreButton)
         achievmentCollectionView.delegate = viewModel
         achievmentCollectionView.dataSource = viewModel
+        showMoreButton.addTarget(self, action: #selector(showMoreAction), for: .touchUpInside)
         prepareConstraint()
     }
     
@@ -61,6 +62,10 @@ final class AchievmentsCell: CoreCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         setupViews()
+    }
+
+    @objc private func showMoreAction() {
+        NotificationCenter.default.post(name: .showAwards, object: nil)
     }
 
     // MARK: - prepare constraints

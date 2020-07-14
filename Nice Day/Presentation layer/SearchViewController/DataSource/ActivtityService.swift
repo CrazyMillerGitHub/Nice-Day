@@ -7,8 +7,8 @@
 //
 
 import Foundation
+import Firebase
 import FirebaseFirestore
-
 
 enum NetworkError: Error {
 
@@ -30,42 +30,80 @@ extension NetworkError: LocalizedError {
     }
 }
 
+// MARK: - ActivtityService
 final class ActivtityService {
 
     let database = Firestore.firestore()
 
-    func getActivities(handler: @escaping (Result<[ActivityElement], NetworkError>) -> Void) {
+    func fetchActivities(filter: [String] = [],
+                         handler: @escaping (Result<[ActivityElement], NetworkError>) -> Void) {
 
         database.collection("activity").addSnapshotListener(includeMetadataChanges: false) { (querySnapshot, err) in
-
-            if let _ = err {
+            // check if error is not null
+            if err != nil {
                 handler(.failure(.collectionError))
             }
-
-            guard let documents = querySnapshot?.documents else {
+            // check if documents exist
+            guard var documents = querySnapshot?.documents else {
                 handler(.failure(.documentError))
                 return
             }
 
-            let values: [ActivityElement] = documents.compactMap { (queryDocumentSnapshot) -> ActivityElement? in
+            if !filter.isEmpty {
+                documents = documents.filter { (snapshot) -> Bool in
+                    let data = snapshot.data()
+                    if let value = data["en"] as? String {
+                        return filter.contains(value)
+                    }
+                    return false
+                }
+            }
+            // compactMap all dict to ActivityElement
+            let activities: [ActivityElement] = documents.compactMap { (queryDocumentSnapshot) -> ActivityElement? in
 
                 let data = queryDocumentSnapshot.data()
-
+                // cast to ActivityElement (alternative Codable)
                 guard
-                    let activityCost = data["activity_cost"] as? String,
+                    let activityCost = data["activity_cost"] as? Int,
                     let activityType = data["activity_type"] as? String,
                     let enLang = data["en"] as? String,
-                    let ruLang = data["ru"] as? String else {
+                    let ruLang = data["ru"] as? String,
+                    let popularity = data["popularity"] as? Double else {
                         return nil
                 }
 
-                return ActivityElement(activityCost: activityCost,
+                return ActivityElement(documentID: queryDocumentSnapshot.documentID,
+                                       activityCost: activityCost,
                                        activityType: activityType,
                                        enLang: enLang,
-                                       ruLang: ruLang)
+                                       ruLang: ruLang,
+                                       popularity: popularity)
             }
 
-            handler(.success(values))
+            handler(.success(activities))
+        }
+    }
+
+    static func fetchFavouriteActvities(filter: [String],
+                                        handler: @escaping (Result<[String], NetworkError>) -> Void) {
+        
+        let database = Firestore.firestore()
+
+        guard let user = Auth.auth().currentUser?.uid else {
+            return
+        }
+
+        let docRef = database.collection("users").document(user)
+
+        docRef.getDocument { document, err in
+            if let document = document, document.exists {
+
+                if err != nil { handler(.failure(.dataCorrupted)) }
+
+                let refArray = document.get("favourite") as? [DocumentReference] ?? []
+
+                handler(.success(refArray.compactMap { String($0.path.split(separator: "/").last!) }))
+            }
         }
     }
 }

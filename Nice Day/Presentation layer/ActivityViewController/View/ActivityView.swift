@@ -55,6 +55,8 @@ class ActivityView: UIViewController {
         pageControl.tintColor = .gray
         pageControl.currentPageTintColor = .inverseColor
         pageControl.padding = 10
+        // TODO: Second cell for activitity view
+        pageControl.isHidden = true
         return pageControl
     }()
     

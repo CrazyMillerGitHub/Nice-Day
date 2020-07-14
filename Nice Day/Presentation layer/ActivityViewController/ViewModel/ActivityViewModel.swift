@@ -19,7 +19,7 @@ class ActivityViewModel: NSObject, UICollectionViewDelegate, UICollectionViewDat
     weak var delegate: PageControlProtocol?
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

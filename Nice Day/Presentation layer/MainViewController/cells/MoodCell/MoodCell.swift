@@ -7,9 +7,17 @@
 //
 
 import UIKit
+import Firebase
 
+// MARK: - Coordinator
+
+// MARK: - MoodCell
 final class MoodCell: CoreCell {
-    
+
+    enum Emotion: Int {
+        case good, neutral, bad
+    }
+
     static var identifier: String = String(describing: type(of: self))
 
     // MARK: Close Button (отмена измерения настроения на день)
@@ -44,12 +52,12 @@ final class MoodCell: CoreCell {
         contentView.addSubview(closeButton)
         moodCollectionView.delegate = self
         moodCollectionView.dataSource = self
-        closeButton.addTarget(self, action: #selector(deleteAction), for: .touchUpInside)
+        closeButton.addTarget(self, action: #selector(notifyToHideAction), for: .touchUpInside)
         prepareConstraint()
     }
     
     @objc
-    private func deleteAction() {
+    private func notifyToHideAction() {
         NotificationCenter.default.post(name: .removeMoodCell, object: nil)
     }
     
@@ -95,8 +103,35 @@ final class MoodCell: CoreCell {
 }
 extension MoodCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
+        var emotionName: String
+
+        guard let emotion = Emotion(rawValue: indexPath.row) else { return }
+
+        switch emotion {
+        case .good:
+            emotionName = "good"
+        case .bad:
+            emotionName = "bad"
+        case .neutral:
+            emotionName = "neutral"
+        }
+
+        // check if current user exist
+        guard let curentUser = Auth.auth().currentUser else {
+            return
+        }
+
+        // apply changes in dataset
+        let database = Firestore.firestore()
+        database.collection("users").document(curentUser.uid).updateData(["moods": FieldValue.arrayUnion([emotionName])]) { (error) in
+            if let error = error {
+                NotificationCenter.default.post(name: .showAlert, object: [error.localizedDescription], userInfo: nil)
+                return
+            }
+            self.notifyToHideAction()
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

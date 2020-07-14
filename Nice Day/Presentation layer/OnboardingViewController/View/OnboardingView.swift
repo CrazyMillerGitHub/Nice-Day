@@ -12,9 +12,9 @@ import Lottie
 
 class OnboardingView: UIViewController {
     
-    fileprivate let stringArray = ["Do your daily activities".localized(),
-                                   "Earn xp".localized(),
-                                   "Be better every day!".localized()]
+    fileprivate let stringArray = ["_daly_activity".localized(),
+                                   "_earn_xp".localized(),
+                                   "_be_better".localized()]
     
     fileprivate var progress: CGFloat =  0
     
@@ -185,11 +185,11 @@ class OnboardingView: UIViewController {
     private func setupScrollView() {
         scrollView.delegate = self
         scrollView.contentSize = CGSize(width: self.view.frame.size.width * 3, height: scrollView.frame.size.height)
-        for iii in 0 ... 2 {
+        for idx in 0..<3 {
             let label = UILabel()
-            label.frame = CGRect(x: 30 + CGFloat(iii) * self.view.frame.size.width , y: 0, width: self.view.frame.width - 110, height: 19)
+            label.frame = CGRect(x: 30 + CGFloat(idx) * self.view.frame.size.width , y: 0, width: self.view.frame.width - 60, height: 19)
             label.textAlignment = .left
-            label.text = stringArray[iii]
+            label.text = stringArray[idx]
             label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.bold)
             label.textColor = UIColor.inverseColor.withAlphaComponent(0.9)
             scrollView.addSubview(label)

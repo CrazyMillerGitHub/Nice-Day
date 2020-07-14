@@ -86,7 +86,7 @@ extension UILabel {
        - for: Значение активности, которое будет отображаться в Cell
     */
     func setAttributedStringForSearch(for xpCount: Int) {
-        let str = "\(xpCount) xp every minute"
+        let str = "\(xpCount) xp \("_every_minute".localized)"
         let attributedString = NSMutableAttributedString(string: str, attributes: [
             .font: UIFont.systemFont(ofSize: 12.0, weight: .semibold),
             .foregroundColor: UIColor.inverseColor,

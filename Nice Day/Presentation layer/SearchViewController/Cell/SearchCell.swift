@@ -33,7 +33,7 @@ final class SearchCell: UITableViewCell {
         case vSpacing = 10.0
         case hSpacing = 5.0
         case gradeSize = 16.0
-        case multiplier = 0.5
+        case multiplier = 0.8
         case leadingConstraint = 18
     }
     
@@ -103,9 +103,10 @@ final class SearchCell: UITableViewCell {
 
     // MARK: - configure Cell
     func configureCell(model: ActivityElement) {
-        activityLabel.text = model.name
-        descriptionLabel.setAttributedStringForSearch(for: model.xpCount)
-        gradeImageView.image = UIImage(named: model.category == .active ? "activeGrade" : "passiveGrade")
+
+        activityLabel.text = model.userLang
+        descriptionLabel.setAttributedStringForSearch(for: model.activityCost)
+        gradeImageView.image = UIImage(named: model.activityType == "a" ? "activeGrade" : "passiveGrade")
     }
 
 }

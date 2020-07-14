@@ -80,6 +80,7 @@ final class MainViewDataSource: NSObject, UICollectionViewDelegate, UICollection
     private func setup() {
         // add observer
         NotificationCenter.default.addObserver(self, selector: #selector(removeCell), name: .removeMoodCell, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showAlert(notification:)), name: .showAlert, object: nil)
         // perform collectionView
         collectionView.delegate = self
         collectionView.frame = delegate.view.frame
@@ -137,4 +138,24 @@ final class MainViewDataSource: NSObject, UICollectionViewDelegate, UICollection
         }
     }
 
+    @objc func showAlert(notification: NSNotification) {
+        guard let data = notification.object as? [String], let body = data.first else {
+            return
+        }
+        delegate.showAlert(service: AlertService(), title: "Alert!", body: body, button: "Ok")
+
+    }
+    
+}
+
+extension UIViewController {
+    func showAlert(service: AlertService,
+                   title: String,
+                   body: String,
+                   button: String) {
+        
+        let alertService = service
+
+        present(alertService.alert(title: title, body: body, button: button), animated: true, completion: nil)
+    }
 }

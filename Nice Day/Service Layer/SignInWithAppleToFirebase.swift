@@ -48,7 +48,7 @@ extension SignInWithAppleDelegates: ASAuthorizationControllerDelegate {
                                                   idToken: idTokenString,
                                                   rawNonce: nonce)
         // Sign in with Firebase.
-        Auth.auth().signIn(with: credential) { authResult, error in
+        Auth.auth().signIn(with: credential) { _, error in
             if let error = error {
                 // Error. If error.code == .MissingOrInvalidNonce, make sure
                 // you're sending the SHA256-hashed nonce as a hex string with
@@ -62,7 +62,7 @@ extension SignInWithAppleDelegates: ASAuthorizationControllerDelegate {
 
     func checkUser() {
         Auth.auth().addStateDidChangeListener { (auth, user) in
-            print(user?.email)
+//
         }
     }
 

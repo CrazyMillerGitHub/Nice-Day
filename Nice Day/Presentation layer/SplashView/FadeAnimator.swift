@@ -9,21 +9,35 @@
 import UIKit
 
 final class FadeAnimator: NSObject, UIViewControllerAnimatedTransitioning {
-    
-    // set duration
-    let duration = 1.0
+
+    enum Constant {
+        case duration
+        case visible
+        case nonVisible
+        case delay
+
+        var value: Double {
+            switch self {
+            case .duration, .visible:
+                return 1
+            case .nonVisible, .delay:
+                return 0
+            }
+        }
+    }
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return duration
+        return Constant.duration.value
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+
         let containerView = transitionContext.containerView
         let toView = transitionContext.view(forKey: .to)!
         containerView.addSubview(toView)
-        toView.alpha = 0.0
-        UIView.animate(withDuration: duration, delay: 0, options: [.curveEaseOut], animations: {
-            toView.alpha = 1.0
+        toView.alpha = CGFloat(Constant.visible.value)
+        UIView.animate(withDuration: Constant.duration.value, delay: Constant.delay.value, options: [.curveEaseOut], animations: {
+            toView.alpha = CGFloat(Constant.nonVisible.value)
             
         }, completion: { _ in
             transitionContext.completeTransition(true)

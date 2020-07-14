@@ -25,9 +25,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().tintColor = .inverseColor
 
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = SplashViewController(SplashViewControllerTransition())
+        window?.rootViewController = MainView()
         window?.makeKeyAndVisible()
+
         FirebaseApp.configure()
+
+//        let database = Firestore.firestore()
+
+//        database.collection("users").document(Auth.auth().currentUser!.uid).getDocument { (document, error) in
+//            if let document = document, document.exists {
+//
+//                let refArray = document.get("Activities") as? [Any] ?? []
+//                let ssss = (refArray.first as? [String: Any])!["startTime"] as? Timestamp
+//                let rrrr = (refArray.first as? [String: Any])!["endTime"] as? Timestamp
+//                print(Int((rrrr!.seconds - ssss!.seconds)/60))
+//            } else {
+//                print("Document does not exist")
+//            }
+//        }
         return true
+    }
+
+    private func checkUserLanguage(for key: String) {
+        if (UserDefaults.standard.string(forKey: key) == nil) {
+            UserDefaults.standard.setValue(NSLocale.current.languageCode, forKey: key)
+        }
     }
 }

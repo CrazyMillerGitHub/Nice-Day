@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 final class MainViewController: UIViewController, UINavigationControllerDelegate {
 
@@ -38,6 +39,7 @@ final class MainViewController: UIViewController, UINavigationControllerDelegate
 
     override func loadView() {
         super.loadView()
+        NotificationCenter.default.addObserver(self, selector: #selector(showAward), name: .showAwards, object: nil)
         customNavBar = CustomNavBar(imageView: &imageView, view: self)
         view.addSubview(collectionView)
     }
@@ -57,6 +59,14 @@ final class MainViewController: UIViewController, UINavigationControllerDelegate
         // TODO: использовать router
         DispatchQueue.main.async {
             let profileView = ProfileView()
+            profileView.isModalInPresentation = true
+            self.present(profileView, animated: true, completion: nil)
+        }
+    }
+
+    @objc private func showAward() {
+        DispatchQueue.main.async {
+            let profileView = ProfileView(mode: .achievment)
             profileView.isModalInPresentation = true
             self.present(profileView, animated: true, completion: nil)
         }

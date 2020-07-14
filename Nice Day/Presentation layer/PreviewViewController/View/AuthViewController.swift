@@ -52,7 +52,7 @@ class AuthViewController: UIViewController {
         let button = UIButton()
         button.addTarget(self, action: #selector(returnButtonTapped), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("You've just remembered something?", for: .normal)
+        button.setTitle("_go_back".localized, for: .normal)
         button.contentEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 13.0, weight: .semibold)
         button.setTitleColor(UIColor.inverseColor.withAlphaComponent(0.7), for: .normal)

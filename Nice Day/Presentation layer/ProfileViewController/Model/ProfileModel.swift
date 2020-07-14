@@ -9,6 +9,7 @@
 import UIKit
 
 struct ProfileModel {
+
     let firstName: String
     let lastName: String
     let xpCount: Int

@@ -1,34 +1,54 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19D76" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Achievment" representedClassName="Achievment" syncable="YES" codeGenerationType="class">
-        <attribute name="achievmentCost" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="achievmentDescription" attributeType="String"/>
-        <attribute name="achievmentTitle" attributeType="String"/>
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="achievments" inverseEntity="User"/>
-    </entity>
-    <entity name="AppUser" representedClassName="AppUser" syncable="YES" codeGenerationType="class">
-        <attribute name="isOnline" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <relationship name="currectUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="appUser" inverseEntity="User"/>
-        <relationship name="friends" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Friends" inverseName="currectUser" inverseEntity="Friends"/>
-    </entity>
-    <entity name="Friends" representedClassName="Friends" syncable="YES" codeGenerationType="class">
-        <attribute name="id" optional="YES" attributeType="String"/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19F101" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="ACTIVITY" representedClassName="ACTIVITY" syncable="YES" codeGenerationType="class">
+        <attribute name="cost" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="surName" optional="YES" attributeType="String"/>
-        <relationship name="currectUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AppUser" inverseName="friends" inverseEntity="AppUser"/>
     </entity>
-    <entity name="User" representedClassName="User" syncable="YES" codeGenerationType="class">
-        <attribute name="id" optional="YES" attributeType="String"/>
-        <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="surname" optional="YES" attributeType="String"/>
-        <relationship name="achievments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Achievment" inverseName="user" inverseEntity="Achievment"/>
-        <relationship name="appUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AppUser" inverseName="currectUser" inverseEntity="AppUser"/>
+    <entity name="ACTIVITY_TYPE" representedClassName="ACTIVITY_TYPE" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
+    <entity name="APPUSER_ACTIVITY" representedClassName="APPUSER_ACTIVITY" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="APPUSER_AWARD" representedClassName="APPUSER_AWARD" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="userId" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="USER" inverseName="awards" inverseEntity="USER"/>
+    </entity>
+    <entity name="APPUSER_MOOD" representedClassName="APPUSER_MOOD" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="AWARD" representedClassName="AWARD" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="AWARD_TYPE" representedClassName="AWARD_TYPE" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="MOOD" representedClassName="MOOD" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="MOOD_TYPE" representedClassName="MOOD_TYPE" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="USER" representedClassName="USER" syncable="YES" codeGenerationType="class">
+        <attribute name="firstName" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="lastName" optional="YES" attributeType="String"/>
+        <relationship name="awards" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="APPUSER_AWARD" inverseName="user" inverseEntity="APPUSER_AWARD"/>
+    </entity>
+    <fetchRequest name="CurrentUser" entity="USER" predicateString="id == 1"/>
+    <fetchRequest name="CurrentUserAward" entity="APPUSER_ACTIVITY" predicateString="id == 0"/>
     <elements>
-        <element name="Achievment" positionX="-190.55078125" positionY="126.97265625" width="128" height="118"/>
-        <element name="AppUser" positionX="-211.171875" positionY="-166.9296875" width="128" height="88"/>
-        <element name="Friends" positionX="-17.48046875" positionY="-101.4453125" width="128" height="105"/>
-        <element name="User" positionX="-435.14453125" positionY="-43.875" width="128" height="120"/>
+        <element name="ACTIVITY" positionX="-314.77734375" positionY="-296.62109375" width="128" height="88"/>
+        <element name="ACTIVITY_TYPE" positionX="-111.21484375" positionY="122.1796875" width="128" height="58"/>
+        <element name="APPUSER_ACTIVITY" positionX="148.66015625" positionY="130.19140625" width="128" height="58"/>
+        <element name="APPUSER_AWARD" positionX="32.82421875" positionY="221.72265625" width="128" height="88"/>
+        <element name="APPUSER_MOOD" positionX="-319.859375" positionY="137.625" width="128" height="58"/>
+        <element name="AWARD" positionX="-319.3828125" positionY="28.12890625" width="128" height="58"/>
+        <element name="AWARD_TYPE" positionX="33.48046875" positionY="-159.13671875" width="128" height="58"/>
+        <element name="MOOD" positionX="96.09375" positionY="-1.08984375" width="128" height="58"/>
+        <element name="MOOD_TYPE" positionX="-256.47265625" positionY="-90.51953125" width="128" height="58"/>
+        <element name="USER" positionX="-456.51171875" positionY="225.2578125" width="128" height="103"/>
     </elements>
 </model>

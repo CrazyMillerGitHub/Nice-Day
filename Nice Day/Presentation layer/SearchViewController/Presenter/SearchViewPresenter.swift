@@ -16,25 +16,44 @@ final class SearchViewPresenter: NSObject, UITableViewDelegate {
         case main
     }
     // MARK: property for items
-    internal var items: [ActivityElement]
+    internal var items: [ActivityElement] = []
+    internal var searchItems: [ActivityElement] = []
     // MARK: properties init
     private var tableView: UITableView!
-    private weak var delegate: UIViewController!
+    private weak var delegate: SeacrhControllerCallable!
     // MARK: typealias init
     private typealias DataSource = UITableViewDiffableDataSource<Selection, ActivityElement>
     private typealias Snapshot = NSDiffableDataSourceSnapshot<Selection, ActivityElement>
     // MARK: inizialize data source
     private lazy var dataSource = makeDataSource()
+    // MARK: ActivityService
+    private let activityService: ActivtityService
 
     // MARK: - init
-    init (items:[ActivityElement] = ActivityElement.elements, tableView: UITableView, delegate: UIViewController) {
+    init (activityService: ActivtityService, tableView: UITableView, delegate: SeacrhControllerCallable) {
         // inizialize properties
+        self.activityService = activityService
         self.tableView = tableView
         self.delegate = delegate
-        self.items = items
         super.init()
+        fetchUserActivities()
         configureTableView()
         applySnapshot()
+    }
+
+    private func fetchUserActivities() {
+
+        activityService.fetchActivities { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let items):
+                self.items = items
+                self.searchItems = items
+                self.applySnapshot()
+            case .failure(let err):
+                print(err)
+            }
+        }
     }
 
     private func configureTableView() {
@@ -63,12 +82,11 @@ final class SearchViewPresenter: NSObject, UITableViewDelegate {
     internal func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
         tableView.deselectRow(at: indexPath, animated: true)
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
-        }
+        delegate.showActivity(element: items[indexPath.row])
     }
 
      internal func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 95
     }
+
 }

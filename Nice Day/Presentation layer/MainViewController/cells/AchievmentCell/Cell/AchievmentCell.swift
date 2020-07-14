@@ -18,7 +18,7 @@ class AchievmentCell: UICollectionViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
-        label.text = "ddef"
+        label.text = "Bronze medal"
         label.textAlignment = .left
         return label
     }()
@@ -28,7 +28,7 @@ class AchievmentCell: UICollectionViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
-        label.text = "ddef"
+        label.text = "Earn 100 xp"
         label.textColor = UIColor.black.withAlphaComponent(0.52)
         label.textAlignment = .left
         return label

@@ -53,7 +53,7 @@ struct SharedWebCredential {
       return
     }
 
-    var acct: CFString? = nil
+    var acct: CFString?
 
     if let account = account {
       acct = account as CFString
