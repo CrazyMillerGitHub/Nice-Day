@@ -9,8 +9,6 @@
 import UIKit
 import Firebase
 
-// MARK: - Coordinator
-
 // MARK: - MoodCell
 final class MoodCell: CoreCell {
 
@@ -18,7 +16,21 @@ final class MoodCell: CoreCell {
         case good, neutral, bad
     }
 
-    static var identifier: String = String(describing: type(of: self))
+    private enum Constant {
+        
+        case size, buttonWidth
+
+        var value: CGFloat {
+            switch self {
+            case .size:
+                return 58
+            case .buttonWidth:
+                return 46
+            }
+        }
+    }
+
+    static var identifier: String = String(describing: type(of: MoodCell.self))
 
     // MARK: Close Button (отмена измерения настроения на день)
     private let closeButton = UIButton().with { button in
@@ -47,7 +59,6 @@ final class MoodCell: CoreCell {
     
     override init(frame: CGRect) {
         super.init(frame:frame)
-        moodCollectionView.collectionViewLayout = createLayout()
         contentView.addSubview(moodCollectionView)
         contentView.addSubview(closeButton)
         moodCollectionView.delegate = self
@@ -72,7 +83,7 @@ final class MoodCell: CoreCell {
     private func prepareConstraint() {
         NSLayoutConstraint.activate([
             
-            closeButton.widthAnchor.constraint(equalToConstant: 46),
+            closeButton.widthAnchor.constraint(equalToConstant: Constant.buttonWidth.value),
             closeButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             closeButton.heightAnchor.constraint(equalTo: contentView.heightAnchor),
             
@@ -82,24 +93,6 @@ final class MoodCell: CoreCell {
             moodCollectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
-
-    private func createLayout() -> UICollectionViewLayout {
-
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalHeight(1), heightDimension: .fractionalWidth(1))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20)
-
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1 / 3),heightDimension: .fractionalHeight(1))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,subitems: [item])
-
-        let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .groupPaging
-
-        let layout = UICollectionViewCompositionalLayout(section: section)
-
-        return layout
-    }
-
 }
 extension MoodCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
@@ -125,10 +118,10 @@ extension MoodCell: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
 
         // apply changes in dataset
         let database = Firestore.firestore()
-        database.collection("users").document(curentUser.uid).updateData(["moods": FieldValue.arrayUnion([emotionName])]) { (error) in
-            if let error = error {
-                NotificationCenter.default.post(name: .showAlert, object: [error.localizedDescription], userInfo: nil)
-                return
+
+        database.collection("users").document(curentUser.uid).updateData(["moods.\(emotionName)" : FieldValue.increment(Int64(1))]) { err in
+            if let err = err {
+                print(err.localizedDescription)
             }
             self.notifyToHideAction()
         }
@@ -145,4 +138,17 @@ extension MoodCell: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
         cell.imageView.image = UIImage(named: "emoji\(indexPath.row + 1)")
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: Constant.size.value, height: Constant.size.value)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+
+        let spacing = (collectionView.frame.width - Constant.size.value * 3 - Constant.buttonWidth.value) / 3
+
+        let padding = (collectionView.frame.height - Constant.size.value) / 2
+        return UIEdgeInsets(top: padding, left: spacing, bottom: padding, right: spacing)
+    }
+    
 }

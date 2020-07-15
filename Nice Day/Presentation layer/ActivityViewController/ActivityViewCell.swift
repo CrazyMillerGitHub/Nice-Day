@@ -10,7 +10,13 @@ import UIKit
 import Lottie
 import Firebase
 
-class ActivityViewCell: UICollectionViewCell {
+protocol ActivtityDelegate: class {
+
+    func dismissAnimation()
+    func addTimestamp(timestamp: Timestamp)
+}
+
+final class ActivityViewCell: UICollectionViewCell {
     
     static var identifier = String(describing: ActivityViewCell.self)
 
@@ -50,15 +56,17 @@ class ActivityViewCell: UICollectionViewCell {
     private var startStopButton: StartStopButton = {
         return StartStopButton()
     }()
+
+    weak var delegate: ActivtityDelegate?
     
     // MARK: timerLabel
-    fileprivate var timerLabel = TimerLabel().with(config: { label in
+    fileprivate var timerLabel = TimerLabel().with { label in
         label.textAlignment = .center
         label.textColor =  UIColor.sunriseColor
         label.text = "00:00:00"
         label.font = UIFont.monospacedDigitSystemFont(ofSize: 32, weight: .heavy)
         label.translatesAutoresizingMaskIntoConstraints = false
-    })
+    }
 
     // MARK: activityDescriptionLabel
     private var activityDescriptionLabel = UILabel().with { label in
@@ -126,8 +134,12 @@ class ActivityViewCell: UICollectionViewCell {
     /// - Parameter sender: any
     @objc
     private func startStopAction(sender: Any) {
-        startStopButton.isSelected = !startStopButton.isSelected
-        startStopButton.isSelected == true ? timerLabel.createTimer() : timerLabel.cancelTimer()
+        startStopButton.isSelected.toggle()
+        startStopButton.isSelected ? timerLabel.createTimer() : timerLabel.cancelTimer()
+        delegate?.addTimestamp(timestamp: Timestamp(date: Date()))
+        if !startStopButton.isSelected {
+            delegate?.dismissAnimation()
+        }
     }
     
     @objc

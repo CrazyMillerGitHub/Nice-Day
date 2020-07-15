@@ -81,7 +81,7 @@ struct SharedWebCredential {
 
       let unsafeCredential = CFArrayGetValueAtIndex(credentials, 0)
       let credential: CFDictionary = unsafeBitCast(unsafeCredential, to: CFDictionary.self)
-      guard let dict = credential as? Dictionary<String, String> else {
+        guard let dict = credential as? [String: String] else {
         DispatchQueue.main.async {
           completion(.failure(.ConversionFailure))
         }
@@ -104,7 +104,7 @@ struct SharedWebCredential {
       return
     }
 
-    var pwd: CFString? = nil
+    var pwd: CFString?
     if let password = password {
       pwd = password as CFString
     }

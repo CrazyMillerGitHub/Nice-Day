@@ -147,6 +147,7 @@ extension ProfileView: ImagePickerDelegate {
 
     func didSelect(image: UIImage?) {
         if let image = image {
+            print(image.size)
             // TODO: Загрузка фото на сервер или в CoreData
         }
     }

@@ -74,8 +74,7 @@ final class SearchView: UIViewController, SeacrhControllerCallable {
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
 
-            let activityView = ActivityView()
-            activityView.viewModel.activityElement = element
+            let activityView = ActivityView(element: element)
 
             let transitionDelegate = DeckTransitioningDelegate()
             activityView.transitioningDelegate = transitionDelegate

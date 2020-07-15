@@ -21,7 +21,7 @@ enum AuthViewType: String {
 
 class AuthViewController: UIViewController {
 
-    private var appleSignInDelegates: SignInWithAppleDelegates! = nil
+    //private var appleSignInDelegates: SignInWithAppleDelegates! = nil
 
     private var currentNonce: String?
 
@@ -65,15 +65,14 @@ class AuthViewController: UIViewController {
     // return Container view
     private var containerView: ContainerViewController!
 
-    deinit {
-        print("Deinited")
-    }
     // loadView()
     override func loadView() {
         super.loadView()
         // perform appleSign
         appleSignButton = UIButton.appleSignIn(authViewType == .signUp ? .signIn : .`continue`,
                                                       traitCollection.userInterfaceStyle == .light ? .black : .white)
+        // TODO: AppleSignIn
+        appleSignButton.isHidden = true
         // perform JGProgress
         performJGProgress()
         // add target to button
@@ -122,11 +121,6 @@ class AuthViewController: UIViewController {
         // set corner radius to a half of container view
         containerView.view.layer.cornerRadius = containerView.view.bounds.width / 2
     }
-    
-//    deinit {
-//        // deinit observers
-//        NotificationCenter.default.removeObserver(self)
-//    }
 
     @objc func keyboardWillShow(notification: NSNotification) {
         guard let userInfo = notification.userInfo else { return }
@@ -288,11 +282,11 @@ extension AuthViewController {
         guard let currentNonce = self.currentNonce else {
             return
         }
-        appleSignInDelegates = SignInWithAppleDelegates(window: nil, currentNonce: currentNonce)
+        //appleSignInDelegates = SignInWithAppleDelegates(window: nil, currentNonce: currentNonce)
 
         let authorizationController = ASAuthorizationController(authorizationRequests: requests)
-        authorizationController.delegate = appleSignInDelegates
-        authorizationController.presentationContextProvider = appleSignInDelegates
+//        authorizationController.delegate = appleSignInDelegates
+//        authorizationController.presentationContextProvider = appleSignInDelegates
         authorizationController.performRequests()
     }
 

@@ -8,41 +8,68 @@
 
 import UIKit
 
-class ChartsCell: CoreCell {
+final class ChartsCell: CoreCell {
 
-    static var identifier: String = String(describing: self.self)
-    
+    static var identifier: String = String(describing: ChartsCell.self)
+
+    private var blurEffectView = UIVisualEffectView().with { blurEffectView in
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    }
+
+    private var vibrancyView = UIVisualEffectView().with { blurEffectView in
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    }
+
     // MARK: Charts
-    let charts: UIView = {
-        let view = UIView()
-        let charts = ChartsView()
+    private let charts = ChartsView().with { charts in
         charts.addLine(data: Array(0...6), color: .sunriseColor, label: "_YOU".localized())
         charts.addLine(data: Array(0...6), color: .secondGradientColor, label: "_AVG".localized())
         charts.translatesAutoresizingMaskIntoConstraints = false
-        return charts
-    }()
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        refresh()
+        prepareUI()
+    }
+
+    private let view = UIView().with { view in
+        view.layer.cornerRadius = 15
+        view.backgroundColor = .clear
+        view.layer.masksToBounds = true
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func refresh() {
-        let view = UIView(frame: contentView.frame)
-        view.layer.cornerRadius = 15
-        view.backgroundColor = .clear
-        view.layer.masksToBounds = true
+    private func prepareUI() {
+
+        view.frame = contentView.frame
+        blurEffectView.frame = view.bounds
+        blurEffectView.effect = getBlurEffect()
+        vibrancyView.frame = view.bounds
+        vibrancyView.effect = getVibrancyEffect()
+
+        let label = UILabel()
+        label.text = "Будет доступно чуть позже"
+        label.font = UIFont().roundedFont(ofSize: .headline, weight: .semibold)
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = UIColor.systemBackground
+
         addSubview(view)
         view.addSubview(charts)
+        vibrancyView.contentView.addSubview(label)
+        blurEffectView.contentView.addSubview(vibrancyView)
+        view.addSubview(blurEffectView)
+
         NSLayoutConstraint.activate([
             charts.topAnchor.constraint(equalTo: cellTitleLabel.bottomAnchor, constant: 20),
             charts.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor,constant: -10),
             charts.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: 10),
-            charts.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 10)
+            charts.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 10),
+            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
     
@@ -50,5 +77,31 @@ class ChartsCell: CoreCell {
         super.prepareForReuse()
         
     }
-    
+
+    private func getBlurEffect() -> UIBlurEffect {
+
+        return UIBlurEffect(style: traitCollection.userInterfaceStyle == .light ? .regular : .dark)
+    }
+
+    private func getVibrancyEffect() -> UIVibrancyEffect {
+        UIVibrancyEffect(blurEffect: getBlurEffect())
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        vibrancyView.effect = getVibrancyEffect()
+        blurEffectView.effect = getBlurEffect()
+    }
+}
+
+extension UIFont {
+
+    func roundedFont(ofSize style: UIFont.TextStyle, weight: UIFont.Weight) -> UIFont {
+
+        let fontSize = UIFont.preferredFont(forTextStyle: style).pointSize
+        if let descriptor = UIFont.systemFont(ofSize: fontSize, weight: weight).fontDescriptor.withDesign(.rounded) {
+            return UIFont(descriptor: descriptor, size: fontSize)
+        } else {
+            return UIFont.preferredFont(forTextStyle: style)
+        }
+    }
 }

@@ -116,6 +116,8 @@ public class AnimationService {
 
     }
 
+    // swiftlint:disable function_parameter_count
+
     /// SlideDown animation
     /// - Parameters:
     ///   - view: parent view
@@ -132,6 +134,8 @@ public class AnimationService {
                                           panGesture: UIPanGestureRecognizer,
                                           tapGesture: UITapGestureRecognizer,
                                           sender: UIPanGestureRecognizer) {
+        // swiftlint:enable function_parameter_count
+
         // detect state of sender
         switch sender.state {
         // sender state changed to began
