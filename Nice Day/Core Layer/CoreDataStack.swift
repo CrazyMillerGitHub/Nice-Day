@@ -7,78 +7,135 @@
 //
 
 import CoreData
+import Firebase
 
-class CoreDataStack: NSObject {
-    var storeURL: URL {
-           guard let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
-               fatalError(#function)
-           }
-           return documentsUrl.appendingPathComponent("MyStore.sqlite")
-       }
-    weak var delegate: CoreDataManager?
-    
-    let dataModelName = "Nice_Day"
-    
-    let dataModelExtension = "momd"
-    
-    lazy var managedObjectModel: NSManagedObjectModel = {
-        guard let modelURL = Bundle.main.url(forResource: self.dataModelName, withExtension: self.dataModelExtension) else { fatalError("Error when trying to find Core Data file") }
-        guard let object = NSManagedObjectModel(contentsOf: modelURL) else { fatalError("object is nill") }
-        return object
-    }()
-    
-     lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator = {
-           let coordinator = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-           do {
-               try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: self.storeURL, options: nil)
-           } catch {
-               assert(false, "Error adding store: \(error)")
-           }
-           return coordinator
-       }()
-    
-    lazy var masterContext: NSManagedObjectContext = {
-         var masterContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-         masterContext.persistentStoreCoordinator = self.persistentStoreCoordinator
-         masterContext.mergePolicy = NSOverwriteMergePolicy
-         return masterContext
-     }()
-     
-     lazy var mainContext: NSManagedObjectContext = {
-         var mainContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-         mainContext.parent = self.masterContext
-         mainContext.mergePolicy = NSOverwriteMergePolicy
-         return mainContext
-     }()
-     
-     lazy var saveContext: NSManagedObjectContext = {
-         var mainContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-         mainContext.parent = self.mainContext
-         mainContext.mergePolicy = NSOverwriteMergePolicy
-         return mainContext
-     }()
-    
-    func performSave() {
-        saveContext.performAndWait {
-            do {
-                try self.saveContext.save()
-            } catch {
-                fatalError("Failure to save context: \(error)")
-            }
-            mainContext.performAndWait {
-                do {
-                    try self.mainContext.save()
-                    self.masterContext.performAndWait {
-                        do {
-                            try self.masterContext.save()
-                        } catch {
-                            fatalError("Failure to save context: \(error)")
-                        }
-                    }
-                } catch {
-                    fatalError("Failure to save context: \(error)")
-                }
+final class CoreDataManager {
+
+    private init() {}
+    static var shared = CoreDataStack()
+}
+
+final class CoreDataStack {
+
+    internal enum Contexts {
+        case main, `private`
+    }
+
+    internal enum MoodType: String {
+
+        case neutral, good, bad
+
+    }
+
+    internal enum CoreDataErrorHandler: Error {
+
+        case fetchDataError
+
+        var localizedDescription: String {
+            switch self {
+            case .fetchDataError:
+                return "Fetching data finished with error"
             }
         }
     }
+
+    internal func context(on context: Contexts) -> NSManagedObjectContext {
+        switch context {
+        case .main:
+            return mainContext
+        case .private:
+            return backgroundContext
+        }
+    }
+
+    private lazy var backgroundContext: NSManagedObjectContext = persistentContainer.newBackgroundContext()
+
+    private lazy var mainContext: NSManagedObjectContext = persistentContainer.viewContext
+
+    private lazy var persistentContainer = NSPersistentContainer(name: "Nice_Day").with { container in
+        container.loadPersistentStores { (_, err) in
+            if let err = err {
+                print(err.localizedDescription)
+            }
+        }
+    }
+
+    internal func saveContext(backgroundContext: NSManagedObjectContext? = nil) {
+
+        let context = backgroundContext ?? persistentContainer.viewContext
+
+            guard context.hasChanges else { return }
+                context.perform {
+                do {
+                    try context.save()
+                } catch(let err) {
+                    print(err.localizedDescription)
+                }
+            }
+
+    }
+
+    internal func deleteData<T: NSManagedObject>(on model: T.Type, context: NSManagedObjectContext) {
+
+        let request: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest<NSFetchRequestResult>(entityName: String(describing: model))
+
+        let fetchRequest: NSBatchDeleteRequest = NSBatchDeleteRequest(fetchRequest: request)
+        do {
+            try self.backgroundContext.execute(fetchRequest)
+            // saveContext
+            saveContext(backgroundContext: context)
+        } catch let error {
+            print(error.localizedDescription)
+        }
+
+    }
+
+    internal func fetchData<T: NSManagedObject>(name: T.Type, context: NSManagedObjectContext,
+                                                completion: @escaping (Result<[T], CoreDataErrorHandler>) -> Void) {
+        let request = name.fetchRequest()
+
+        do {
+            guard let results = try context.fetch(request) as? [T] else {
+                completion(.failure(.fetchDataError))
+                return
+            }
+            completion(.success(results))
+        } catch(let err) {
+            print(err.localizedDescription)
+        }
+    }
+
+    internal func createOrUpdateUser(context: NSManagedObjectContext,
+                                     info: (firstName: String, lastName: String)) {
+
+        fetchData(name: User.self, context: context) { result in
+
+            if case let .success(users) = result {
+                var currentUser: User
+                switch users.first {
+                case .some(let user):
+                    currentUser = user
+                case .none:
+                    currentUser = User(context: context)
+                }
+                currentUser.firstName = info.firstName
+                currentUser.lastName = info.lastName
+                self.saveContext(backgroundContext: context)
+            }
+        }
+    }
+
+    internal func updateMood(on context: NSManagedObjectContext, moodType: MoodType) {
+
+        fetchData(name: User.self, context: context) { (result) in
+            if case let.success(users) = result, let user = users.first {
+                let mood = Mood(context: context)
+                mood.name = moodType.rawValue
+                mood.count = 1
+                user.addToMoods(mood)
+                self.saveContext(backgroundContext: context)
+            }
+        }
+    }
+
 }
