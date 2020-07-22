@@ -11,7 +11,7 @@ import PassKit
 
 class MoodStaticCell: CoreCell {
     
-    static var identifier = "moodStaticCell"
+    static var identifier = String(describing: MoodStaticCell.self)
     
     // MARK: avgPrecent String
     lazy var avgPrecent: (Int) -> UIStackView = { str in
@@ -51,21 +51,33 @@ class MoodStaticCell: CoreCell {
           stackView.distribution = .equalSpacing
           stackView.alignment = .leading
           stackView.spacing = 15
-          stackView.addArrangedSubview(EmotionLabel(text: "\(Int.random(in: 0...100))% Happy"))
-          stackView.addArrangedSubview(EmotionLabel(text: "\(Int.random(in: 0...100))% Normal"))
-          stackView.addArrangedSubview(EmotionLabel(text: "\(Int.random(in: 0...100))% Sad"))
           stackView.translatesAutoresizingMaskIntoConstraints = false
           return stackView
       }()
+
+    func fetchUserMood() {
+
+        if let moods = currentUser.moods?.allObjects as? [Mood] {
+            let moodCount = moods.compactMap { $0.count }.reduce(0, +)
+            if moodCount > 0, let goodCount = moods.first(where: { mood in mood.name == "good" })?.count,
+                let neutralCount = moods.first(where: { mood in mood.name == "neutral" })?.count,
+                let badCount = moods.first(where: { mood in mood.name == "bad" })?.count {
+                stackView.addArrangedSubview(EmotionLabel(text: "\(goodCount / moodCount * 100)% Happy"))
+                stackView.addArrangedSubview(EmotionLabel(text: "\(neutralCount / moodCount * 100)% Normal"))
+                stackView.addArrangedSubview(EmotionLabel(text: "\(badCount / moodCount * 100)% Sad"))
+                prepareShape(precentage: CGFloat(goodCount / moodCount * 100))
+            }
+        }
+    }
     
     /// подготовка CAShapeLayer к работе
-    private func prepareShape() {
-        let path = UIBezierPath(arcCenter: CGPoint(x: contentView.center.x - 90, y: contentView.center.y), radius: 40, startAngle: -CGFloat.pi / 2, endAngle: 2 * CGFloat.pi, clockwise: true).cgPath
+    private func prepareShape(precentage: CGFloat) {
+        let path = UIBezierPath(arcCenter: CGPoint(x: contentView.center.x - 90, y: contentView.center.y), radius: 40, startAngle: -CGFloat.pi / 2, endAngle: 3/2 * CGFloat.pi, clockwise: true).cgPath
         let shapeLayer = ProgressShapeLayer(shapePath: path, shapeType: .moodForeground)
         let bgLayer = ProgressShapeLayer(shapePath: path, shapeType: .moodBackground)
         contentView.layer.addSublayer(bgLayer)
         contentView.layer.addSublayer(shapeLayer)
-        shapeLayer.add(basicAnimation(0.6), forKey: "urSoBasic")
+        shapeLayer.add(basicAnimation(precentage), forKey: "urSoBasic")
         let stackView = avgPrecent(10)
         addSubview(stackView)
         NSLayoutConstraint.activate([
@@ -77,7 +89,7 @@ class MoodStaticCell: CoreCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(stackView)
-        prepareShape()
+        fetchUserMood()
         NSLayoutConstraint.activate([
             stackView.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor,constant: 34.5),
             stackView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor)

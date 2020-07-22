@@ -120,8 +120,15 @@ extension MoodCell: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
         let database = Firestore.firestore()
 
         database.collection("users").document(curentUser.uid).updateData(["moods.\(emotionName)" : FieldValue.increment(Int64(1))]) { err in
+//            DispatchQueue.global(qos: .background).async {
+//                 CoreDataManager.shared.updateMoodtype(context: CoreDataManager.shared.backgroundContext)
+//            }
             if let err = err {
                 print(err.localizedDescription)
+            }
+
+            CoreDataManager.shared.context(on: .private).perform {
+                CoreDataManager.shared.incrementMood(on: CoreDataManager.shared.context(on: .private), with: CoreDataStack.MoodType(rawValue: emotionName)!)
             }
             self.notifyToHideAction()
         }

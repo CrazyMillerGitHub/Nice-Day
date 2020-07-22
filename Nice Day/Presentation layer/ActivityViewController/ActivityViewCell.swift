@@ -41,7 +41,6 @@ final class ActivityViewCell: UICollectionViewCell {
         animationView.setProgressForState(fromProgress: 1, toProgress: 0, forOnState: false)
         animationView.frame.size.height = 28
         animationView.frame.size.width = 28
-        animationView.addTarget(self, action: #selector(favouriteAction(sender:)), for: .touchUpInside)
     }
     
     // MARK: activityLabel
@@ -97,6 +96,7 @@ final class ActivityViewCell: UICollectionViewCell {
     }
     
     func prepareTarget() {
+        heartView.addTarget(self, action: #selector(favouriteAction(sender:)), for: .touchUpInside)
         startStopButton.addTarget(self, action: #selector(startStopAction(sender:)), for: .touchUpInside)
     }
     

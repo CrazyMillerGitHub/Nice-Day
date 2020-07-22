@@ -8,22 +8,19 @@
 
 import UIKit
 
-class ProfileAchievmentsCell: UICollectionViewCell {
+final class ProfileDescriptionCell: UICollectionViewCell {
     
-    static var identifier = "profileAchievments"
+    static var identifier = String(describing: ProfileDescriptionCell.self)
+
+    private var presenter: ProfileDescriptionPresenter!
     
-    fileprivate let viewModel = ProfileAchievmentsViewModel()
-    
-    weak var bgView: UIView!
+    private var bgView: UIView!
     
     // MARK: CollectionView
     // CollectionView для статистики
-    let statsCollectionView: UICollectionView = {
+    private var descriptionCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.backgroundColor = .clear
-        collectionView.register(MoodStaticCell.self, forCellWithReuseIdentifier: MoodStaticCell.identifier)
-        collectionView.register(ChartsStaticCell.self, forCellWithReuseIdentifier: ChartsStaticCell.identifier)
-        collectionView.register(AchievmentsStaticCell.self, forCellWithReuseIdentifier: AchievmentsStaticCell.identifier)
         return collectionView
     }()
     
@@ -33,12 +30,8 @@ class ProfileAchievmentsCell: UICollectionViewCell {
     }
     
     func setupViews() {
-        addSubview(statsCollectionView)
-        
-        statsCollectionView.delegate = viewModel
-        statsCollectionView.dataSource = viewModel
-        
-        statsCollectionView.frame = contentView.frame
+        addSubview(descriptionCollectionView)
+        presenter = ProfileDescriptionPresenter(collectionView: descriptionCollectionView, delegate: self)
         reset()
     }
     

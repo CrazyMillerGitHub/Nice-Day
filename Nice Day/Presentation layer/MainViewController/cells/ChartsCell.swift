@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Charts
 
 final class ChartsCell: CoreCell {
 
@@ -20,16 +21,24 @@ final class ChartsCell: CoreCell {
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     }
 
+    private var blurViewToggle: Bool = true {
+        didSet {
+            blurEffectView.isHidden = blurViewToggle
+        }
+    }
+
     // MARK: Charts
-    private let charts = ChartsView().with { charts in
-        charts.addLine(data: Array(0...6), color: .sunriseColor, label: "_YOU".localized())
-        charts.addLine(data: Array(0...6), color: .secondGradientColor, label: "_AVG".localized())
+    private var charts = ChartsView().with { charts in
+       // charts.addLine(data: Array(0...6), color: .secondGradientColor, label: "_AVG".localized())
         charts.translatesAutoresizingMaskIntoConstraints = false
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         prepareUI()
+        CoreDataManager.shared.context(on: .main).perform {
+            self.checkIfDataExist()
+        }
     }
 
     private let view = UIView().with { view in
@@ -43,7 +52,6 @@ final class ChartsCell: CoreCell {
     }
     
     private func prepareUI() {
-
         view.frame = contentView.frame
         blurEffectView.frame = view.bounds
         blurEffectView.effect = getBlurEffect()
@@ -72,10 +80,25 @@ final class ChartsCell: CoreCell {
             label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
-    
+
     override func prepareForReuse() {
         super.prepareForReuse()
         
+    }
+
+    private func checkIfDataExist() {
+        if let items = CoreDataManager.shared.fetchActivityForLast7Days(on: CoreDataManager.shared.context(on: .main)) {
+            self.charts.addLine(data: items, color: .sunriseColor, label: "_YOU".localized())
+            if items.keys.count > 1 {
+                DispatchQueue.main.async {
+                    self.blurViewToggle = true
+                }
+            }
+        } else {
+            DispatchQueue.main.async {
+                self.blurViewToggle = true
+            }
+        }
     }
 
     private func getBlurEffect() -> UIBlurEffect {

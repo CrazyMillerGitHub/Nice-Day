@@ -105,7 +105,7 @@ extension SearchView: UISearchResultsUpdating, UISearchBarDelegate {
             return item.userLang.lowercased().contains(query.lowercased())
         }
 
-        if filteredActvity.count != 0 {
+        if !filteredActvity.isEmpty {
 
             return filteredActvity
         } else {
@@ -132,19 +132,22 @@ extension SearchView: UISearchResultsUpdating, UISearchBarDelegate {
             ActivtityService.fetchFavouriteActvities(filter: [""]) { result in
                 switch result {
                 case .success(let favourites):
-                    let dispatchGroup = DispatchGroup()
+                    DispatchQueue.global(qos: .utility).async {
+                        let dispatchGroup = DispatchGroup()
 
-                    var arr = [ActivityElement]()
+                        var arr = [ActivityElement]()
 
-                    for item in self.presenter.searchItems {
-                        dispatchGroup.enter()
-                        if favourites.contains(item.documentID) { arr.append(item) }
-                        dispatchGroup.leave()
-                    }
+                        for item in self.presenter.searchItems {
+                            dispatchGroup.enter()
+                            if favourites.contains(item.documentID) { arr.append(item) }
+                            dispatchGroup.leave()
+                        }
 
-                    dispatchGroup.notify(queue: .main) {
-                        self.presenter.items = arr
-                        self.presenter.applySnapshot(animate: true)
+                        dispatchGroup.notify(queue: .main) {
+                            self.presenter.items = arr
+                            self.presenter.applySnapshot(animate: true)
+
+                        }
                     }
                 case .failure(let err):
                     print(err.localizedDescription ?? "")

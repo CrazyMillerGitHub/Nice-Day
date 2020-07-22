@@ -149,6 +149,11 @@ extension ActivityView: ActivityCallable {
         DispatchQueue.global(qos: .background).async {
             database.collection("users").document(Auth.auth().currentUser!.uid).updateData(["usage" : FieldValue.arrayUnion([value])])
         }
+        let backgroundContext = CoreDataManager.shared.context(on: .private)
+
+        backgroundContext.perform {
+            CoreDataManager.shared.insertActivity(on: backgroundContext, activity: value)
+        }
     }
 
     func progress(_ progress: Double) {

@@ -16,12 +16,12 @@ final class ProfileView: UIViewController {
     }
 
     private var profileMode: Mode!
-
-    private var viewModel: ProfileViewModel!
     
     private var imagePicker: ImagePicker!
+
+    private var presenter: ProfileViewPresenter!
     
-    private let navigationBar: UINavigationBar = UINavigationBar().with { (navigationBar) in
+    private let navigationBar: UINavigationBar = UINavigationBar().with { navigationBar in
         let navigationItem = UINavigationItem(title: "_profile".localized)
         navigationBar.shadowImage = UIImage()
         navigationBar.isTranslucent = true
@@ -44,13 +44,12 @@ final class ProfileView: UIViewController {
         collectionView.alwaysBounceVertical = true
         collectionView.backgroundColor = .secondGradientColor
         collectionView.register(AboutCell.self, forCellWithReuseIdentifier: AboutCell.identifier)
-        collectionView.register(ProfileAchievmentsCell.self, forCellWithReuseIdentifier: ProfileAchievmentsCell.identifier)
+        collectionView.register(ProfileDescriptionCell.self, forCellWithReuseIdentifier: ProfileDescriptionCell.identifier)
         return collectionView
     }()
 
-    init(viewModel: ProfileViewModel = ProfileViewModel(), mode: Mode = .normal) {
+    init(mode: Mode = .normal) {
         super.init(nibName: nil, bundle: nil)
-        self.viewModel = viewModel
         self.profileMode = mode
         imagePicker = ImagePicker(presentationController: self, delegate: self)
     }
@@ -66,10 +65,7 @@ final class ProfileView: UIViewController {
         view.addSubview(collectionView)
         view.addSubview(navigationBar)
         collectionView.addSubview(topView)
-
-        DispatchQueue.global(qos: .background).async {
-            self.createObserver()
-        }
+        presenter = ProfileViewPresenter(collectionView: collectionView, delegate: self)
     }
     
     override func viewDidLoad() {
@@ -77,23 +73,12 @@ final class ProfileView: UIViewController {
 
         setupConstraint()
 
-        collectionView.delegate = viewModel
-        collectionView.dataSource = viewModel
-
         if let mode = profileMode, mode == .achievment {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 1), at: .bottom, animated: true)
             }
         }
-    }
-    
-    private func createObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(signOutAction), name: .signOutNotificationKey, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(performPicker), name: .performPicker, object: nil)
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
+
     }
     
     // MARK: Настройка constraint
@@ -109,6 +94,7 @@ final class ProfileView: UIViewController {
             topView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
             topView.bottomAnchor.constraint(equalTo: collectionView.topAnchor),
             topView.heightAnchor.constraint(equalToConstant: 300),
+
             navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             navigationBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             navigationBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
@@ -120,22 +106,9 @@ final class ProfileView: UIViewController {
     private func dismissAction(sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
-    
-    @objc
-    func signOutAction() {
-        let onboardingView = OnboardingView()
-        onboardingView.modalPresentationStyle = .fullScreen
-        self.present(onboardingView, animated: true, completion: nil)
-    }
-    
-    @objc
-    func performPicker(_ sender: Any) {
-        self.imagePicker.present(from: view)
-    }
+
 }
 extension Notification.Name {
-    static let signOutNotificationKey = Notification.Name(rawValue: "com.niceDay.signOutNotificationKey")
-    static let performPicker = Notification.Name(rawValue: "con.niceDay.perfomPicker")
     static let moveAndResizeImage = Notification.Name(rawValue: "com.niceDay.moveAndResizeImage")
     static let removeMoodCell = Notification.Name(rawValue: "com.niceDay.removeMoodCell")
     static let showAlert = Notification.Name(rawValue:
@@ -143,7 +116,17 @@ extension Notification.Name {
     static let showAwards = Notification.Name(rawValue: "com.niceDay.showAwards")
 }
 
-extension ProfileView: ImagePickerDelegate {
+extension ProfileView: ImagePickerDelegate, ProfilePresentable {
+
+    func performPicker() {
+        self.dismiss(animated: true, completion: nil)
+    }
+
+    func signOut() {
+        let onboardingView = OnboardingView()
+        onboardingView.modalPresentationStyle = .fullScreen
+        self.present(onboardingView, animated: true, completion: nil)
+    }
 
     func didSelect(image: UIImage?) {
         if let image = image {
@@ -151,5 +134,4 @@ extension ProfileView: ImagePickerDelegate {
             // TODO: Загрузка фото на сервер или в CoreData
         }
     }
-    
 }

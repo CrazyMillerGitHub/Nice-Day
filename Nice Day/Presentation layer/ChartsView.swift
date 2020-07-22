@@ -11,7 +11,7 @@ import Charts
 
 class ChartsView: LineChartView {
     
-    fileprivate var lines: [LineChartDataSet] = []
+    private var lines: [LineChartDataSet] = []
     
     weak var axisFormatDelegate: IAxisValueFormatter?
     
@@ -21,7 +21,7 @@ class ChartsView: LineChartView {
         self.xAxis.labelFont = UIFont.systemFont(ofSize: 10, weight: .semibold)
         self.scaleXEnabled = false
         self.scaleYEnabled =  false
-        self.rightAxis.enabled = false
+        self.rightAxis.enabled = true
         self.leftAxis.enabled = false
         self.xAxis.labelTextColor = UIColor.inverseColor.withAlphaComponent(0.6)
         self.leftAxis.drawGridLinesEnabled = false
@@ -34,8 +34,8 @@ class ChartsView: LineChartView {
         self.doubleTapToZoomEnabled = false
         self.chartDescription?.text = ""
         self.leftAxis.axisMinimum = 0.0
-        self.xAxis.axisMinimum = 0.0
         self.xAxis.valueFormatter = axisFormatDelegate
+        self.xAxis.forceLabelsEnabled = true
         self.legend.form = .rectangle
         self.legend.textColor = .inverseColor
         self.legend.formSize = 10.0
@@ -50,11 +50,18 @@ class ChartsView: LineChartView {
             self.legend.enabled = false
         }
     }
-    
-    func addLine(data: [Int], color: UIColor, label: String = "") {
+
+    func addLine(data: [Double: [Usage]], color: UIColor, label: String) {
+
         var chartEntry = [ChartDataEntry]()
-        data.forEach {
-            let value = ChartDataEntry(x: Double($0), y: Double.random(in: 0...100))
+
+        let arr = Array(data).sorted { (lhs, rhs) -> Bool in
+            return lhs.key < rhs.key
+        }
+
+        for (key, value) in arr {
+            let total: Double = Double(value.compactMap { $0.total }.reduce(0, +))
+            let value = ChartDataEntry(x: key, y: total)
             chartEntry.append(value)
         }
         isLegendHidden(label)
@@ -68,18 +75,23 @@ class ChartsView: LineChartView {
         line.drawValuesEnabled = false
         line.highlightEnabled = false
         lines.append(line)
-        reloadChart()
+        reloadChart(items: arr.count)
     }
     
-    private func reloadChart() {
+    private func reloadChart(items: Int) {
         let data = LineChartData(dataSets: lines)
+        xAxis.labelCount = items
+        xAxis.forceLabelsEnabled = true
+        notifyDataSetChanged()
         self.data = data
     }
 }
 
 extension ChartsView: IAxisValueFormatter {
+
     func stringForValue(_ value: Double, axis: AxisBase?) -> String {
-        let arr = ["Mon", "Wed", "Thu", "Wen", "Fri", "Sun", "Sat"]
-        return arr[Int(value)]
+        let arr = Calendar.current.shortStandaloneWeekdaySymbols.map { $0.capitalized }
+        return arr[(Int(value) % 10) % 7]
     }
+
 }

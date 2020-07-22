@@ -6,21 +6,41 @@
 //  Copyright © 2019 Mikhail Borisov. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
-struct ProfileModel {
+enum ProfileViewModelItemType {
+    case about
+    case achievments
+}
 
-    let firstName: String
-    let lastName: String
-    let xpCount: Int
-    let level: Int
-    
-    init() {
-        // TODO: Fetch UserInfo here
-        self.firstName = "Apple"
-        self.lastName = "Feld"
-        self.xpCount = 150
-        self.level = 10
+protocol ProfileViewModelItem {
+    var type: ProfileViewModelItemType { get }
+}
+
+class AboutCellModelItem: ProfileViewModelItem {
+    var type: ProfileViewModelItemType {
+        return .about
     }
-    
+}
+
+class ProfileAchievmentsModelItem: ProfileViewModelItem {
+    var type: ProfileViewModelItemType {
+        return .achievments
+    }
+}
+
+class ProfileViewModel: NSObject {
+
+    var items = [ProfileViewModelItem]()
+
+    override init() {
+        super.init()
+
+        let aboutItem = AboutCellModelItem()
+        items.append(aboutItem)
+
+        let achievmentItem = ProfileAchievmentsModelItem()
+        items.append(achievmentItem)
+
+    }
 }

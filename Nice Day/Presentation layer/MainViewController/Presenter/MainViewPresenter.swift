@@ -21,6 +21,7 @@ final class MainViewPresenter {
     }
 
     func fetchBricks() {
+
         let items = [MainItem(type: .bonus),
                      MainItem(type: .mood),
                      MainItem(type: .charts),
@@ -28,6 +29,12 @@ final class MainViewPresenter {
 //                     MainItem(type: .friend),
                      MainItem(type: .achievments),
                      MainItem(type: .special)]
+
+//        if let date = CoreDataManager.shared.fetchMoodTime() {
+//            if Calendar.current.isDateInToday(date) {
+//                items.remove(at: 1)
+//            }
+//        }
         view?.show(items: items)
     }
 

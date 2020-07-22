@@ -30,19 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         FirebaseApp.configure()
 
-//        let database = Firestore.firestore()
+        let backgroudContext = CoreDataManager.shared.context(on: .private)
 
-//        database.collection("users").document(Auth.auth().currentUser!.uid).getDocument { (document, error) in
-//            if let document = document, document.exists {
-//
-//                let refArray = document.get("Activities") as? [Any] ?? []
-//                let ssss = (refArray.first as? [String: Any])!["startTime"] as? Timestamp
-//                let rrrr = (refArray.first as? [String: Any])!["endTime"] as? Timestamp
-//                print(Int((rrrr!.seconds - ssss!.seconds)/60))
-//            } else {
-//                print("Document does not exist")
-//            }
-//        }
         return true
     }
 
@@ -50,5 +39,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if (UserDefaults.standard.string(forKey: key) == nil) {
             UserDefaults.standard.setValue(NSLocale.current.languageCode, forKey: key)
         }
+    }
+
+    func applicationWillTerminate(_ application: UIApplication) {
+//        saveContext()
+       // CoreDataManager.shared.saveContext()
+    }
+}
+
+final class Helper {
+
+    private init() {}
+
+    static var shared = Helper()
+
+    func debugPrint(_ items: Any...) {
+        #if DEBUG
+        print(items)
+        #endif
     }
 }

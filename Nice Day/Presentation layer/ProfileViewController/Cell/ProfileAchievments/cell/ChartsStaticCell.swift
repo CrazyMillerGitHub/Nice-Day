@@ -14,7 +14,7 @@ class ChartsStaticCell: CoreCell {
     
     let charts: UIView = {
         let charts = ChartsView()
-        charts.addLine(data: Array(0...6), color: .searchBarColor, label: "hidden")
+       // charts.addLine(data: Array(0...6), color: .searchBarColor, label: "hidden")
         charts.translatesAutoresizingMaskIntoConstraints = false
         charts.layer.cornerRadius = 15
         return charts

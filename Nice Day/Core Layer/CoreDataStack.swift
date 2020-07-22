@@ -64,15 +64,12 @@ final class CoreDataStack {
 
         let context = backgroundContext ?? persistentContainer.viewContext
 
-            guard context.hasChanges else { return }
-                context.perform {
-                do {
-                    try context.save()
-                } catch(let err) {
-                    print(err.localizedDescription)
-                }
-            }
-
+        guard context.hasChanges else { return }
+        do {
+            try context.save()
+        } catch(let err) {
+            print(err.localizedDescription)
+        }
     }
 
     internal func deleteData<T: NSManagedObject>(on model: T.Type, context: NSManagedObjectContext) {
@@ -90,52 +87,156 @@ final class CoreDataStack {
 
     }
 
-    internal func fetchData<T: NSManagedObject>(name: T.Type, context: NSManagedObjectContext,
-                                                completion: @escaping (Result<[T], CoreDataErrorHandler>) -> Void) {
-        let request = name.fetchRequest()
+    internal func fetchData<T: NSManagedObject>(name: T.Type, context: NSManagedObjectContext) -> [T]? {
+        do {
+            guard let results = try context.fetch(name.fetchRequest()) as? [T] else {
+                return nil
+            }
+            return results
+        } catch(let err) {
+            Helper.shared.debugPrint(err)
+           return nil
+        }
+    }
+
+    internal func currentUser(_ context: NSManagedObjectContext) -> User {
+
+        guard let users = fetchData(name: User.self, context: context), let user = users.first else {
+            let user = createOrUpdateUser(context: context, info: (firstName: "", lastName: ""))
+            return user
+        }
+
+        return user
+    }
+
+    @discardableResult internal func createOrUpdateUser(context: NSManagedObjectContext,
+                                                        info: (firstName: String, lastName: String)?) -> User {
+
+        var currentUser: User
+
+        if let user = fetchData(name: User.self, context: context)?.first {
+            currentUser = user
+        } else {
+            currentUser = User(context: context)
+            context.performAndWait {
+                createEmptryMoods(on: context, user: currentUser)
+            }
+        }
+        currentUser.firstName = info?.firstName
+        currentUser.lastName = info?.lastName
+        saveContext(backgroundContext: context)
+
+        return currentUser
+    }
+
+    internal func createEmptryMoods(on context: NSManagedObjectContext, user: User) {
+
+        let goodMood = Mood(context: context)
+        let badMood = Mood(context: context)
+        let neutralMood = Mood(context: context)
+
+        goodMood.name = MoodType.good.rawValue
+        goodMood.count = 0
+
+        user.addToMoods(goodMood)
+
+        badMood.name = MoodType.bad.rawValue
+        badMood.count = 0
+
+        user.addToMoods(badMood)
+
+        neutralMood.name = MoodType.neutral.rawValue
+        neutralMood.count = 0
+
+        user.addToMoods(neutralMood)
+
+    }
+//
+//    internal func updateMood(on context: NSManagedObjectContext, moodType: MoodType) {
+//
+//        fetchData(name: User.self, context: context) { (result) in
+//            if case let.success(users) = result, let user = users.first {
+//                let mood = Mood(context: context)
+//                mood.name = moodType.rawValue
+//                mood.count = 1
+//                user.addToMoods(mood)
+//                self.saveContext(backgroundContext: context)
+//            }
+//        }
+//    }
+
+    private func fetchEmptyMood(on context: NSManagedObjectContext, name: String, user: User) -> Mood {
+        let mood = Mood(context: context)
+        mood.name = name
+        mood.count = 0
+        return mood
+    }
+
+    internal func insertActivity(on context: NSManagedObjectContext, activity: [String: Any]) {
+        guard let cost = activity["cost"] as? Int,
+            let total = activity["total"] as? Int,
+            let timeStart = (activity["timeStart"] as? Timestamp)?.dateValue(),
+            let timeEnd = (activity["timeEnd"] as? Timestamp)?.dateValue() else {
+                Helper.shared.debugPrint("!Error saving to coredata!")
+                return
+        }
+
+        let usage = Usage(context: context)
+        usage.endTime = timeEnd
+        usage.startTime = timeStart
+        usage.total = Int32(total)
+        usage.cost = Int16(cost)
+
+        let user = currentUser(context)
+        user.addToUsages(usage)
+        saveContext(backgroundContext: context)
+    }
+
+    internal func fetchActivityForLast7Days(on context: NSManagedObjectContext) -> [Double: [Usage]]? {
+
+        let request: NSFetchRequest<Usage> = Usage.fetchRequest()
+        let startTime = NSDate()
+        guard let sevenDaysAgo = NSCalendar.current.date(byAdding: .day, value: -7, to: Date()) else { return nil }
+        let endTime = NSCalendar.current.startOfDay(for: sevenDaysAgo) as NSDate
+        request.predicate = NSPredicate(format:"(endTime >= %@) AND (endTime < %@)", endTime, startTime)
 
         do {
-            guard let results = try context.fetch(request) as? [T] else {
-                completion(.failure(.fetchDataError))
-                return
+            let items = try context.fetch(request)
+            let dict = Dictionary(grouping: items) { (element) -> Double in
+                return Double(Calendar.current.component(.weekday, from: element.endTime!)) + 10
+                    * (Double(Calendar.current.component(.year, from: element.endTime!)) - 2019)
+                    * (Double(Calendar.current.component(.weekOfYear, from: element.endTime!)))
             }
-            completion(.success(results))
+            return dict
         } catch(let err) {
-            print(err.localizedDescription)
+            Helper.shared.debugPrint(err.localizedDescription)
+            return nil
         }
     }
 
-    internal func createOrUpdateUser(context: NSManagedObjectContext,
-                                     info: (firstName: String, lastName: String)) {
-
-        fetchData(name: User.self, context: context) { result in
-
-            if case let .success(users) = result {
-                var currentUser: User
-                switch users.first {
-                case .some(let user):
-                    currentUser = user
-                case .none:
-                    currentUser = User(context: context)
-                }
-                currentUser.firstName = info.firstName
-                currentUser.lastName = info.lastName
-                self.saveContext(backgroundContext: context)
+    internal func incrementMood(on context: NSManagedObjectContext, with moodType: MoodType) {
+        let user = currentUser(context)
+        if let moods = user.moods?.allObjects as? [Mood] {
+            if let mood = moods.first(where: { mood -> Bool in mood.name == moodType.rawValue }) {
+                mood.count += 1
+                saveContext(backgroundContext: context)
             }
         }
     }
 
-    internal func updateMood(on context: NSManagedObjectContext, moodType: MoodType) {
-
-        fetchData(name: User.self, context: context) { (result) in
-            if case let.success(users) = result, let user = users.first {
-                let mood = Mood(context: context)
-                mood.name = moodType.rawValue
-                mood.count = 1
-                user.addToMoods(mood)
-                self.saveContext(backgroundContext: context)
-            }
-        }
-    }
-
+//    private func createOrFetchMood(on context: NSManagedObjectContext, moodType: MoodType) -> Mood {
+//
+//        guard let currentUser = fetchData(name: User.self, context: context)?.first else {
+//            return fetchEmptyMood(on: context, name: moodType.rawValue)
+//        }
+//        guard let moods = currentUser.moods?.allObjects as? [Mood] else {
+//            return fetchEmptyMood(on: context, name: moodType.rawValue, user: currentUser)
+//        }
+//        let names = moods.compactMap { mood in return mood.name }
+//        if names.contains(moodType.rawValue) {
+//            return moods.filter{ mood in return mood.name == moodType.rawValue }.first!
+//        } else {
+//            return fetchEmptyMood(on: context, name: moodType.rawValue)
+//        }
+//    }
 }
