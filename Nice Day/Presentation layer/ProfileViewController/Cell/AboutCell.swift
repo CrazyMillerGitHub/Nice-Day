@@ -17,9 +17,7 @@ protocol Streamable {
 
 }
 
-final class AboutCell: UICollectionViewCell, Streamable {
-
-    internal var currentUser: User!
+final class AboutCell: UICollectionViewCell, Streamable, UserInteraction {
 
     typealias Output = SubjectType
 
@@ -81,7 +79,7 @@ final class AboutCell: UICollectionViewCell, Streamable {
     lazy private var stackView = CustomStackView(elements: nil, stackViewAxis: .horizontal, spacingCount: 35)
     
     // MARK: basicAnimationInit
-    private let basicAnimation: (CGFloat) -> CABasicAnimation = { toValue in
+    private var basicAnimation: (CGFloat) -> CABasicAnimation = { toValue in
         let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
         basicAnimation.fillMode = .forwards
         basicAnimation.toValue = toValue
@@ -91,13 +89,13 @@ final class AboutCell: UICollectionViewCell, Streamable {
         return basicAnimation
     }
     
-    private func prepareShape() {
-        let path = UIBezierPath(arcCenter: CGPoint(x: contentView.center.x, y: contentView.center.y - 50.5 ), radius: 45, startAngle: -CGFloat.pi / 2, endAngle: 2 * CGFloat.pi, clockwise: true).cgPath
+    private func prepareShape(value: CGFloat) {
+        let path = UIBezierPath(arcCenter: CGPoint(x: contentView.center.x, y: contentView.center.y - 50.5 ), radius: 45, startAngle: -CGFloat.pi / 2, endAngle: 3/2 * CGFloat.pi, clockwise: true).cgPath
         let shapeLayer = ProgressShapeLayer(shapePath: path, shapeType: .foreground)
         let bgLayer = ProgressShapeLayer(shapePath: path, shapeType: .background)
         contentView.layer.addSublayer(bgLayer)
         contentView.layer.addSublayer(shapeLayer)
-        shapeLayer.add(basicAnimation(0.3), forKey: "urSoBasic")
+        shapeLayer.add(basicAnimation(value), forKey: "urSoBasic")
        
     }
     
@@ -111,11 +109,12 @@ final class AboutCell: UICollectionViewCell, Streamable {
         contentView.addSubview(imageView)
         contentView.addSubview(userNameLabel)
         contentView.addSubview(signOutButton)
-
-        prepareGesture()
+        
         prepareConstraint()
         reset()
-        prepareShape()
+        CoreDataManager.shared.context(on: .private).perform { [unowned self] in
+            self.configure()
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -123,13 +122,24 @@ final class AboutCell: UICollectionViewCell, Streamable {
     }
 
     internal func configure() {
-        if let firstName = currentUser.firstName?.capitalized, let lastName = currentUser.lastName?.capitalized {
-            userNameLabel.text = "\(firstName) \(lastName)"
-        }
-        if let usages = currentUser.usages?.allObjects as? [Usage] {
-            let result = usages.compactMap { $0.total }.reduce(0, +)
-            levelStackView.elements?.last?.text = "\(getLevel(result))"
-            xpStackView.elements?.last?.text = "\(result)"
+
+        fetchCurrentUser(on: CoreDataManager.shared.context(on: .private)) { currentUser in
+
+            let userId = currentUser.objectID
+            DispatchQueue.main.async { [weak self] in
+
+                guard let self = self else { return }
+                guard let currentUser = CoreDataManager.shared.context(on: .main).object(with: userId) as? User else { return }
+                if let firstName = currentUser.firstName?.capitalized, let lastName = currentUser.lastName?.capitalized {
+                    self.userNameLabel.text = "\(firstName) \(lastName)"
+                }
+                if let usages = currentUser.usages?.allObjects as? [Usage] {
+                    let result = usages.compactMap { $0.total }.reduce(0, +)
+                    self.levelStackView.elements?.last?.text = "\(self.getLevel(result))"
+                    self.xpStackView.elements?.last?.text = "\(result)"
+                    self.prepareShape(value: CGFloat(Double(result) / Double((100 ^ self.getLevel(result)))))
+                }
+            }
         }
     }
 
@@ -194,8 +204,5 @@ extension AboutCell: UIGestureRecognizerDelegate {
             
         ])
     }
-    
-    func prepareGesture() {
-        self.imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imagePickerAction(_:))))
-    }
+
 }

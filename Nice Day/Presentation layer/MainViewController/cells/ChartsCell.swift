@@ -59,7 +59,7 @@ final class ChartsCell: CoreCell {
         vibrancyView.effect = getVibrancyEffect()
 
         let label = UILabel()
-        label.text = "Будет доступно чуть позже"
+        label.text = "_later".localized
         label.font = UIFont().roundedFont(ofSize: .headline, weight: .semibold)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false

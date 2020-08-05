@@ -65,7 +65,9 @@ final class ProfileView: UIViewController {
         view.addSubview(collectionView)
         view.addSubview(navigationBar)
         collectionView.addSubview(topView)
-        presenter = ProfileViewPresenter(collectionView: collectionView, delegate: self)
+        DispatchQueue.main.async { [unowned self] in
+            self.presenter = ProfileViewPresenter(collectionView: self.collectionView, delegate: self)
+        }
     }
     
     override func viewDidLoad() {

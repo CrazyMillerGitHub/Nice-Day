@@ -60,17 +60,7 @@ final class ProfileViewPresenter: NSObject {
             .sink { _ in }
             .store(in: &subscriptions)
     }
-
-    private func loadCurrentUser() -> User {
-
-        let backgroundCotext = CoreDataManager.shared.context(on: .main)
-
-        var user: User!
-        backgroundCotext.performAndWait {
-            user = CoreDataManager.shared.currentUser(backgroundCotext)
-        }
-        return user
-    }
+    
 }
 
 // MARK: - CollectionView
@@ -92,8 +82,6 @@ extension ProfileViewPresenter: UICollectionViewDelegate, UICollectionViewDataSo
         case .about:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AboutCell.identifier, for: indexPath) as? AboutCell else { return UICollectionViewCell() }
             cell.backgroundColor = .white
-            cell.currentUser = loadCurrentUser()
-            cell.configure()
             performSubscription(cell: cell)
             return cell
         case .achievments:

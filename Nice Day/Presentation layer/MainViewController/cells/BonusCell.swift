@@ -92,7 +92,9 @@ class BonusCell: CoreCell {
            let minute = timeInterval.minute,
            let second = timeInterval.second {
             let isWeekend = day < 2
-            return ("\(isWeekend ? "Bonus" : "_wait".localized): \(String(format: "%02d:%02d:%02d", hour, minute, second))",isWeekend)
+            let formatString : String = NSLocalizedString("_day_count", comment: "")
+            let days = String.localizedStringWithFormat(formatString, day)
+            return ("\(isWeekend ? "Bonus" : "_wait".localized): \(days) \(String(format: "%02d:%02d:%02d", hour, minute, second))", isWeekend)
         }
         return ("", false)
     }

@@ -33,7 +33,7 @@ final class MoodCell: CoreCell {
     static var identifier: String = String(describing: type(of: MoodCell.self))
 
     // MARK: Close Button (отмена измерения настроения на день)
-    private let closeButton = UIButton().with { button in
+    private lazy var closeButton = UIButton().with { button in
         button.backgroundColor = .sunriseColor
         button.setImage(UIImage(named: "close"), for: .normal)
         button.adjustsImageWhenHighlighted = false
@@ -44,6 +44,7 @@ final class MoodCell: CoreCell {
         button.layer.shadowRadius = 16.0
         button.layer.shadowOpacity = 0.14
         button.layer.shadowOffset = CGSize(width: 0, height: 16)
+        button.addTarget(self, action: #selector(notifyToHideAction), for: .touchUpInside)
         button.layer.masksToBounds = false
     }
 
@@ -63,7 +64,6 @@ final class MoodCell: CoreCell {
         contentView.addSubview(closeButton)
         moodCollectionView.delegate = self
         moodCollectionView.dataSource = self
-        closeButton.addTarget(self, action: #selector(notifyToHideAction), for: .touchUpInside)
         prepareConstraint()
     }
     
@@ -120,18 +120,24 @@ extension MoodCell: UICollectionViewDelegate, UICollectionViewDataSource, UIColl
         let database = Firestore.firestore()
 
         database.collection("users").document(curentUser.uid).updateData(["moods.\(emotionName)" : FieldValue.increment(Int64(1))]) { err in
-//            DispatchQueue.global(qos: .background).async {
-//                 CoreDataManager.shared.updateMoodtype(context: CoreDataManager.shared.backgroundContext)
-//            }
+            
             if let err = err {
                 print(err.localizedDescription)
             }
 
-            CoreDataManager.shared.context(on: .private).perform {
+            CoreDataManager.shared.context(on: .private).perform { [weak self] in
                 CoreDataManager.shared.incrementMood(on: CoreDataManager.shared.context(on: .private), with: CoreDataStack.MoodType(rawValue: emotionName)!)
+                self?.updateMoodTime()
             }
+
             self.notifyToHideAction()
         }
+    }
+
+    private func updateMoodTime() {
+        let currentUser = CoreDataManager.shared.currentUser(CoreDataManager.shared.context(on: .private))
+        currentUser.moodTime = Date()
+        CoreDataManager.shared.saveContext(backgroundContext: CoreDataManager.shared.context(on: .private))
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

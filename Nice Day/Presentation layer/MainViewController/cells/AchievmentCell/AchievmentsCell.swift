@@ -40,7 +40,7 @@ final class AchievmentsCell: CoreCell {
     }
 
     private var unavailableLaebl = UILabel().with { label in
-        label.text = "Будет доступно чуть позже"
+        label.text = "_later".localized
         label.font = UIFont().roundedFont(ofSize: .headline, weight: .semibold)
         label.textAlignment = .center
         label.textColor = UIColor.systemBackground

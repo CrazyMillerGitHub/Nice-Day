@@ -38,7 +38,6 @@ final class SearchViewPresenter: NSObject, UITableViewDelegate {
         super.init()
         fetchUserActivities()
         configureTableView()
-        applySnapshot()
     }
 
     private func fetchUserActivities() {

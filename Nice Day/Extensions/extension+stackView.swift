@@ -19,8 +19,8 @@ extension UIStackView {
         // setted distributon to equal spacing
         stackView.distribution = .equalSpacing
         stackView.spacing = 10
-        // hide stackView
         stackView.alpha = 0
+        // hide stackView
         // setted to perform constraints later
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView

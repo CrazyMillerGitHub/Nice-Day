@@ -55,6 +55,7 @@ final class SearchView: UIViewController, SeacrhControllerCallable {
         presenter = SearchViewPresenter(activityService: ActivtityService(),
                                         tableView: tableView,
                                         delegate: self)
+        presenter.applySnapshot(animate: false)
         searchViewController.searchResultsUpdater = self
         searchViewController.searchBar.delegate = self
     }

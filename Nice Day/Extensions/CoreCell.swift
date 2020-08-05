@@ -15,8 +15,6 @@ class CoreCell: UICollectionViewCell {
         case analyz
     }
 
-    internal var currentUser: User!
-
     var status: Bool = false
     
     // MARK: stageTitleLabel
@@ -63,11 +61,10 @@ class CoreCell: UICollectionViewCell {
         ])
     }
     
-    func run(mode: StatusCell, text: String, user: User) {
+    func run(mode: StatusCell, text: String) {
         switch mode {
         case .analyz:
             analyzLabel(text)
-            self.currentUser = user
         case _:
             return
         }

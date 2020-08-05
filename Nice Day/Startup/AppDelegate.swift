@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CoreData
 import Firebase
 
 @UIApplicationMain
@@ -25,12 +24,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().tintColor = .inverseColor
 
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = MainView()
+        window?.rootViewController = SplashViewController(SplashViewControllerTransition())
         window?.makeKeyAndVisible()
 
         FirebaseApp.configure()
-
-        let backgroudContext = CoreDataManager.shared.context(on: .private)
 
         return true
     }
@@ -44,18 +41,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
 //        saveContext()
        // CoreDataManager.shared.saveContext()
-    }
-}
-
-final class Helper {
-
-    private init() {}
-
-    static var shared = Helper()
-
-    func debugPrint(_ items: Any...) {
-        #if DEBUG
-        print(items)
-        #endif
     }
 }

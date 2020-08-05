@@ -94,7 +94,7 @@ final class CoreDataStack {
             }
             return results
         } catch(let err) {
-            Helper.shared.debugPrint(err)
+//            Helper.shared.debugPrint(err)
            return nil
         }
     }
@@ -151,19 +151,6 @@ final class CoreDataStack {
         user.addToMoods(neutralMood)
 
     }
-//
-//    internal func updateMood(on context: NSManagedObjectContext, moodType: MoodType) {
-//
-//        fetchData(name: User.self, context: context) { (result) in
-//            if case let.success(users) = result, let user = users.first {
-//                let mood = Mood(context: context)
-//                mood.name = moodType.rawValue
-//                mood.count = 1
-//                user.addToMoods(mood)
-//                self.saveContext(backgroundContext: context)
-//            }
-//        }
-//    }
 
     private func fetchEmptyMood(on context: NSManagedObjectContext, name: String, user: User) -> Mood {
         let mood = Mood(context: context)
@@ -177,7 +164,7 @@ final class CoreDataStack {
             let total = activity["total"] as? Int,
             let timeStart = (activity["timeStart"] as? Timestamp)?.dateValue(),
             let timeEnd = (activity["timeEnd"] as? Timestamp)?.dateValue() else {
-                Helper.shared.debugPrint("!Error saving to coredata!")
+//                Helper.shared.debugPrint("!Error saving to coredata!")
                 return
         }
 
@@ -209,7 +196,7 @@ final class CoreDataStack {
             }
             return dict
         } catch(let err) {
-            Helper.shared.debugPrint(err.localizedDescription)
+//            Helper.shared.debugPrint(err.localizedDescription)
             return nil
         }
     }
@@ -223,20 +210,4 @@ final class CoreDataStack {
             }
         }
     }
-
-//    private func createOrFetchMood(on context: NSManagedObjectContext, moodType: MoodType) -> Mood {
-//
-//        guard let currentUser = fetchData(name: User.self, context: context)?.first else {
-//            return fetchEmptyMood(on: context, name: moodType.rawValue)
-//        }
-//        guard let moods = currentUser.moods?.allObjects as? [Mood] else {
-//            return fetchEmptyMood(on: context, name: moodType.rawValue, user: currentUser)
-//        }
-//        let names = moods.compactMap { mood in return mood.name }
-//        if names.contains(moodType.rawValue) {
-//            return moods.filter{ mood in return mood.name == moodType.rawValue }.first!
-//        } else {
-//            return fetchEmptyMood(on: context, name: moodType.rawValue)
-//        }
-//    }
 }

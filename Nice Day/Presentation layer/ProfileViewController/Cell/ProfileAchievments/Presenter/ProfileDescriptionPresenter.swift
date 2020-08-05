@@ -7,6 +7,22 @@
 //
 
 import UIKit
+import CoreData
+
+protocol UserInteraction {
+
+    func fetchCurrentUser(on context: NSManagedObjectContext, completion: @escaping (User) -> Void)
+}
+
+extension UserInteraction {
+
+    func fetchCurrentUser(on context: NSManagedObjectContext, completion: @escaping (User) -> Void) {
+        context.performAndWait {
+            let user = CoreDataManager.shared.currentUser(context)
+            completion(user)
+        }
+    }
+}
 
 final class ProfileDescriptionPresenter: NSObject {
 
@@ -22,23 +38,25 @@ final class ProfileDescriptionPresenter: NSObject {
     }()
 
     init(collectionView: UICollectionView, delegate: UICollectionViewCell) {
+
         self.collectionView = collectionView
         self.delegate = delegate
         super.init()
-        configureCollectionView()
+
+        DispatchQueue.main.async { [unowned self] in
+            self.configureCollectionView()
+        }
     }
 
-    private let currentUser: User = {
-        return CoreDataManager.shared.currentUser(CoreDataManager.shared.context(on: .main))
-    }()
-
     private func configureCollectionView() {
+        delegate?.addSubview(collectionView)
         collectionView.frame = delegate?.contentView.frame ?? .zero
         collectionView.delegate = self
         collectionView.dataSource = self
+        // register for collectionView
         collectionView.register(MoodStaticCell.self, forCellWithReuseIdentifier: MoodStaticCell.identifier)
         collectionView.register(ChartsStaticCell.self, forCellWithReuseIdentifier: ChartsStaticCell.identifier)
-        collectionView.register(AchievmentsStaticCell.self, forCellWithReuseIdentifier: AchievmentsStaticCell.identifier)
+        collectionView.register(UserAchievmentCell.self, forCellWithReuseIdentifier: UserAchievmentCell.identifier)
     }
 }
 
@@ -54,22 +72,22 @@ extension ProfileDescriptionPresenter: UICollectionViewDelegate, UICollectionVie
         switch item.type {
         case .mood:
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoodStaticCell.identifier, for: indexPath) as? MoodStaticCell {
-                mainContext.perform { [unowned self] in
-                    cell.run(mode: .analyz, text: "_mood".localized(), user: self.currentUser)
+                mainContext.perform {
+                    cell.run(mode: .analyz, text: "_mood".localized())
                 }
                 return cell
             }
         case .charts:
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ChartsStaticCell.identifier, for: indexPath) as? ChartsStaticCell {
-                mainContext.perform { [unowned self] in
-                    cell.run(mode: .analyz, text: "_charts".localized(), user: self.currentUser)
+                mainContext.perform {
+                    cell.run(mode: .analyz, text: "_charts".localized())
                 }
                 return cell
             }
         case .achievments:
-            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AchievmentsStaticCell.identifier, for: indexPath) as? AchievmentsStaticCell {
-                mainContext.perform { [unowned self] in
-                    cell.run(mode: .analyz, text: "_achievments".localized(), user: self.currentUser)
+            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UserAchievmentCell.identifier, for: indexPath) as? UserAchievmentCell {
+                mainContext.perform {
+                    cell.run(mode: .analyz, text: "_achievments".localized())
                 }
                 return cell
             }

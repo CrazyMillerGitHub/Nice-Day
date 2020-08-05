@@ -35,9 +35,9 @@ final class FadeAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         let containerView = transitionContext.containerView
         let toView = transitionContext.view(forKey: .to)!
         containerView.addSubview(toView)
-        toView.alpha = CGFloat(Constant.visible.value)
+        toView.alpha = CGFloat(Constant.nonVisible.value)
         UIView.animate(withDuration: Constant.duration.value, delay: Constant.delay.value, options: [.curveEaseOut], animations: {
-            toView.alpha = CGFloat(Constant.nonVisible.value)
+            toView.alpha = CGFloat(Constant.visible.value)
             
         }, completion: { _ in
             transitionContext.completeTransition(true)
