@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CoreData
 import Firebase
 
 @UIApplicationMain
@@ -27,7 +26,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = SplashViewController(SplashViewControllerTransition())
         window?.makeKeyAndVisible()
+
         FirebaseApp.configure()
+
         return true
+    }
+
+    func applicationWillTerminate(_ application: UIApplication) {
+
     }
 }

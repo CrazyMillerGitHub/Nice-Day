@@ -9,12 +9,14 @@
 import UIKit
 
 class CustomStackView: UIStackView {
-    
+
+    internal var elements: [UILabel]?
     /// Инициализация
     /// - Parameter elements: elements that we use in our stackView(may be UIView, etc)
     /// - Parameter stackViewAxis: Axis of StackView(.vertical, .horizontal)
     /// - Parameter spacingCount: spacing between elements
     init(elements: [UILabel]?, stackViewAxis: NSLayoutConstraint.Axis, spacingCount: CGFloat) {
+        self.elements = elements
         super.init(frame: .zero)
         axis = stackViewAxis
         distribution = .equalSpacing

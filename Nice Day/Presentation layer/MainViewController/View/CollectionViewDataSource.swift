@@ -80,6 +80,7 @@ final class MainViewDataSource: NSObject, UICollectionViewDelegate, UICollection
     private func setup() {
         // add observer
         NotificationCenter.default.addObserver(self, selector: #selector(removeCell), name: .removeMoodCell, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(showAlert(notification:)), name: .showAlert, object: nil)
         // perform collectionView
         collectionView.delegate = self
         collectionView.frame = delegate.view.frame
@@ -137,4 +138,34 @@ final class MainViewDataSource: NSObject, UICollectionViewDelegate, UICollection
         }
     }
 
+    func addMoodCell() {
+        if let idx = items.firstIndex(where: {$0.type == .mood }),
+            let item = dataSource.itemIdentifier(for: IndexPath(item: idx, section: 0)) {
+            var currentSnapshot = dataSource.snapshot()
+            currentSnapshot.insertItems([MainItem(type: .mood)], afterItem: item)
+            items.insert(MainItem(type: .mood), at: 1)
+            dataSource.apply(currentSnapshot)
+        }
+    }
+
+    @objc func showAlert(notification: NSNotification) {
+        guard let data = notification.object as? [String], let body = data.first else {
+            return
+        }
+        delegate.showAlert(service: AlertService(), title: "Alert!", body: body, button: "Ok")
+
+    }
+    
+}
+
+extension UIViewController {
+    func showAlert(service: AlertService,
+                   title: String,
+                   body: String,
+                   button: String) {
+        
+        let alertService = service
+
+        present(alertService.alert(title: title, body: body, button: button), animated: true, completion: nil)
+    }
 }

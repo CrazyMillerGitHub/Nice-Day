@@ -1,34 +1,44 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19D76" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Achievment" representedClassName="Achievment" syncable="YES" codeGenerationType="class">
-        <attribute name="achievmentCost" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="achievmentDescription" attributeType="String"/>
-        <attribute name="achievmentTitle" attributeType="String"/>
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="achievments" inverseEntity="User"/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19F101" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Activity" representedClassName="Activity" syncable="YES" codeGenerationType="class">
+        <attribute name="activityCost" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="activityType" optional="YES" attributeType="String"/>
+        <attribute name="documentID" transient="YES" attributeType="String"/>
+        <attribute name="en" optional="YES" attributeType="String"/>
+        <attribute name="isFavourite" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="popularity" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="ru" optional="YES" attributeType="String"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="documentID"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
     </entity>
-    <entity name="AppUser" representedClassName="AppUser" syncable="YES" codeGenerationType="class">
-        <attribute name="isOnline" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <relationship name="currectUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="appUser" inverseEntity="User"/>
-        <relationship name="friends" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Friends" inverseName="currectUser" inverseEntity="Friends"/>
-    </entity>
-    <entity name="Friends" representedClassName="Friends" syncable="YES" codeGenerationType="class">
-        <attribute name="id" optional="YES" attributeType="String"/>
+    <entity name="Mood" representedClassName="Mood" syncable="YES" codeGenerationType="class">
+        <attribute name="count" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="surName" optional="YES" attributeType="String"/>
-        <relationship name="currectUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AppUser" inverseName="friends" inverseEntity="AppUser"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="moods" inverseEntity="User"/>
+    </entity>
+    <entity name="Usage" representedClassName="Usage" syncable="YES" codeGenerationType="class">
+        <attribute name="cost" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="endTime" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="startTime" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="total" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="usages" inverseEntity="User"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES" codeGenerationType="class">
-        <attribute name="id" optional="YES" attributeType="String"/>
-        <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="surname" optional="YES" attributeType="String"/>
-        <relationship name="achievments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Achievment" inverseName="user" inverseEntity="Achievment"/>
-        <relationship name="appUser" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AppUser" inverseName="currectUser" inverseEntity="AppUser"/>
+        <attribute name="firstName" attributeType="String"/>
+        <attribute name="lastName" attributeType="String"/>
+        <attribute name="level" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="moodTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="xp" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="moods" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Mood" inverseName="user" inverseEntity="Mood"/>
+        <relationship name="usages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Usage" inverseName="user" inverseEntity="Usage"/>
     </entity>
     <elements>
-        <element name="Achievment" positionX="-190.55078125" positionY="126.97265625" width="128" height="118"/>
-        <element name="AppUser" positionX="-211.171875" positionY="-166.9296875" width="128" height="88"/>
-        <element name="Friends" positionX="-17.48046875" positionY="-101.4453125" width="128" height="105"/>
-        <element name="User" positionX="-435.14453125" positionY="-43.875" width="128" height="120"/>
+        <element name="Mood" positionX="191.90234375" positionY="328.96875" width="128" height="88"/>
+        <element name="Usage" positionX="315.328125" positionY="154.91015625" width="128" height="118"/>
+        <element name="User" positionX="-267.19140625" positionY="114.87109375" width="128" height="148"/>
+        <element name="Activity" positionX="-63" positionY="171" width="128" height="148"/>
     </elements>
 </model>

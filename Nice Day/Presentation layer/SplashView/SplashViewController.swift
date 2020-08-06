@@ -9,7 +9,7 @@
 import UIKit
 import AnimationFramework
 
-final class SplashViewController: UIViewController {
+class SplashViewController: UIViewController {
 
     lazy var splashLabel = UILabel.splash
 
@@ -34,8 +34,8 @@ final class SplashViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        AnimationService.callBackAnimation(splashLabel, in: self.view) {
-            self.performAnimationToMainView()
+        AnimationService.callBackAnimation(splashLabel, in: self.view) { [weak self] in
+            self?.performAnimationToMainView()
         }
     }
 
@@ -47,7 +47,7 @@ private extension SplashViewController {
         let view = UserDefaults.standard.object(forKey: "loggedIn") == nil || UserDefaults.standard.object(forKey: "loggedIn") as? Bool == false ? OnboardingView() : MainView()
         view.modalPresentationStyle = .custom
         view.transitioningDelegate = transition
-        present(view, animated: true, completion: nil)
+        self.present(view, animated: true, completion: nil)
     }
 
 }

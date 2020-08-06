@@ -7,12 +7,31 @@
 //
 
 import UIKit
+import Combine
 
-final class AboutCell: UICollectionViewCell {
+protocol Streamable {
+
+    associatedtype Output
+
+    var outputStream: PassthroughSubject<Output, Never> { get }
+
+}
+
+final class AboutCell: UICollectionViewCell, Streamable, UserInteraction {
+
+    typealias Output = SubjectType
+
+    static var identifier = String(describing: AboutCell.self)
     
-    static var identifier = String(describing: type(of: self))
-    
-    private var headerView: ProfileHeader!
+    private lazy var headerView: ProfileHeader = {
+        return ProfileHeader()
+    }()
+
+    internal enum SubjectType {
+        case disconnect, picker
+    }
+
+    internal let outputStream = PassthroughSubject<Output, Never>()
     
     // MARK: создание imageView
     private lazy var imageView =  UIImageView().with { imageView in
@@ -20,7 +39,7 @@ final class AboutCell: UICollectionViewCell {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFit
-        imageView.backgroundColor = .red
+        imageView.backgroundColor = .sunriseColor
         imageView.isUserInteractionEnabled = true
     }
     
@@ -51,7 +70,6 @@ final class AboutCell: UICollectionViewCell {
     // MARK: userName
     private lazy var userNameLabel = UILabel().with { label in
         label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
-        label.text = UserDefaults.standard.object(forKey: "userName") as? String
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .inverseColor
         label.textAlignment = .center
@@ -61,7 +79,7 @@ final class AboutCell: UICollectionViewCell {
     lazy private var stackView = CustomStackView(elements: nil, stackViewAxis: .horizontal, spacingCount: 35)
     
     // MARK: basicAnimationInit
-    private let basicAnimation: (CGFloat) -> CABasicAnimation = { toValue in
+    private var basicAnimation: (CGFloat) -> CABasicAnimation = { toValue in
         let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
         basicAnimation.fillMode = .forwards
         basicAnimation.toValue = toValue
@@ -71,36 +89,66 @@ final class AboutCell: UICollectionViewCell {
         return basicAnimation
     }
     
-    private func prepareShape() {
-        let path = UIBezierPath(arcCenter: CGPoint(x: contentView.center.x, y: contentView.center.y - 50.5 ), radius: 45, startAngle: -CGFloat.pi / 2, endAngle: 2 * CGFloat.pi, clockwise: true).cgPath
+    private func prepareShape(value: CGFloat) {
+        let path = UIBezierPath(arcCenter: CGPoint(x: contentView.center.x, y: contentView.center.y - 50.5 ), radius: 45, startAngle: -CGFloat.pi / 2, endAngle: 3/2 * CGFloat.pi, clockwise: true).cgPath
         let shapeLayer = ProgressShapeLayer(shapePath: path, shapeType: .foreground)
         let bgLayer = ProgressShapeLayer(shapePath: path, shapeType: .background)
         contentView.layer.addSublayer(bgLayer)
         contentView.layer.addSublayer(shapeLayer)
-        shapeLayer.add(basicAnimation(0.3), forKey: "urSoBasic")
+        shapeLayer.add(basicAnimation(value), forKey: "urSoBasic")
        
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        let headerView = ProfileHeader()
         
         stackView.addArrangedSubview(levelStackView)
         stackView.addArrangedSubview(xpStackView)
-        self.contentView.addSubview(stackView)
-        self.contentView.addSubview(headerView)
-        self.contentView.addSubview(imageView)
-        self.contentView.addSubview(userNameLabel)
-        self.contentView.addSubview(signOutButton)
-        self.headerView = headerView
-        prepareGesture()
+        contentView.addSubview(stackView)
+        contentView.addSubview(headerView)
+        contentView.addSubview(imageView)
+        contentView.addSubview(userNameLabel)
+        contentView.addSubview(signOutButton)
+        
         prepareConstraint()
         reset()
-        prepareShape()
+        CoreDataManager.shared.context(on: .private).perform { [unowned self] in
+            self.configure()
+        }
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    internal func configure() {
+
+        fetchCurrentUser(on: CoreDataManager.shared.context(on: .private)) { currentUser in
+
+            let userId = currentUser.objectID
+            DispatchQueue.main.async { [weak self] in
+
+                guard let self = self else { return }
+                guard let currentUser = CoreDataManager.shared.context(on: .main).object(with: userId) as? User else { return }
+                if let firstName = currentUser.firstName?.capitalized, let lastName = currentUser.lastName?.capitalized {
+                    self.userNameLabel.text = "\(firstName) \(lastName)"
+                }
+                if let usages = currentUser.usages?.allObjects as? [Usage] {
+                    let result = usages.compactMap { $0.total }.reduce(0, +)
+                    self.levelStackView.elements?.last?.text = "\(self.getLevel(result))"
+                    self.xpStackView.elements?.last?.text = "\(result)"
+                    self.prepareShape(value: CGFloat(Double(result) / Double((100 ^ self.getLevel(result)))))
+                }
+            }
+        }
+    }
+
+    func getLevel(_ xpCount: Int32) -> Int32 {
+        var lvl: Int32 = 1
+        while xpCount > 100 ^ lvl {
+            lvl += 1
+        }
+        return lvl
     }
     
     override func prepareForReuse() {
@@ -115,12 +163,14 @@ final class AboutCell: UICollectionViewCell {
         }
     }
     
-    @objc
-    private func signOutAction() {
+    @objc private func signOutAction() {
         UserDefaults.standard.set(false, forKey: "loggedIn")
-        NotificationCenter.default.post(name: .signOutNotificationKey, object: nil)
+        outputStream.send(.disconnect)
     }
     
+    @objc private func imagePickerAction(_ sender: UITapGestureRecognizer) {
+        outputStream.send(.picker)
+    }
 }
 
 extension AboutCell: UIGestureRecognizerDelegate {
@@ -154,13 +204,5 @@ extension AboutCell: UIGestureRecognizerDelegate {
             
         ])
     }
-    
-    func prepareGesture() {
-        self.imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapped(_:))))
-    }
-    
-    @objc
-    func tapped(_ sender: UITapGestureRecognizer) {
-        NotificationCenter.default.post(name: .performPicker, object: nil)
-    }
+
 }

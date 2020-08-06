@@ -12,7 +12,8 @@ class MainView: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        UserDefaults.standard.set(true, forKey: "loggedIn")
         let config = UIImage.SymbolConfiguration(pointSize: 18 , weight: .medium)
         self.tabBar.isTranslucent = true
         

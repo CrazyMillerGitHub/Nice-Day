@@ -64,26 +64,19 @@ class AuthService: NSObject {
                         if let err = err {
                             completion(err.localizedDescription, nil)
                         } else {
-                            UserDefaults.standard.setValue("\(user.firstName) \(user.lastName)", forKey: "userName")
+                            let dataBase = Firestore.firestore()
+                            // add values to our collection
+                            dataBase.collection("users").document(Auth.auth().currentUser!.uid).setData(
+                                ["lastName" : user.lastName,
+                                 "firstName": user.firstName,
+                                 "favourite": [],
+                                 "friends": []]
+                            )
                             completion(nil, AuthUser(firstName: user.firstName, lastName: user.lastName, emailAdress: email))
                         }
                         
                     }
                 }
-//                // inizialize database
-//                let dataBase = Firestore.firestore()
-//                // add values to our collection
-//                dataBase.collection("users").addDocument(data: [
-//                    "lastName": user.lastName,
-//                    "firstName": user.firstName,
-//                    "email": email,
-//                    "UID": result!.user.uid
-//                ]) { (err) in
-//                    if let error = err {
-//                        // copletion handler with our error if we can't create new user
-//                        completeion(error.localizedDescription, nil)
-//                    }
-//                }
             }
             // if all currectly done we callback completionhandler with userData
         }
@@ -106,13 +99,11 @@ class AuthService: NSObject {
             }
             
             if let currentUser = Auth.auth().currentUser {
-                
                 guard let userInfo = currentUser.displayName?.split(separator: " ").map(String.init) else {
                     completion("User display name is nil", nil)
                     return
                 }
                 
-                UserDefaults.standard.setValue(userInfo.joined(separator: " "), forKey: "userName")
                 completion(nil , AuthUser(firstName: userInfo.first!, lastName: userInfo.last!, emailAdress: currentUser.email!))
             }
         }
@@ -139,19 +130,5 @@ class AuthService: NSObject {
 }
 
 extension AuthService {
-    
-//    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-////        window
-//    }
-    
-    func signInWithApple() {
-//        let provider = ASAuthorizationAppleIDProvider()
-//        let request = provider.createRequest()
-//        request.requestedScopes = [.email, .fullName]
-//        let controller = ASAuthorizationController(authorizationRequests: [request])
-//        controller.delegate = self
-//        controller.presentationContextProvider = self
-//        controller.performRequests()
-    }
-    
+
 }

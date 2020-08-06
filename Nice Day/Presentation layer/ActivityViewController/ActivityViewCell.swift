@@ -8,23 +8,32 @@
 
 import UIKit
 import Lottie
+import Firebase
 
-class ActivityViewCell: UICollectionViewCell {
+protocol ActivtityDelegate: class {
+
+    func dismissAnimation()
+    func addTimestamp(timestamp: Timestamp)
+}
+
+final class ActivityViewCell: UICollectionViewCell {
     
-    static var identifier = "activity"
-    
-    var element: ActivityElement? {
+    static var identifier = String(describing: ActivityViewCell.self)
+
+    // MARK: - Prepare UI
+
+    var element: Activity? {
         didSet {
             if let element = element {
-                activityLabel.text = element.name
-                if let dscrText = activityDescriptionLabel.text { activityDescriptionLabel.text = "\(element.xpCount)" + dscrText }
+                activityLabel.text = element.userLang
+                if let dscrText = activityDescriptionLabel.text { activityDescriptionLabel.text = "\(element.activityCost)" + dscrText }
                 heartView.setIsOn(true, animated: true)
             }
         }
     }
-    
-    private var heartView: AnimatedSwitch = {
-        let animationView = AnimatedSwitch()
+
+    // MARK: heartView
+    private var heartView = AnimatedSwitch().with { animationView in
         animationView.animation = Animation.named("heartAnimation")
         animationView.contentMode = .scaleAspectFit
         animationView.translatesAutoresizingMaskIntoConstraints = false
@@ -32,47 +41,39 @@ class ActivityViewCell: UICollectionViewCell {
         animationView.setProgressForState(fromProgress: 1, toProgress: 0, forOnState: false)
         animationView.frame.size.height = 28
         animationView.frame.size.width = 28
-        return animationView
-    }()
+    }
     
     // MARK: activityLabel
-    fileprivate var activityLabel: UILabel = {
-        let label = UILabel()
+    private var activityLabel = UILabel().with { label in
         label.textAlignment = .center
         label.textColor =  UIColor.inverseColor
-        label.text = "Sport"
         label.font = UIFont.systemFont(ofSize: 19, weight: .heavy)
         label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+    }
     
     // MARK: startStopButton init
-    fileprivate var startStopButton: StartStopButton = {
-        let button = StartStopButton()
-        return button
+    private var startStopButton: StartStopButton = {
+        return StartStopButton()
     }()
+
+    weak var delegate: ActivtityDelegate?
     
     // MARK: timerLabel
-    fileprivate var timerLabel: TimerLabel = {
-        let label = TimerLabel()
+    fileprivate var timerLabel = TimerLabel().with { label in
         label.textAlignment = .center
         label.textColor =  UIColor.sunriseColor
         label.text = "00:00:00"
-        label.font = UIFont.systemFont(ofSize: 32, weight: .heavy)
+        label.font = UIFont.monospacedDigitSystemFont(ofSize: 32, weight: .heavy)
         label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
+    }
+
     // MARK: activityDescriptionLabel
-    fileprivate var activityDescriptionLabel: UILabel = {
-        let label = UILabel()
+    private var activityDescriptionLabel = UILabel().with { label in
         label.textAlignment = .center
         label.textColor = .inverseColor
-        label.text = "xp per min"
         label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
         label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -133,13 +134,22 @@ class ActivityViewCell: UICollectionViewCell {
     /// - Parameter sender: any
     @objc
     private func startStopAction(sender: Any) {
-        startStopButton.isSelected = !startStopButton.isSelected
-        startStopButton.isSelected == true ? timerLabel.createTimer() : timerLabel.cancelTimer()
+        startStopButton.isSelected.toggle()
+        startStopButton.isSelected ? timerLabel.createTimer() : timerLabel.cancelTimer()
+        delegate?.addTimestamp(timestamp: Timestamp(date: Date()))
+        if !startStopButton.isSelected {
+            delegate?.dismissAnimation()
+        }
     }
     
     @objc
     private func favouriteAction(sender: Any) {
-        print(#function)
+
+//        let database = Firestore.firestore()
+//        guard let element = element else { return }
+//        database.collection("users").document(Auth.auth().currentUser!.uid).updateData(
+//            ["favourite" : FieldValue.arrayUnion([
+//                database.collection("activity").document(element.documentID)])])
     }
     
 }

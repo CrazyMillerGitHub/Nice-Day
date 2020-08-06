@@ -8,22 +8,19 @@
 
 import UIKit
 
-final class NewFriendAdditionalLabel: UILabel {
-    
-    enum LabelType {
-        case lvl
-        case match
-    }
-    
-    init(ofString:String, type:LabelType) {
+protocol LabelConfigurable: class {
+    func present()
+}
+
+final class FriendLabel: UILabel, LabelConfigurable {
+
+    init(_ attributedString: NSAttributedString = NSAttributedString()) {
         super.init(frame: .zero)
-        let attributedString = NSMutableAttributedString(string: " \(ofString) \(type == .lvl ? "Lvl" : "_match".localized())  ", attributes: [
-          .font: UIFont.systemFont(ofSize: 11.0, weight: .bold),
-          .foregroundColor: UIColor.inverseColor,
-          .kern: 0.18
-        ])
-        attributedString.addAttribute(.foregroundColor, value: type == .lvl ? UIColor.green : UIColor.sunriseColor, range: NSRange(location: 1, length: ofString.count + 1))
-        attributedText = attributedString
+        present()
+    }
+
+    func present() {
+        translatesAutoresizingMaskIntoConstraints = false
         layer.backgroundColor = UIColor.bgColor.cgColor
         layer.cornerRadius = 8
         layer.borderWidth = 1
@@ -31,47 +28,106 @@ final class NewFriendAdditionalLabel: UILabel {
         layer.shadowOpacity = 0.03
         layer.shadowOffset = CGSize(width: 0, height: 2)
         layer.borderColor = UIColor.bgColor.withAlphaComponent(0.02).cgColor
-        translatesAutoresizingMaskIntoConstraints = false
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }
 
-class FriendsCell: CoreCell {
-    
-    static var identifier: String = "friends"
-    
-    // MARK: newFriendImage init
-    private var newFriendImage: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = #imageLiteral(resourceName: "emoji3")
-        imageView.contentMode = .scaleAspectFill
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-    
-    private var inviteButton: UIButton = {
-        let button = UIButton()
+extension UILabel {
+
+//    static var friendStatsLabel = UILabel().with { label in
+//
+//        // customize label
+//        label.layer.backgroundColor = UIColor.bgColor.cgColor
+//        label.layer.cornerRadius = 8
+//        label.layer.borderWidth = 1
+//        label.layer.shadowRadius = 4
+//        label.layer.shadowOpacity = 0.03
+//        label.layer.shadowOffset = CGSize(width: 0, height: 2)
+//        label.layer.borderColor = UIColor.bgColor.withAlphaComponent(0.02).cgColor
+//    }
+
+    static var friendLabel = UILabel().with { label in
+        label.contentMode = .left
+        label.tintColor = .black
+        label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
+        label.translatesAutoresizingMaskIntoConstraints = false
+    }
+}
+
+// MARK: - UserModel
+struct UserModel {
+
+    internal enum Style: String {
+        case lvl
+        case match
+    }
+    // MARK: property init
+    internal let firstName: String
+    internal let lastName: String
+    private let match: CGFloat
+    private let level: Int
+
+    // MARK: initializer
+    init (_ firstName : String = "Lewis", _ lastName: String = "Webb", _ match: CGFloat = 50, _ level: Int = 1) {
+        self.firstName = firstName
+        self.lastName = lastName
+        self.match =  match
+        self.level = level
+    }
+
+    internal func attributedString(for type: Style) -> NSMutableAttributedString {
+        let value = type == .lvl ? String(level) : match.description
+        let str = " \(value) \(type == .lvl ? "Lvl" : "Match")"
+        let attributedString = NSMutableAttributedString(string: str, attributes: [
+            .font: UIFont.systemFont(ofSize: 11.0, weight: .bold),
+            .foregroundColor: UIColor.inverseColor,
+            .kern: 0.18
+        ])
+        attributedString.addAttribute(.foregroundColor, value: type == .lvl ? UIColor.green : UIColor.sunriseColor, range: NSRange(location: 1, length: value.count + 1))
+
+        return attributedString
+    }
+}
+// MARK: - FriendsCell
+final class FriendsCell: CoreCell {
+
+    // MARK: define identifier
+    static var identifier: String = String(describing: type(of: self))
+
+    // MARK: - prepare properties
+    private var levelLabel = FriendLabel()
+
+    private var matchLabel = FriendLabel()
+
+    private var friendLabel: UILabel = .friendLabel
+
+    // MARK: - setup UI
+    private lazy var inviteButton = UIButton().with { button in
         button.layer.backgroundColor = UIColor.sunriseColor.cgColor
         button.setTitle("_invite".localized(), for: .normal)
-        button.titleLabel?.textColor = UIColor.white.withAlphaComponent(0.8)
+        button.setTitleColor(UIColor.white.withAlphaComponent(0.8), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
         button.layer.cornerRadius = 15
-        button.layer.maskedCorners = [.layerMaxXMaxYCorner,.layerMinXMaxYCorner]
+        button.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
-    private var locationStackView: UIStackView = {
-        let stackView = UIStackView()
+    }
+
+    private lazy var profileImage = UIImageView().with { imageView in
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = #imageLiteral(resourceName: "emoji3")
+        imageView.contentMode = .scaleAspectFill
+    }
+
+    private lazy var locationStackView = UIStackView().with { stackView in
         stackView.axis = .horizontal
         stackView.distribution = .equalSpacing
         stackView.alignment = .center
         stackView.spacing = 4
         stackView.translatesAutoresizingMaskIntoConstraints = false
+        // TODO: Refactor
         let label = UILabel()
         label.text = "400 ft"
         label.font = UIFont.systemFont(ofSize: 10, weight: .bold)
@@ -81,20 +137,14 @@ class FriendsCell: CoreCell {
         location.image = UIImage(systemName: "location.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: 7))
         location.contentMode = .scaleAspectFit
         location.tintColor = .inverseColor
+        // TODO: End Refactor
         stackView.addArrangedSubview(location)
         stackView.addArrangedSubview(label)
-        return stackView
-    }()
-    
-    private var levelLabel = NewFriendAdditionalLabel(ofString: "10",type: .lvl)
-    
-    private var matchLabel = NewFriendAdditionalLabel(ofString: "50%",type: .match)
-    
-    // MARK: newFriendTitleLabel init
-    private var newFriendTitleLabel = NewFriendTitleLabel(of: "Fred Perry")
-    
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
+        configure()
         refresh()
     }
     
@@ -107,39 +157,49 @@ class FriendsCell: CoreCell {
            refresh()
        }
        
-    func refresh() {
-        addSubview(newFriendImage)
-        addSubview(newFriendTitleLabel)
-        addSubview(locationStackView)
-        addSubview(inviteButton)
-        addSubview(levelLabel)
-        addSubview(matchLabel)
-        NSLayoutConstraint.activate([
+    fileprivate func extractedFunc() -> [NSLayoutConstraint] {
+        return [
             // newFriendImage Constraint
-            newFriendImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 17),
-            newFriendImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            newFriendImage.heightAnchor.constraint(equalToConstant: 48),
-            newFriendImage.widthAnchor.constraint(equalToConstant: 48),
+            profileImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 17),
+            profileImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            profileImage.heightAnchor.constraint(equalToConstant: 48),
+            profileImage.widthAnchor.constraint(equalToConstant: 48),
             
-            newFriendTitleLabel.topAnchor.constraint(equalTo: newFriendImage.topAnchor),
-            newFriendTitleLabel.leadingAnchor.constraint(equalTo: newFriendImage.trailingAnchor, constant: 13),
+            friendLabel.topAnchor.constraint(equalTo: profileImage.topAnchor),
+            friendLabel.leadingAnchor.constraint(equalTo: profileImage.trailingAnchor, constant: 13),
             
-            locationStackView.centerYAnchor.constraint(equalTo: newFriendTitleLabel.centerYAnchor, constant: 1),
-            locationStackView.leadingAnchor.constraint(equalTo: newFriendTitleLabel.trailingAnchor, constant: 3),
+            locationStackView.centerYAnchor.constraint(equalTo: friendLabel.centerYAnchor, constant: 1),
+            locationStackView.leadingAnchor.constraint(equalTo: friendLabel.trailingAnchor, constant: 3),
             
             inviteButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             inviteButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             inviteButton.heightAnchor.constraint(equalToConstant: 46),
             inviteButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             
-            levelLabel.topAnchor.constraint(equalTo: newFriendTitleLabel.bottomAnchor, constant: 7),
-            levelLabel.leadingAnchor.constraint(equalTo: newFriendTitleLabel.leadingAnchor),
+            levelLabel.topAnchor.constraint(equalTo: friendLabel.bottomAnchor, constant: 7),
+            levelLabel.leadingAnchor.constraint(equalTo: friendLabel.leadingAnchor),
             levelLabel.heightAnchor.constraint(equalToConstant: 20),
             
             matchLabel.leadingAnchor.constraint(equalTo: levelLabel.trailingAnchor,constant: 10),
             matchLabel.centerYAnchor.constraint(equalTo: levelLabel.centerYAnchor),
             matchLabel.heightAnchor.constraint(equalToConstant: 20)
-        ])
+        ]
     }
-       
+    
+    private func refresh() {
+        addSubview(profileImage)
+        addSubview(friendLabel)
+        addSubview(locationStackView)
+        addSubview(inviteButton)
+        addSubview(levelLabel)
+        addSubview(matchLabel)
+        NSLayoutConstraint.activate(extractedFunc())
+    }
+
+    internal func configure() {
+        let model = UserModel()
+        levelLabel.attributedText = model.attributedString(for: .lvl)
+        matchLabel.attributedText = model.attributedString(for: .match)
+        friendLabel.text = model.firstName + " " + model.lastName
+    }
 }

@@ -14,7 +14,7 @@ class CoreCell: UICollectionViewCell {
         case main
         case analyz
     }
-    
+
     var status: Bool = false
     
     // MARK: stageTitleLabel

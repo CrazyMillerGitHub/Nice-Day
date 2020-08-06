@@ -10,59 +10,69 @@ import UIKit
 
 class BonusCell: CoreCell {
 
+    typealias DataType = String
+
+    static var identifier: String = String(describing: BonusCell.self)
+
+    weak var timer: Timer?
+    
+    private let timeTitle = UILabel().with { label in
+        label.textAlignment = .center
+        label.font = UIFont.monospacedDigitSystemFont(ofSize: 17, weight: .semibold)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = .white
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+
+        contentView.addSubview(timeTitle)
+
+        inizializeTimer()
+        prepareUI()
+        refresh()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     func configure(data: String) {
         self.cellTitleLabel.text = data
     }
 
-    typealias DataType = String
-
-    static var identifier: String = "bonus"
-
-    weak var timer: Timer?
-    
-    private let timeTitle: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Wait: 23:59:59"
-        label.textColor = .white
-        return label
-    }()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        contentView.backgroundColor = .sunriseColor
-        self.contentView.addSubview(timeTitle)
-        NSLayoutConstraint.activate([
-            
-            timeTitle.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
-            timeTitle.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
-            timeTitle.heightAnchor.constraint(equalToConstant: 46)
-            
-        ])
+    private func inizializeTimer() {
         if timer == nil {
-            let timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: true)
+            let timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(setTimer), userInfo: nil, repeats: true)
             RunLoop.current.add(timer, forMode: .common)
             self.timer = timer
         }
-        
-        refresh()
     }
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+
+    private func prepareUI() {
+        // inizializing constraints
+        NSLayoutConstraint.activate([
+            timeTitle.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
+            timeTitle.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
+            timeTitle.heightAnchor.constraint(equalToConstant: 46)
+        ])
     }
+
+    // MARK: Neeed to reuse
     override func prepareForReuse() {
         super.prepareForReuse()
         refresh()
     }
-    
+
     private func refresh() {
-        fireTimer()
+        setTimer()
     }
-    
+
+    // MARK: - Timer until next Monday
     private func timeUntilNextMonday() -> (message:String, isWeekend: Bool) {
+
         let date = Date()
+
         var nextMonday: Date {
             
             let nextMonday = Calendar.current.dateComponents([.day, .month, .year], from: date.next(.monday))
@@ -82,16 +92,19 @@ class BonusCell: CoreCell {
            let minute = timeInterval.minute,
            let second = timeInterval.second {
             let isWeekend = day < 2
-            return ("\(isWeekend ? "Bonus" : "Wait"):\(String(hour).count > 1 ? "" : "0")\(hour):\(String(minute).count > 1 ? "" : "0")\(minute):\(String(second).count > 1 ? "" : "0")\(second)",isWeekend)
+            let formatString : String = NSLocalizedString("_day_count", comment: "")
+            let days = String.localizedStringWithFormat(formatString, day)
+            return ("\(isWeekend ? "Bonus" : "_wait".localized): \(days) \(String(format: "%02d:%02d:%02d", hour, minute, second))", isWeekend)
         }
-        return ("",false)
+        return ("", false)
     }
     
     @objc
-    private func fireTimer() {
+    private func setTimer() {
         let date = timeUntilNextMonday()
-        self.timeTitle.text = date.message
-        self.contentView.backgroundColor = date.isWeekend ? .secondGradientColor : .sunriseColor
+        timeTitle.text = date.message
+        timeTitle.adjustsFontSizeToFitWidth = true
+        contentView.backgroundColor = date.isWeekend ? .secondGradientColor : .sunriseColor
     }
     
 }
