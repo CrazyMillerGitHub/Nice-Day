@@ -10,36 +10,25 @@ import UIKit
 import CHIPageControl
 import Lottie
 
-class OnboardingView: UIViewController {
-    
-    fileprivate let stringArray = ["Do your daily activities".localized(),
-                                   "Earn xp".localized(),
-                                   "Be better every day!".localized()]
-    
-    fileprivate var progress: CGFloat =  0
-    
+final class OnboardingView: UIViewController, OnboardingCallable {
+
     // MARK: animationView
-    private var animationView: AnimationView = {
-        let animationView = AnimationView(name: "onboarding")
+    private var animationView = AnimationView(name: "onboarding").with { animationView in
         animationView.contentMode = .scaleAspectFit
         animationView.translatesAutoresizingMaskIntoConstraints = false
-        return animationView
-    }()
-    
+    }
+
     // MARK: headerLabel
-    private let headerLabel: UILabel = {
-        let label = UILabel()
+    private lazy var headerLabel = UILabel().with { label in
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = NSLocalizedString("_welcome".localized(), comment: "")
         label.font = UIFont.systemFont(ofSize: 32, weight: .heavy)
         label.textColor = .inverseColor
-        return label
-    }()
-    
+    }
+
     // MARK: logInButton
-    private let loginButton: ElasticButton = {
-        let button = ElasticButton()
-        button.setTitle(NSLocalizedString("_sign_in".localized(), comment: ""), for: .normal)
+    internal lazy var loginButton = ElasticButton().with { button in
+        button.setTitle("_sign_in".localized(), for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.semibold)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 18
@@ -50,14 +39,12 @@ class OnboardingView: UIViewController {
         button.backgroundColor = UIColor.white
         button.layer.shadowRadius = 20
         button.alpha = 0.0
-        button.addTarget(self, action: #selector(signInAction(_:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(transitionAction(_:)), for: .touchUpInside)
         button.isHidden = true
-        return button
-    }()
-    
+    }
+
     // MARK: NewUserLabel init
-    private var newUserLabel: UILabel = {
-        let label = UILabel()
+    internal lazy var newUserLabel = UILabel().with { label in
         label.text = "_sign_up_description".localized
         label.font = UIFont.systemFont(ofSize: 13, weight: .semibold)
         label.textColor = UIColor.inverseColor.withAlphaComponent(0.5)
@@ -65,44 +52,45 @@ class OnboardingView: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isUserInteractionEnabled = true
         label.alpha = 0
-        return label
-    }()
-    
+        label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(transitionAction(_:))))
+    }
+
     // MARK: ScrollView
-    private let scrollView: UIScrollView = {
-        let scroll = UIScrollView()
+    private lazy var scrollView = UIScrollView().with { scroll in
         scroll.translatesAutoresizingMaskIntoConstraints = false
         scroll.backgroundColor = .clear
         scroll.isPagingEnabled = true
         scroll.showsHorizontalScrollIndicator = false
-        return scroll
-    }()
-    
+    }
+
     // MARK: pageControl
-    private let pageControl : CHIPageControlAleppo = {
-        let pageControl = CHIPageControlAleppo()
+    private lazy var pageControl = CHIPageControlAleppo().with { pageControl in
         pageControl.translatesAutoresizingMaskIntoConstraints = false
         pageControl.numberOfPages = 3
         pageControl.radius = 4
         pageControl.tintColor = UIColor(red:0.85, green:0.85, blue:0.85, alpha:1.00)
         pageControl.currentPageTintColor = .inverseColor
         pageControl.padding = 10
-        return pageControl
-    }()
-    
+    }
+
+    private var presenter: OnboardingPresenter!
+
+    // MARK: - UI cycle
     override func viewWillAppear(_ animated: Bool) {
-        if progress == 0 {
+        super.viewWillAppear(animated)
+        if animationView.currentProgress == 0 {
             animationView.play(fromProgress: 0, toProgress: 0.5, completion: nil)
         }
     }
-    
+
     override func loadView() {
         super.loadView()
-        self.view.backgroundColor = .bgColor
-        // Add gesture for label
-        newUserLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(newUserLabelTapped(_:))))
+        view.backgroundColor = .bgColor
+        DispatchQueue.main.async { [unowned self] in
+            self.presenter = OnboardingPresenter(scrollView: self.scrollView, delegate: self, animationView: self.animationView)
+        }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         if #available(iOS 11.0, *) {
@@ -111,13 +99,17 @@ class OnboardingView: UIViewController {
             UINavigationBar.appearance().setBackgroundImage(UIImage(),for:.default)
             UINavigationBar.appearance().shadowImage = UIImage()
         }
-        preformView()
-        prepareConstraint()
-        setupScrollView()
+        self.prepareUI()
+        self.prepareConstraint()
+        DispatchQueue.main.async { [weak self] in
+            self?.prepareUI()
+            DispatchQueue.main.async { [weak self] in
+                self?.prepareConstraint()
+            }
+        }
     }
-    
-    // Добавление всех эллементов как подслои к основному экрану
-    private func preformView() {
+
+    private func prepareUI() {
         [headerLabel,
          animationView,
          loginButton,
@@ -125,105 +117,63 @@ class OnboardingView: UIViewController {
          pageControl,
          newUserLabel].forEach(view.addSubview(_:))
     }
-    
-    // Добавление констрэйнтов
-    fileprivate func prepareConstraint() {
-           NSLayoutConstraint.activate([
-               //headerlabel
-               self.headerLabel.heightAnchor.constraint(equalToConstant: 38.0),
-               self.headerLabel.widthAnchor.constraint(equalToConstant: 260),
-               self.headerLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 28.0),
-               self.headerLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant:72.0),
-               
-               //logInbuttonConstraint
-               self.loginButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 18.0),
-               self.loginButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -18.0),
-               self.loginButton.topAnchor.constraint(equalTo: pageControl.bottomAnchor, constant: 20),
-               self.loginButton.heightAnchor.constraint(equalToConstant: 46.0),
-               
-               //pageControl
-               self.pageControl.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 25.5),
-               self.pageControl.widthAnchor.constraint(equalToConstant: 89.0 ),
-               self.pageControl.heightAnchor.constraint(equalToConstant: 21.0),
-               self.pageControl.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -125.0),
-               
-               //scrollView
-               self.scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0.0),
-               self.scrollView.widthAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.widthAnchor),
-               self.scrollView.heightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.heightAnchor, constant: -245),
-               self.scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 118.0),
-               
-               //animationView
-               self.animationView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 70),
-               self.animationView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-               self.animationView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
-               self.animationView.heightAnchor.constraint(equalTo: animationView.widthAnchor, multiplier: 9/16),
-               
-               // newUserLabel
-               self.newUserLabel.centerYAnchor.constraint(equalTo: loginButton.centerYAnchor, constant: 46),
-               self.newUserLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-               
-           ])
-       }
-    
-    @objc
-    private func signInAction(_ sender: Any) {
-        presentView(type: .signIn)
-    }
-    
-    @objc
-    private func newUserLabelTapped(_ sender: Any) {
-        presentView(type: .signUp)
-    }
-    
-    private func handlePan(recognizer:UIPanGestureRecognizer) {
-        let translation = recognizer.translation(in: self.view)
-        let progress = translation.x / self.view.bounds.size.width * 0.75
-        animationView.currentProgress = progress
-    }
-    
-    private func setupScrollView() {
-        scrollView.delegate = self
-        scrollView.contentSize = CGSize(width: self.view.frame.size.width * 3, height: scrollView.frame.size.height)
-        for iii in 0 ... 2 {
-            let label = UILabel()
-            label.frame = CGRect(x: 30 + CGFloat(iii) * self.view.frame.size.width , y: 0, width: self.view.frame.width - 110, height: 19)
-            label.textAlignment = .left
-            label.text = stringArray[iii]
-            label.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.bold)
-            label.textColor = UIColor.inverseColor.withAlphaComponent(0.9)
-            scrollView.addSubview(label)
-        }
-        self.view.bringSubviewToFront(scrollView)
-    }
-    
-    private func presentView(type: AuthViewType) {
-        DispatchQueue.main.async {
-            let authVC = AuthViewController()
-            authVC.authViewType = type == .signUp ? .signUp : .signIn
-            authVC.modalPresentationStyle = .fullScreen
-            self.present(authVC, animated: true, completion: nil)
-        }
-    }
-}
 
-extension OnboardingView: UIScrollViewDelegate {
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        progress = scrollView.contentOffset.x / scrollView.contentSize.width * 0.75 + 0.5
-        pageControl.progress = Double(scrollView.contentOffset.x / scrollView.contentSize.width) * 3
-        if progress < 0.5 { progress = 0.5 }
-        if progress >= 1.0 {
-            progress = 1.0
-            if loginButton.isHidden {
-                loginButton.isHidden = false
-                UIView.animate(withDuration: 0.5, delay: 0.0, usingSpringWithDamping: 1.5, initialSpringVelocity: 0.0, options: [.curveEaseOut], animations: {
-                    self.loginButton.alpha = 1.0
-                    self.newUserLabel.alpha = 1.0
-                })
-            }
+    @objc private func transitionAction(_ sender: Any) {
+        guard sender as? UIButton != nil else {
+            presentView(authBehavior: .signUp)
+            return
         }
-        animationView.currentProgress = progress
+        presentView(authBehavior: .signIn)
     }
-    
+
+    func setPageControlProgress(_ value: Double) {
+        pageControl.progress = value
+    }
+
+    private func presentView(authBehavior: AuthViewController.AuthViewType) {
+        DispatchQueue.main.async { [weak self] in
+            let authVC = AuthViewController(authBehavior: authBehavior)
+            authVC.modalPresentationStyle = .fullScreen
+            self?.present(authVC, animated: true, completion: nil)
+        }
+    }
+
+    private func prepareConstraint() {
+        NSLayoutConstraint.activate([
+            //headerlabel
+            self.headerLabel.heightAnchor.constraint(equalToConstant: 38.0),
+            self.headerLabel.widthAnchor.constraint(equalToConstant: 260),
+            self.headerLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 28.0),
+            self.headerLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant:72.0),
+
+            //logInbuttonConstraint
+            self.loginButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 18.0),
+            self.loginButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -18.0),
+            self.loginButton.topAnchor.constraint(equalTo: pageControl.bottomAnchor, constant: 20),
+            self.loginButton.heightAnchor.constraint(equalToConstant: 46.0),
+
+            //pageControl
+            self.pageControl.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 25.5),
+            self.pageControl.widthAnchor.constraint(equalToConstant: 89.0 ),
+            self.pageControl.heightAnchor.constraint(equalToConstant: 21.0),
+            self.pageControl.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -125.0),
+
+            //scrollView
+            self.scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0.0),
+            self.scrollView.widthAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.widthAnchor),
+            self.scrollView.heightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.heightAnchor, constant: -245),
+            self.scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 118.0),
+
+            //animationView
+            self.animationView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 70),
+            self.animationView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            self.animationView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
+            self.animationView.heightAnchor.constraint(equalTo: animationView.widthAnchor, multiplier: 9/16),
+
+            // newUserLabel
+            self.newUserLabel.centerYAnchor.constraint(equalTo: loginButton.centerYAnchor, constant: 46),
+            self.newUserLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+
+        ])
+    }
 }

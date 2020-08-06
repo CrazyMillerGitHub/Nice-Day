@@ -8,14 +8,6 @@
 
 import UIKit
 
-public enum ElementProtocol {
-    // stackView case
-    case stackView
-    // button case
-    case button
-
-}
-
 public protocol AnimationProtocol: class {
 
     /// content need to hide/unhide
@@ -24,9 +16,6 @@ public protocol AnimationProtocol: class {
 }
 
 public class AnimationService {
-
-    // set debug to print log if needed
-    public static var isDebug: Bool = true
 
     // set isHidden container in authViewController
     private static var isHidden: Bool = false {
@@ -49,11 +38,6 @@ public class AnimationService {
 
     public weak static var delegate: AnimationProtocol?
 
-    /// Ease in-out animation that used in SplashView
-    /// - Parameters:
-    ///   - object: An object that need to be animated
-    ///   - view: A view that is a parent view to our object
-    ///   - action: callback function that we need to do
     public static func callBackAnimation(_ object: UIView,
                                          in view: UIView,
                                          action: @escaping () -> Void) {
@@ -78,12 +62,7 @@ public class AnimationService {
         })
     }
 
-    /// Circle Animation that used in containerView inside loginViewController
-    /// - Parameters:
-    ///   - view: MainViewController
-    ///   - widthConstraint: witdth constraint
-    ///   - centerYConstraint: centerYConstraint
-    ///   - booleanElements: the elements that needed to toggle
+
     @objc public static func circleTapAnimation(in view: UIView,
                                                 widthConstraint: NSLayoutConstraint,
                                                 centerYConstraint: NSLayoutConstraint,
@@ -116,15 +95,7 @@ public class AnimationService {
 
     }
 
-    /// SlideDown animation
-    /// - Parameters:
-    ///   - view: parent view
-    ///   - animator: animator
-    ///   - widthConstraint: widthConstraint
-    ///   - centerYConstraint: centerYConstraint
-    ///   - panGesture: panGesture
-    ///   - tapGesture: tapGesture
-    ///   - sender: sender
+    // swiftlint:disable function_parameter_count
     public static func slideDownAnimation(to view: UIView,
                                           animator: inout UIViewPropertyAnimator,
                                           widthConstraint: NSLayoutConstraint,
@@ -132,6 +103,8 @@ public class AnimationService {
                                           panGesture: UIPanGestureRecognizer,
                                           tapGesture: UITapGestureRecognizer,
                                           sender: UIPanGestureRecognizer) {
+        // swiftlint:enable function_parameter_count
+
         // detect state of sender
         switch sender.state {
         // sender state changed to began
@@ -210,8 +183,8 @@ private extension AnimationService {
     /// print inside console if mode set to debug
     /// - Parameter message: message inside Console
     static func printConsole<T: Any>(_ message: T) {
-        if AnimationService.isDebug {
-            print(message)
-        }
+        #if DEBUG
+        print(message)
+        #endif
     }
 }

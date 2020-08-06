@@ -60,8 +60,6 @@ extension UIButton {
         button.titleLabel?.font =  UIFont.systemFont(ofSize: 17.0, weight: .semibold)
         // disable auto constraint
         button.translatesAutoresizingMaskIntoConstraints = false
-        // hide button
-        button.alpha = 0
         // set corner radius
         button.layer.cornerRadius = 15
         // set clips to bound to true

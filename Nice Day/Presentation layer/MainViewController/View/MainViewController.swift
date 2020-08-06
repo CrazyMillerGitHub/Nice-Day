@@ -7,25 +7,28 @@
 //
 
 import UIKit
+import Firebase
+import CoreData
 
-final class MainViewController: UIViewController, UINavigationControllerDelegate {
+final class MainViewController: UIViewController, UINavigationControllerDelegate, MainViewCallable {
 
     // creating properties
     private var customNavBar: CustomNavBar!
-    private var collectionViewDataSource: MainViewDataSource?
     private var presenter: MainViewPresenter!
 
-    private lazy var collectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    private var backgroundContext: NSManagedObjectContext {
+        CoreDataManager.shared.context(on: .main)
+    }
+
+    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout()).with { collectionView in
         collectionView.alwaysBounceVertical = true
         collectionView.backgroundColor = .bgColor
-        return collectionView
-    }()
+    }
 
     // MARK: imageView
-    private lazy var imageView: UIImageView = {
+    private lazy var imageView = UIImageView().with { imageView in
         let data = UserDefaults.standard.data(forKey: "imageView")
-        let imageView =  UIImageView(image: data == nil ? #imageLiteral(resourceName: "profile_img.pdf") : UIImage(data: data!))
+        imageView.image = data == nil ? #imageLiteral(resourceName: "profile_img.pdf") : UIImage(data: data!)
         imageView.layer.borderColor = UIColor.systemBackground.cgColor
         imageView.layer.borderWidth = 1
         imageView.isUserInteractionEnabled = true
@@ -33,20 +36,18 @@ final class MainViewController: UIViewController, UINavigationControllerDelegate
         imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapped)))
-        return imageView
-    }()
+    }
 
     override func loadView() {
         super.loadView()
+        presenter = MainViewPresenter(collectionView: collectionView, delegate: self)
+        NotificationCenter.default.addObserver(self, selector: #selector(showAward), name: .showAwards, object: nil)
         customNavBar = CustomNavBar(imageView: &imageView, view: self)
         view.addSubview(collectionView)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionViewDataSource = MainViewDataSource(collectionView: collectionView, delegate: self)
-        presenter = MainViewPresenter(view: self)
-        presenter.fetchBricks()
     }
 
     deinit {
@@ -55,18 +56,25 @@ final class MainViewController: UIViewController, UINavigationControllerDelegate
 
     @objc private func tapped() {
         // TODO: использовать router
-        DispatchQueue.main.async {
+        self.backgroundContext.perform {
             let profileView = ProfileView()
             profileView.isModalInPresentation = true
-            self.present(profileView, animated: true, completion: nil)
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.present(profileView, animated: true, completion: nil)
+            }
         }
     }
 
-}
-
-extension MainViewController: BrickListView {
-
-    internal func show(items: [MainItem]) {
-        collectionViewDataSource?.items = items
+    @objc private func showAward() {
+        self.backgroundContext.perform {
+            let profileView = ProfileView(mode: .achievment)
+            profileView.isModalInPresentation = true
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.present(profileView, animated: true, completion: nil)
+            }
+        }
     }
+
 }

@@ -8,30 +8,34 @@
 
 import UIKit
 
-struct ActivityElement: Hashable, Equatable {
-    
-    static func == (lhs: ActivityElement, rhs: ActivityElement) -> Bool {
-        return lhs.identifier == rhs.identifier
+extension Activity {
+
+    var userLang: String? {
+        if let locale = Locale.current.languageCode, locale == "ru" {
+            return ru
+        } else {
+            return en
+        }
     }
-
-    let identifier = UUID()
-    let name: String
-    let xpCount: Int
-    let category: Grade
-
 }
 
-extension ActivityElement {
+struct ActivityElement: Decodable {
 
-    static var elements: [ActivityElement] = [
-        ActivityElement(name: "Watching TV", xpCount: 10, category: .passive),
-        ActivityElement(name: "Playing Games", xpCount: 30, category: .active),
-        ActivityElement(name: "Volleyball", xpCount: 33, category: .active),
-        ActivityElement(name: "Basketball", xpCount: 22, category: .active),
-        ActivityElement(name: "Rollercast", xpCount: 11, category: .active),
-        ActivityElement(name: "Table tennis", xpCount: 12, category: .active),
-        ActivityElement(name: "Chess", xpCount: 20, category: .passive),
-        ActivityElement(name: "Shopping", xpCount: 32, category: .passive),
-        ActivityElement(name: "Workout", xpCount: 33, category: .active)
-    ]
+    let documentID: String
+    let activityCost: Int
+    let activityType: String
+    let enLang: String
+    let ruLang: String
+    let popularity: Double
+
+    private enum CodingKeys: String, CodingKey {
+
+        case activityCost = "activity_cost"
+        case activityType = "activity_type"
+        case enLang = "en"
+        case ruLang = "ru"
+        case popularity
+        case documentID
+    }
+
 }
