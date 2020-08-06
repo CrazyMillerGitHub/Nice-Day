@@ -22,7 +22,7 @@ final class ActivityViewCell: UICollectionViewCell {
 
     // MARK: - Prepare UI
 
-    var element: ActivityElement? {
+    var element: Activity? {
         didSet {
             if let element = element {
                 activityLabel.text = element.userLang
@@ -145,11 +145,11 @@ final class ActivityViewCell: UICollectionViewCell {
     @objc
     private func favouriteAction(sender: Any) {
 
-        let database = Firestore.firestore()
-        guard let element = element else { return }
-        database.collection("users").document(Auth.auth().currentUser!.uid).updateData(
-            ["favourite" : FieldValue.arrayUnion([
-                database.collection("activity").document(element.documentID)])])
+//        let database = Firestore.firestore()
+//        guard let element = element else { return }
+//        database.collection("users").document(Auth.auth().currentUser!.uid).updateData(
+//            ["favourite" : FieldValue.arrayUnion([
+//                database.collection("activity").document(element.documentID)])])
     }
     
 }

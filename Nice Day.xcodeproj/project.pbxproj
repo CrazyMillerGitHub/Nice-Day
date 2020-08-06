@@ -15,7 +15,6 @@
 		74137ABB243394840092B8B1 /* UserDataKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74137AB7243394840092B8B1 /* UserDataKeychain.swift */; };
 		74137ABC243394840092B8B1 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74137AB8243394840092B8B1 /* Keychain.swift */; };
 		74137ABD243394840092B8B1 /* SharedWebCredential.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74137AB9243394840092B8B1 /* SharedWebCredential.swift */; };
-		74137ABF2433948E0092B8B1 /* SignInWithAppleToFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74137ABE2433948E0092B8B1 /* SignInWithAppleToFirebase.swift */; };
 		74184CB422CE2F9000EC31DE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74184CB322CE2F9000EC31DE /* MainViewController.swift */; };
 		74184CB622CE3D2F00EC31DE /* ChartsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74184CB522CE3D2F00EC31DE /* ChartsCell.swift */; };
 		741F27BE247146A700B95A75 /* MainViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 741F27BD247146A700B95A75 /* MainViewPresenter.swift */; };
@@ -39,7 +38,6 @@
 		745E059A23884301008F5E63 /* AnimatedLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745E059923884301008F5E63 /* AnimatedLabel.swift */; };
 		745F4598246C326B00BC6855 /* CustomNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745F4597246C326B00BC6855 /* CustomNavBar.swift */; };
 		745F459A246DB8C200BC6855 /* CollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 745F4599246DB8C200BC6855 /* CollectionViewDataSource.swift */; };
-		7465A25F23FB0376003EC339 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7465A25E23FB0376003EC339 /* UserService.swift */; };
 		7467E79C23658EFC00396FF2 /* Date+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7467E79B23658EFC00396FF2 /* Date+extension.swift */; };
 		747C715B22CD25AB00FBEDCF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 747C715A22CD25AB00FBEDCF /* AppDelegate.swift */; };
 		747C716322CD25AB00FBEDCF /* Nice_Day.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 747C716122CD25AB00FBEDCF /* Nice_Day.xcdatamodeld */; };
@@ -132,7 +130,6 @@
 		74137AB7243394840092B8B1 /* UserDataKeychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDataKeychain.swift; sourceTree = "<group>"; };
 		74137AB8243394840092B8B1 /* Keychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		74137AB9243394840092B8B1 /* SharedWebCredential.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedWebCredential.swift; sourceTree = "<group>"; };
-		74137ABE2433948E0092B8B1 /* SignInWithAppleToFirebase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInWithAppleToFirebase.swift; sourceTree = "<group>"; };
 		74184CB322CE2F9000EC31DE /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		74184CB522CE3D2F00EC31DE /* ChartsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsCell.swift; sourceTree = "<group>"; };
 		741F27BD247146A700B95A75 /* MainViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewPresenter.swift; sourceTree = "<group>"; };
@@ -156,7 +153,6 @@
 		745E059923884301008F5E63 /* AnimatedLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedLabel.swift; sourceTree = "<group>"; };
 		745F4597246C326B00BC6855 /* CustomNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavBar.swift; sourceTree = "<group>"; };
 		745F4599246DB8C200BC6855 /* CollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewDataSource.swift; sourceTree = "<group>"; };
-		7465A25E23FB0376003EC339 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		7467E79B23658EFC00396FF2 /* Date+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+extension.swift"; sourceTree = "<group>"; };
 		747C715722CD25AB00FBEDCF /* Nice Day.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Nice Day.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		747C715A22CD25AB00FBEDCF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -672,8 +668,6 @@
 			children = (
 				745B554B23BA04C8003C1928 /* AlertService.swift */,
 				74A1023A23C67CED006C745F /* AuthService.swift */,
-				74137ABE2433948E0092B8B1 /* SignInWithAppleToFirebase.swift */,
-				7465A25E23FB0376003EC339 /* UserService.swift */,
 			);
 			path = "Service Layer";
 			sourceTree = "<group>";
@@ -1075,14 +1069,12 @@
 				74CE441E235C9FA400066B17 /* MainView.swift in Sources */,
 				74985E7B24C4938500275B5E /* Router.swift in Sources */,
 				742194552374028D007D0EB1 /* NewPasswordCell.swift in Sources */,
-				7465A25F23FB0376003EC339 /* UserService.swift in Sources */,
 				741F27BE247146A700B95A75 /* MainViewPresenter.swift in Sources */,
 				745F4598246C326B00BC6855 /* CustomNavBar.swift in Sources */,
 				74BCEE2122D12B6100127488 /* MoodCell.swift in Sources */,
 				74CF0C43232EA92A0091F1A8 /* CircleAnimation.swift in Sources */,
 				745D8D0623956B9C008370F9 /* EmotionLabel.swift in Sources */,
 				74CF0C4B232F92510091F1A8 /* ProfileView.swift in Sources */,
-				74137ABF2433948E0092B8B1 /* SignInWithAppleToFirebase.swift in Sources */,
 				745805B523491FA300B7783F /* CoreCell.swift in Sources */,
 				745F459A246DB8C200BC6855 /* CollectionViewDataSource.swift in Sources */,
 				74A5BAC62366DF1800B3B000 /* CoreSupportCell.swift in Sources */,
@@ -1292,7 +1284,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Nice Day/Nice Day.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 35;
+				CURRENT_PROJECT_VERSION = 37;
 				DEVELOPMENT_TEAM = 4GB4E68ZU6;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Nice Day/Supporting Files/Info.plist";
@@ -1317,7 +1309,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Nice Day/Nice DayRelease.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 35;
+				CURRENT_PROJECT_VERSION = 37;
 				DEVELOPMENT_TEAM = 4GB4E68ZU6;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "Nice Day/Supporting Files/Info.plist";

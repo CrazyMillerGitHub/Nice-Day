@@ -13,7 +13,7 @@ import Firebase
 final class ActivityView: UIViewController {
 
     private var presenter: ActivityViewPresenter!
-    internal var activityElement: ActivityElement?
+    internal var activityElement: Activity?
 
     private enum Constans {
 
@@ -39,7 +39,7 @@ final class ActivityView: UIViewController {
         }
     }
 
-    init(element: ActivityElement?) {
+    init(element: Activity?) {
         self.activityElement = element
         super.init(nibName: nil, bundle: nil)
     }
@@ -131,7 +131,7 @@ final class ActivityView: UIViewController {
 
 extension ActivityView: ActivityCallable {
 
-    func dismiss(timestamps: [Timestamp], element: ActivityElement?) {
+    func dismiss(timestamps: [Timestamp], element: Activity?) {
         guard let element = element else { return }
         guard let timeStart = timestamps.first, let timeEnd = timestamps.last, timestamps.count == 2 else { return }
 
@@ -140,7 +140,7 @@ extension ActivityView: ActivityCallable {
         }
 
         let database = Firestore.firestore()
-        let total = (Int(timeEnd.seconds - timeStart.seconds) / 60) * element.activityCost
+        let total = (Int(timeEnd.seconds - timeStart.seconds) / 60) * Int(element.activityCost)
         guard total > 0 else { return }
         let value: [String: Any] = ["cost": element.activityCost,
                                     "timeStart": timeStart,

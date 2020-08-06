@@ -11,9 +11,9 @@ import Firebase
 
 protocol ActivityCallable: class {
     
-    var activityElement: ActivityElement? { get }
+    var activityElement: Activity? { get }
 
-    func dismiss(timestamps: [Timestamp], element: ActivityElement?)
+    func dismiss(timestamps: [Timestamp], element: Activity?)
     func progress(_ progress: Double)
 }
 

@@ -20,6 +20,7 @@ protocol ContainerViewConfigurable where Self: UIViewController {
     var passwordTextField: CocoaTextField { get }
 
     func toggleContainer(state: Int)
+    func disableKeyboard()
 }
 
 extension ContainerViewConfigurable {
@@ -27,6 +28,12 @@ extension ContainerViewConfigurable {
     func toggleContainer(state: Int) {
         self.mainStackView.alpha = state == 0 ? 0 : 1
         self.signButton.alpha = state == 0 ? 0 : 1
+    }
+
+    func disableKeyboard() {
+        userTextField.resignFirstResponder()
+        emailTextField.resignFirstResponder()
+        passwordTextField.resignFirstResponder()
     }
 }
 

@@ -40,7 +40,7 @@ final class SearchCell: UITableViewCell {
     static var identifier: String = String(describing: type(of: self))
 
     // MARK: - perofrm properties
-    private lazy var activityLabel = UILabel().with { label in
+    internal lazy var activityLabel = UILabel().with { label in
         label.font = UIFont.systemFont(ofSize: 18.0, weight: .bold)
         label.textColor = .inverseColor
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -102,7 +102,7 @@ final class SearchCell: UITableViewCell {
     }
 
     // MARK: - configure Cell
-    func configureCell(model: ActivityElement) {
+    internal func configureCell(model: Activity) {
 
         activityLabel.text = model.userLang
         descriptionLabel.setAttributedStringForSearch(for: model.activityCost)

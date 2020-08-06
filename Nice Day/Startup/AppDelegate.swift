@@ -32,14 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    private func checkUserLanguage(for key: String) {
-        if (UserDefaults.standard.string(forKey: key) == nil) {
-            UserDefaults.standard.setValue(NSLocale.current.languageCode, forKey: key)
-        }
-    }
-
     func applicationWillTerminate(_ application: UIApplication) {
-//        saveContext()
-       // CoreDataManager.shared.saveContext()
+
     }
 }

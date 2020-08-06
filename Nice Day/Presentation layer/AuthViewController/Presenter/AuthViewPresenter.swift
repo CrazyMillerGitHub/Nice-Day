@@ -25,14 +25,8 @@ final class AuthViewPresenter: NSObject {
         self.container = container
         super.init()
         DispatchQueue.main.async { [unowned self] in
-            self.circleAnimator = CircleAnimation(container: container.view, deleagate: delegate, button: delegate.emailButton, cont: container)
-            self.presentConstraints()
+            self.circleAnimator = CircleAnimation(container: container, delegate: delegate, button: delegate.emailButton)
         }
 
     }
-
-    private func presentConstraints() {
-        
-    }
-
 }

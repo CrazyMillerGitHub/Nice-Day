@@ -87,9 +87,6 @@ final class AuthViewController: UIViewController, AuthViewCallable {
         super.viewDidLoad()
         add(containerView)
         prepareConstraints()
-
-        // set delegate
-//        self.containerView.delegate = self
     }
 
     @objc private func keyboadBehavior(_ notification: NSNotification) {
@@ -107,12 +104,6 @@ final class AuthViewController: UIViewController, AuthViewCallable {
 
 // Prepare UI and Constraints
 private extension AuthViewController {
-
-//    func performJGProgress() {
-//        let hud = JGProgressHUD(style: traitCollection.userInterfaceStyle == .light ? .light : .dark)
-//        hud.textLabel.text = "Loading"
-//        self.hud = hud
-//    }
  
     /// prepare ui by adding elements to superView
     private func prepareUI() {
@@ -160,18 +151,3 @@ private extension AuthViewController {
         }
     }
 }
-
-//extension AuthViewController: HUDViewProtocol {
-//
-//    func toggleHud(status: Bool) {
-//        // check status of HUD
-//        switch status {
-//        case true:
-//            // show hud
-//            hud.show(in: self.view)
-//        case false:
-//            // dismiss hud
-//            hud.dismiss(animated: true)
-//        }
-//    }
-//}

@@ -54,6 +54,7 @@ final class CoreDataStack {
 
     private lazy var persistentContainer = NSPersistentContainer(name: "Nice_Day").with { container in
         container.loadPersistentStores { (_, err) in
+            container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
             if let err = err {
                 print(err.localizedDescription)
             }

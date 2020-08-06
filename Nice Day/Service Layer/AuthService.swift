@@ -104,7 +104,6 @@ class AuthService: NSObject {
                     return
                 }
                 
-                UserDefaults.standard.setValue(userInfo.joined(separator: " "), forKey: "userName")
                 completion(nil , AuthUser(firstName: userInfo.first!, lastName: userInfo.last!, emailAdress: currentUser.email!))
             }
         }

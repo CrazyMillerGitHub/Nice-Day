@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19F101" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Activity" representedClassName="Activity" syncable="YES" codeGenerationType="class">
+        <attribute name="activityCost" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="activityType" optional="YES" attributeType="String"/>
-        <attribute name="actvivityCost" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="documentID" transient="YES" attributeType="String"/>
         <attribute name="en" optional="YES" attributeType="String"/>
-        <attribute name="id" attributeType="Integer 16" usesScalarValueType="YES"/>
+        <attribute name="isFavourite" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="popularity" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="ru" optional="YES" attributeType="String"/>
         <uniquenessConstraints>
             <uniquenessConstraint>
-                <constraint value="id"/>
+                <constraint value="documentID"/>
             </uniquenessConstraint>
         </uniquenessConstraints>
     </entity>
@@ -35,9 +36,9 @@
         <relationship name="usages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Usage" inverseName="user" inverseEntity="Usage"/>
     </entity>
     <elements>
-        <element name="Activity" positionX="-54" positionY="18" width="128" height="133"/>
         <element name="Mood" positionX="191.90234375" positionY="328.96875" width="128" height="88"/>
         <element name="Usage" positionX="315.328125" positionY="154.91015625" width="128" height="118"/>
         <element name="User" positionX="-267.19140625" positionY="114.87109375" width="128" height="148"/>
+        <element name="Activity" positionX="-63" positionY="171" width="128" height="148"/>
     </elements>
 </model>

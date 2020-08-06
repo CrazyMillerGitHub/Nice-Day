@@ -8,17 +8,18 @@
 
 import UIKit
 
-struct ActivityElement: Hashable, Equatable, Codable {
-    
-    static func == (lhs: ActivityElement, rhs: ActivityElement) -> Bool {
-        return lhs.identifier == rhs.identifier
-    }
+extension Activity {
 
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(identifier)
+    var userLang: String? {
+        if let locale = Locale.current.languageCode, locale == "ru" {
+            return ru
+        } else {
+            return en
+        }
     }
+}
 
-    let identifier = UUID()
+struct ActivityElement: Decodable {
 
     let documentID: String
     let activityCost: Int
@@ -35,14 +36,6 @@ struct ActivityElement: Hashable, Equatable, Codable {
         case ruLang = "ru"
         case popularity
         case documentID
-    }
-
-    var userLang: String {
-        if let locale = Locale.current.languageCode, locale == "ru" {
-            return ruLang
-        } else {
-            return enLang
-        }
     }
 
 }

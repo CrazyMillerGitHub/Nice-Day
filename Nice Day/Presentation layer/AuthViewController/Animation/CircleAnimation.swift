@@ -40,13 +40,13 @@ final class CircleAnimation: NSObject {
         return UIViewPropertyAnimator(duration: 0.5, curve: .easeInOut)
     }()
 
-    private unowned var deleagate: UIViewController
+    private unowned var delegate: UIViewController
 
     private unowned var containerView: UIView
 
     private unowned var button: UIButton
 
-    private unowned var cont: ContainerViewConfigurable
+    private unowned var container: ContainerViewConfigurable
 
     private lazy var panRecognizer: UIPanGestureRecognizer = {
         let recognizer = UIPanGestureRecognizer()
@@ -54,11 +54,11 @@ final class CircleAnimation: NSObject {
         return recognizer
     }()
 
-    internal init(container: UIView, deleagate: UIViewController, button: UIButton, cont: ContainerViewConfigurable) {
-        self.deleagate = deleagate
-        self.containerView = container
+    internal init(container: ContainerViewConfigurable, delegate: UIViewController, button: UIButton) {
+        self.delegate = delegate
+        self.containerView = container.view
         self.button = button
-        self.cont = cont
+        self.container = container
         super.init()
 
         DispatchQueue.main.async { [unowned self] in
@@ -72,17 +72,17 @@ final class CircleAnimation: NSObject {
     }
 
     private func performContainer() {
-        deleagate.view.addSubview(containerView)
+        delegate.view.addSubview(containerView)
 
         containerView.addGestureRecognizer(panRecognizer)
         containerView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(toggle)))
 
-        let centerYConstraint = containerView.centerYAnchor.constraint(equalTo: deleagate.view.centerYAnchor)
+        let centerYConstraint = containerView.centerYAnchor.constraint(equalTo: delegate.view.centerYAnchor)
         let widthConstraint = containerView.widthAnchor.constraint(equalToConstant: 200)
         let finishedWidthConstraint = containerView.widthAnchor.constraint(equalToConstant: 600)
-        let finishedCenterYConstraint = containerView.centerYAnchor.constraint(equalTo: deleagate.view.centerYAnchor, constant: deleagate.view.bounds.height / 3)
+        let finishedCenterYConstraint = containerView.centerYAnchor.constraint(equalTo: delegate.view.centerYAnchor, constant: delegate.view.bounds.height / 3)
         NSLayoutConstraint.activate([
-            containerView.centerXAnchor.constraint(equalTo: deleagate.view.centerXAnchor),
+            containerView.centerXAnchor.constraint(equalTo: delegate.view.centerXAnchor),
             centerYConstraint,
             widthConstraint,
             containerView.heightAnchor.constraint(equalTo: containerView.widthAnchor)
@@ -94,7 +94,7 @@ final class CircleAnimation: NSObject {
     }
 
     private var popupOffset: CGFloat {
-        return (deleagate.view.bounds.height - containerView.frame.height) / 2
+        return (delegate.view.bounds.height - containerView.frame.height) / 2
     }
 
     @objc private func popupViewPanned(recognizer: UIPanGestureRecognizer) {
@@ -106,7 +106,7 @@ final class CircleAnimation: NSObject {
             animationProgress = animator.fractionComplete
 
         case .changed:
-            let translation = recognizer.translation(in: deleagate.view)
+            let translation = recognizer.translation(in: delegate.view)
             var fraction = -translation.y / popupOffset
             if state == .collapsed || animator.isReversed { fraction *= -1 }
 
@@ -155,14 +155,14 @@ final class CircleAnimation: NSObject {
 
     private func expand() {
         animator.addAnimations { [weak self] in
-            self?.cont.toggleContainer(state: 1)
+            self?.container.toggleContainer(state: 1)
             self?.toggleWdith()
-            self?.deleagate.view.layoutIfNeeded()
+            self?.delegate.view.layoutIfNeeded()
         }
 
         animator.addAnimations({ [weak self] in
             self?.toggleCenterY()
-            self?.deleagate.view.layoutIfNeeded()
+            self?.delegate.view.layoutIfNeeded()
         }, delayFactor: 0.3)
 
         animator.addCompletion { [weak self] position in
@@ -173,10 +173,10 @@ final class CircleAnimation: NSObject {
 
     private func collapse() {
         animator.addAnimations { [weak self] in
-            self?.cont.toggleContainer(state: 0)
+            self?.container.toggleContainer(state: 0)
             self?.toggleWdith()
             self?.toggleCenterY()
-            self?.deleagate.view.layoutIfNeeded()
+            self?.delegate.view.layoutIfNeeded()
         }
         animator.addCompletion { [weak self] position in
             self?.completionAction(position)
@@ -186,6 +186,8 @@ final class CircleAnimation: NSObject {
     }
 
     private func completionAction(_ position: UIViewAnimatingPosition) {
+
+        container.disableKeyboard()
         switch position {
         case .end:
             self.state = self.state.change

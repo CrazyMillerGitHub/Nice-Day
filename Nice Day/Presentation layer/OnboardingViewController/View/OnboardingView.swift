@@ -74,7 +74,8 @@ final class OnboardingView: UIViewController, OnboardingCallable {
     }
 
     private var presenter: OnboardingPresenter!
-//     MARK: - UI cycle
+
+    // MARK: - UI cycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if animationView.currentProgress == 0 {
@@ -126,7 +127,7 @@ final class OnboardingView: UIViewController, OnboardingCallable {
     }
 
     func setPageControlProgress(_ value: Double) {
-          pageControl.progress = value
+        pageControl.progress = value
     }
 
     private func presentView(authBehavior: AuthViewController.AuthViewType) {
@@ -139,38 +140,39 @@ final class OnboardingView: UIViewController, OnboardingCallable {
 
     private func prepareConstraint() {
         NSLayoutConstraint.activate([
-            headerLabel.heightAnchor.constraint(equalToConstant: 38.0),
-            headerLabel.widthAnchor.constraint(equalToConstant: 260),
-            headerLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 28.0),
-            headerLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant:72.0),
+            //headerlabel
+            self.headerLabel.heightAnchor.constraint(equalToConstant: 38.0),
+            self.headerLabel.widthAnchor.constraint(equalToConstant: 260),
+            self.headerLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 28.0),
+            self.headerLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant:72.0),
 
             //logInbuttonConstraint
-            loginButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 18.0),
-            loginButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -18.0),
-            loginButton.topAnchor.constraint(equalTo: view.bottomAnchor, constant: -80),
-            loginButton.heightAnchor.constraint(equalToConstant: 46.0),
+            self.loginButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 18.0),
+            self.loginButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -18.0),
+            self.loginButton.topAnchor.constraint(equalTo: pageControl.bottomAnchor, constant: 20),
+            self.loginButton.heightAnchor.constraint(equalToConstant: 46.0),
 
-//            pageControl
-            pageControl.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 25.5),
-            pageControl.widthAnchor.constraint(equalToConstant: 89.0 ),
-            pageControl.heightAnchor.constraint(equalToConstant: 21.0),
-            pageControl.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -125.0),
+            //pageControl
+            self.pageControl.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 25.5),
+            self.pageControl.widthAnchor.constraint(equalToConstant: 89.0 ),
+            self.pageControl.heightAnchor.constraint(equalToConstant: 21.0),
+            self.pageControl.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -125.0),
 
-//            scrollView
-            scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0.0),
-            scrollView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor),
-            scrollView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor, constant: -245),
-            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 118.0),
+            //scrollView
+            self.scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0.0),
+            self.scrollView.widthAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.widthAnchor),
+            self.scrollView.heightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.heightAnchor, constant: -245),
+            self.scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 118.0),
 
-//            animationView
-            animationView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 70),
-            animationView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
-            animationView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
-            animationView.heightAnchor.constraint(equalTo: animationView.widthAnchor, multiplier: 9/16),
+            //animationView
+            self.animationView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 70),
+            self.animationView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
+            self.animationView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
+            self.animationView.heightAnchor.constraint(equalTo: animationView.widthAnchor, multiplier: 9/16),
 
-//             newUserLabel
-            newUserLabel.centerYAnchor.constraint(equalTo: loginButton.centerYAnchor, constant: 46),
-            newUserLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            // newUserLabel
+            self.newUserLabel.centerYAnchor.constraint(equalTo: loginButton.centerYAnchor, constant: 46),
+            self.newUserLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
 
         ])
     }
